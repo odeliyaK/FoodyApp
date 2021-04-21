@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+//Button registration on the MainActivity- pass to the registration page
 public void openRegistrationActivity(){
         Intent intent=new Intent(this, RegistrationActivity.class);
         startActivity(intent);

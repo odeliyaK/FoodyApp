@@ -3,4 +3,12 @@
     <string name="welcome_to_foody">Welcome to Foody</string>
     <string name="the_application_that_organize_food_distribution_by_volunteers">The application that organize food distribution by volunteers</string>
     <string name="cart_image">TODO</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string-array name="roles">
+        <item>Volunteer</item>
+        <item>User</item>
+        <item>Recycling company</item>
+    </string-array>
 </resources>
