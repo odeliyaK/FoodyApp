@@ -6,6 +6,7 @@
     <string name="register">Register</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
     <string-array name="roles">
         <item>Volunteer</item>
         <item>User</item>
