@@ -84,8 +84,25 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     }
 
     public void openOrganizationsActivity(){
-        Intent intent=new Intent(this, OganizationsActivity.class);
-        startActivity(intent);
+        if (TextUtils.isEmpty(email.getText())){
+            email.setError("Enter an email");
+            email.requestFocus();
+        } else if (TextUtils.isEmpty(pass.getText())){
+            pass.setError("Enter an password");
+            pass.requestFocus();
+        }else if (TextUtils.isEmpty(address.getText())){
+            address.setError("Enter an address");
+            address.requestFocus();
+        }else if (!TextUtils.equals(pass.getText(), confirm_pass.getText())){
+            pass.setError("password not equal");
+            pass.requestFocus();
+            confirm_pass.setError("password not equal");
+            confirm_pass.requestFocus();
+        }else {
+            Intent intent=new Intent(this, OganizationsActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     public void openMainActivity(){
@@ -100,16 +117,20 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             //if the user is volunteer show the button to choose an organization
             case 0:
                 organization_btn.setVisibility(View.VISIBLE);
+                num_people.setVisibility(View.INVISIBLE);
+                reg_btn.setVisibility(View.INVISIBLE);
                 break;
                 //if the user is customer show the field of number of people
             case 1:
                 organization_btn.setVisibility(View.INVISIBLE);
                 num_people.setVisibility(View.VISIBLE);
+                reg_btn.setVisibility(View.VISIBLE);
                 break;
                 //if the user is recycling company don't show any of them
             case 2:
                 organization_btn.setVisibility(View.INVISIBLE);
                 num_people.setVisibility(View.INVISIBLE);
+                reg_btn.setVisibility(View.VISIBLE);
                 break;
         }
     }

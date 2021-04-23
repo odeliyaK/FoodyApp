@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -34,8 +33,7 @@
             android:layout_gravity="fill"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="9dp"
-            tools:targetApi="lollipop">
+            app:cardElevation="9dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -52,41 +50,35 @@
                 </TextView>
 
                 <ImageButton
+                    android:id="@+id/latet_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/latet"
-                    android:contentDescription="@string/latetlogo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/latet" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Address: Hamasger 44 Tel Aviv " />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="phone: 03-6833388" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="1"
             android:layout_row="0"
-            android:layout_gravity="fill"
             android:layout_rowWeight="1"
+            android:layout_column="1"
             android:layout_columnWeight="1"
+            android:layout_gravity="fill"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="9dp"
-            tools:targetApi="lollipop">
+            app:cardElevation="9dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_gravity="center_vertical|center_horizontal"
                 android:gravity="center"
-                android:layout_gravity="center_vertical|center_horizontal">
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -95,18 +87,12 @@
                 </TextView>
 
                 <ImageButton
+                    android:id="@+id/pithonlev_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/pithonlev"
-                    android:contentDescription="@string/pithonlevlogo" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Address: Homama St 12 Rishon LeZion "/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="phone: 03-5576000"/>
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/pithonlev" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -121,7 +107,7 @@
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="9dp"
-            tools:targetApi="lollipop">
+            >
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -134,19 +120,14 @@
                     android:text="@string/lasova">
 
                 </TextView>
+
                 <ImageButton
+                    android:id="@+id/lasova_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/lasova"
-                    android:contentDescription="@string/lasovalogo" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Address: Chelnov St 18 Tel Aviv"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="phone: 03-3731660"/>
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/lasova" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -161,7 +142,7 @@
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="9dp"
-            tools:targetApi="lollipop">
+            >
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -174,19 +155,14 @@
                     android:text="@string/yad_eliezer">
 
                 </TextView>
+
                 <ImageButton
+                    android:id="@+id/yadeliezer_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/yadeliezer"
-                    android:contentDescription="@string/yadeliezerlogo" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Address: Polanski St 12, Jerusalem"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="phone: 02-5912222"/>
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/yadeliezer" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </GridLayout>

@@ -7,6 +7,26 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="please_choose_the_organization_you_would_like_to_volunteer_for">Please choose the organization you would like to volunteer for</string>
+    <string name="pithon_lev">Pithon Lev</string>
+    <string name="lasova">Lasova</string>
+    <string name="yad_eliezer">Yad Eliezer</string>
+    <string name="latet">Latet</string>
+    <string name="phone_03_6833388">phone: 03-6833388</string>
+    <string name="address_homama_st_12_rishon_lezion_7565512">Address: Homama St 12 Rishon LeZion 7565512</string>
+    <string name="phone_03_3731660">phone: 03-3731660</string>
+    <string name="address_chelnov_st_18_tel_aviv_6685915">Address: Chelnov St 18 Tel Aviv 6685915</string>
+    <string name="address_polanski_st_12_jerusalem">Address: Polanski St 12, Jerusalem</string>
+    <string name="address_hamasger_44_tel_aviv_67214_po_box_57636">Address: Hamasger 44 Tel Aviv 67214, PO Box 57636</string>
+    <string name="phone_03_5576000">phone: 03-5576000</string>
+    <string name="phone_02_5912222">phone: 02-5912222</string>
+    <string name="latetlogo">latatlogo</string>
+    <string name="pithonlevlogo">pithonlevlogo</string>
+    <string name="lasovalogo">lasovalogo</string>
+    <string name="yadeliezerlogo">yadeliezerlogo</string>
+    <string name="todo">latatimg</string>
+
+
     <string-array name="roles">
         <item>Volunteer</item>
         <item>User</item>
