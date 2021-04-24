@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
-
+    tools:context=".OrganizationActivity">
 
     <TextView
         android:id="@+id/organization_description"
@@ -55,7 +54,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/latet"
-                    android:contentDescription="@string/latetlogo" />
+                    android:contentDescription="@string/latetlogo"
+                    android:onClick="showSimpleAlertDialog"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,7 +98,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/pithonlev"
-                    android:contentDescription="@string/pithonlevlogo" />
+                    android:contentDescription="@string/pithonlevlogo"
+                    android:onClick="showSimpleAlertDialog"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -138,7 +139,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/lasova"
-                    android:contentDescription="@string/lasovalogo" />
+                    android:contentDescription="@string/lasovalogo"
+                    android:onClick="showSimpleAlertDialog"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -178,7 +180,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/yadeliezer"
-                    android:contentDescription="@string/yadeliezerlogo" />
+                    android:contentDescription="@string/yadeliezerlogo"
+                    android:onClick="showSimpleAlertDialog"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -190,6 +193,10 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </GridLayout>
+
+
+
+
 
 
 </RelativeLayout>

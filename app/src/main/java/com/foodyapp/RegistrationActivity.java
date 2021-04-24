@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
@@ -25,6 +26,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     EditText confirm_pass;
       EditText address;
       Button reg_btn;
+    EditText phone;
 
 
     @Override
@@ -51,6 +53,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         pass=(EditText)findViewById(R.id.password);
         confirm_pass=(EditText)findViewById(R.id.confirm_password);
         address=(EditText)findViewById(R.id.address);
+        phone=(EditText)findViewById(R.id.phone);
         back=(Button)findViewById(R.id.back_btn);
         reg_btn=(Button)findViewById(R.id.registration_btn);
         back.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +80,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                     pass.requestFocus();
                     confirm_pass.setError("password not equal");
                     confirm_pass.requestFocus();
+                }else if (TextUtils.isEmpty(phone.getText())){
+                    address.setError("Enter your phone number");
+                    address.requestFocus();
                 }
             }
         });
@@ -98,8 +104,13 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             pass.requestFocus();
             confirm_pass.setError("password not equal");
             confirm_pass.requestFocus();
-        }else {
-            Intent intent=new Intent(this, OganizationsActivity.class);
+
+        }else if (TextUtils.isEmpty(phone.getText())){
+            address.setError("Enter your phone number");
+            address.requestFocus();
+        }
+        else {
+            Intent intent=new Intent(this, OrganizationActivity.class);
             startActivity(intent);
         }
 
@@ -109,6 +120,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         Intent intent=new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //        String text= parent.getItemAtPosition(position).toString();

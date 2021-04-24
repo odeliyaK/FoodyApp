@@ -15,7 +15,6 @@
         android:text="Registration"
         android:textSize="25dp"
         android:layout_margin="10dp"
-
         android:gravity="center"
         android:textColor="@color/black"
         android:textStyle="bold|italic"
@@ -42,7 +41,7 @@
         android:layout_margin="10dp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
     <EditText
         android:id="@+id/confirm_password"
@@ -63,6 +62,18 @@
         android:ems="10"
         android:hint="Address"
         android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:hint="Phone"
+        android:inputType="phone"
+        android:digits="0123456789"
+        android:maxLength="10"/>
 
     <Spinner
         android:id="@+id/role"

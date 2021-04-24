@@ -25,6 +25,21 @@
     <string name="lasovalogo">lasovalogo</string>
     <string name="yadeliezerlogo">yadeliezerlogo</string>
     <string name="todo">latatimg</string>
+    <string name="ordersTitle">Orders</string>
+    <string name="col1">Name of customer</string>
+    <string name="col2">Special requests</string>
+    <string name="col3">Delivery confirmation</string>
+    <string name="customer1">Bill Johnson</string>
+    <string name="customerParcel1">No</string>
+    <string name="customer2">Amanda Fox</string>
+    <string name="customerParcel2">Gluten-free </string>
+    <string name="customer3">Linda Smith</string>
+    <string name="customerParcel3">Sugar-free products </string>
+    <string name="sendBtn">send Parcel </string>
+    <string name="signIn_btn">Sign In </string>
+    <string name="signIn_title">Sign In </string>
+    <string name="volunteertitle">Volunteers page </string>
+    <string name="backFromOrders">Back </string>
 
 
     <string-array name="roles">

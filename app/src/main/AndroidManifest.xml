@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodyApp">
-        <activity android:name=".OredersActivity"></activity>
+        <activity android:name=".ManageOrdersActivity"></activity>
+        <activity android:name=".VolunteerMainActivity" />
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".OrganizationActivity" />
+        <activity android:name=".OredersActivity" />
         <activity android:name=".OganizationsActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainActivity">

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManageOrdersActivity">
+
+
+    <TextView
+        android:id="@+id/Orders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ordersTitle"
+        android:textSize="25dp"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center"/>
+
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_margin="60dp">
+        <!--        table head-->
+        <TableRow
+            android:background="@color/purple_200">
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/col1"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textSize="14sp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal"/>
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/col2"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textSize="14sp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal"/>
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/col3"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:textSize="14sp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal"/>
+
+        </TableRow>
+
+        <!--    table data    -->
+        <TableRow>
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/customer1"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal"/>
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/customerParcel1"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal"/>
+            <Button
+                android:text="@string/sendBtn"/>
+
+        </TableRow>
+        <TableRow>
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/customer2"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal"/>
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/customerParcel2"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal"/>
+            <Button
+                android:text="@string/sendBtn"/>
+        </TableRow>
+        <TableRow>
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/customer3"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal"/>
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/customerParcel3"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:layout_weight="4"
+                android:layout_gravity="center_horizontal"/>
+            <Button
+                android:text="@string/sendBtn"/>
+
+
+        </TableRow>
+        <Button
+            android:id="@+id/backfromorders"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:text="@string/backFromOrders" />
+    </TableLayout>
+
+
+</RelativeLayout>
