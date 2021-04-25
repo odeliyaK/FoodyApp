@@ -59,7 +59,7 @@ public class VolunteerMainActivity extends AppCompatActivity {
     }
 
     public void openInventoryActivity(){
-        Intent intent=new Intent(this, InventoryManageActivity.class);
+        Intent intent=new Intent(this, InventoryActivity.class);
         startActivity(intent);
     }
 }

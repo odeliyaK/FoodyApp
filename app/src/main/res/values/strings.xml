@@ -46,7 +46,13 @@
     <string name="MPBtn">Meat and Poultry</string>
     <string name="BakeryBtn">Bakery </string>
     <string name="GroceryBtn">Grocery </string>
-
+    <string name="DairyTitle">Dairy products</string>
+    <string name="DairyCol1">Product Name</string>
+    <string name="DairyCol2">Amount</string>
+    <string name="DairyCol3">Update Amount</string>
+    <string name="DairyCol4">Order</string>
+    <string name="updateBtn">Update</string>
+    <string name="chooseOrderBtn">Choose Amount</string>
 
     <string-array name="roles">
         <item>Volunteer</item>

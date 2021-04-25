@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".InventoryActivity">
+
 
     <TextView
         android:id="@+id/textView2"
@@ -69,13 +72,25 @@
 
     <Button
         android:id="@+id/groceryBtn"
-        android:layout_width="110"
-        android:layout_height="44"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="138dp"
         android:layout_marginLeft="138dp"
         android:layout_marginTop="94dp"
         android:text="@string/GroceryBtn"
         app:layout_constraintStart_toStartOf="@+id/bakerkyBtn"
         app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <FrameLayout
+        android:id="@+id/root_layout"
+        android:layout_width="419dp"
+        android:layout_height="261dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fvBtn">
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
