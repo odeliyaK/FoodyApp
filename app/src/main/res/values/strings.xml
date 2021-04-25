@@ -39,7 +39,13 @@
     <string name="signIn_btn">Sign In </string>
     <string name="signIn_title">Sign In </string>
     <string name="volunteertitle">Volunteers page </string>
+    <string name="manageTitle">Inventory Management </string>
     <string name="backFromOrders">Back </string>
+    <string name="DairyBtn">Dairy</string>
+    <string name="FVBtn">Fruits and Vegetables </string>
+    <string name="MPBtn">Meat and Poultry</string>
+    <string name="BakeryBtn">Bakery </string>
+    <string name="GroceryBtn">Grocery </string>
 
 
     <string-array name="roles">

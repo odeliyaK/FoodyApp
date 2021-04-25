@@ -38,6 +38,10 @@ public class VolunteerMainActivity extends AppCompatActivity {
                 else if(position==1){
                     openOrdersActivity();
                 }
+                //if "inventory management" was clicked
+                else if(position==3){
+                    openInventoryActivity();
+                }
             }
         });
 
@@ -51,6 +55,11 @@ public class VolunteerMainActivity extends AppCompatActivity {
 
     public void openOrdersActivity(){
         Intent intent=new Intent(this, ManageOrdersActivity.class);
+        startActivity(intent);
+    }
+
+    public void openInventoryActivity(){
+        Intent intent=new Intent(this, InventoryManageActivity.class);
         startActivity(intent);
     }
 }
