@@ -33,12 +33,12 @@ public class InventoryActivity extends AppCompatActivity {
         secondBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                FragmentManager fm = getFragmentManager();
-//                SecondFragment fragmet2 = new SecondFragment();
-//                FragmentTransaction t = fm.beginTransaction();
-//                t.replace(R.id.root_layout, fragmet2);
-//                t.addToBackStack(null);
-//                t.commit();
+                FragmentManager fm = getFragmentManager();
+                BakeryScrollingFragment fragmet = new BakeryScrollingFragment();
+                FragmentTransaction t = fm.beginTransaction();
+                t.replace(R.id.root_layout, fragmet);
+                t.addToBackStack(null);
+                t.commit();
 
             }
         });
