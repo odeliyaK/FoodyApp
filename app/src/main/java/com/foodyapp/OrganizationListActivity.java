@@ -1,23 +1,57 @@
 package com.foodyapp;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-import android.app.Activity;
-import android.app.AlertDialog;
 
-public class OrganizationActivity extends Activity  {
+import java.util.ArrayList;
+import java.util.List;
+
+public class OrganizationListActivity extends Activity {
 
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_organization);
+        setContentView(R.layout.activity_organization_list);
         this.context=this;
+
+        RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+
+        organizationsAdapter ca = new organizationsAdapter(createList(10));
+        recList.setAdapter(ca);
     }
+
+    private List<organizationInfo> createList(int size) {
+
+        List<organizationInfo> result = new ArrayList<organizationInfo>();
+        for (int i = 1; i <= size; i++) {
+            organizationInfo ci = new organizationInfo();
+            ci.name = organizationInfo.NAME_PREFIX + i;
+            ci.address = organizationInfo.SURNAME_PREFIX + i;
+            ci.phone = organizationInfo.EMAIL_PREFIX + i + "@test.com";
+
+            result.add(ci);
+
+        }
+
+        return result;
+    }
+
+
 
     public void showSimpleAlertDialog(View view) {
 

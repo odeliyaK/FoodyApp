@@ -49,12 +49,12 @@ public class VolunteerMainActivity extends AppCompatActivity {
 
 
     public void openOrganizationActivity(){
-        Intent intent=new Intent(this, OrganizationActivity.class);
+        Intent intent=new Intent(this, OrganizationListActivity.class);
         startActivity(intent);
     }
 
     public void openOrdersActivity(){
-        Intent intent=new Intent(this, ManageOrdersActivity.class);
+        Intent intent=new Intent(this, UsersActivity.class);
         startActivity(intent);
     }
 

@@ -110,7 +110,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             address.requestFocus();
         }
         else {
-            Intent intent=new Intent(this, OrganizationActivity.class);
+            Intent intent=new Intent(this, OrganizationListActivity.class);
             startActivity(intent);
         }
 
