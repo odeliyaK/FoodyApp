@@ -14,12 +14,13 @@
 
         <TextView
 
-            android:id="@+id/dairyTitle"
+            android:id="@+id/FruitVegTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:text="@string/DairyTitle"
-            android:textColor="@color/black" />
+            android:layout_marginLeft="90dp"
+            android:text="@string/FruitVegTitle"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -431,8 +432,8 @@
                     android:id="@+id/saveBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="150dp"
-                    android:layout_marginLeft="150dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginLeft="120dp"
                     android:text="Save Inventory"/>
             </LinearLayout>
         </ScrollView>

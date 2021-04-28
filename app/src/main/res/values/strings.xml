@@ -46,7 +46,10 @@
     <string name="MPBtn">Meat and Poultry</string>
     <string name="BakeryBtn">Bakery </string>
     <string name="GroceryBtn">Grocery </string>
-    <string name="DairyTitle">Dairy products</string>
+    <string name="DairyTitle">Dairy Products</string>
+    <string name="GroceryTitle">Grocery</string>
+    <string name="FruitVegTitle">Fruits and Vegetables </string>
+    <string name="MeatPoultryTitle">Meat and Poultry</string>
     <string name="DairyCol1">Product Name</string>
     <string name="DairyCol2">Current Amount</string>
     <string name="DairyCol3">Update Amount</string>
