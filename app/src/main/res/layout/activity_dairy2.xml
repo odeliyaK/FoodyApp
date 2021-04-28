@@ -7,297 +7,667 @@
     tools:context=".DairyActivity">
 
 
-    <TextView
-
-        android:id="@+id/dairyTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:text="@string/DairyTitle"
-        android:textColor="@color/black" />
-
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:scrollbars="none">
+        android:orientation="vertical">
 
-        <TableLayout
-            android:layout_width="match_parent"
+        <TextView
+
+            android:id="@+id/dairyTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@color/white">
-            <!--        table head-->
-            <TableRow android:background="@color/purple_200">
+            android:layout_marginLeft="150dp"
+            android:text="@string/DairyTitle"
+            android:textColor="@color/black" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="4"
-                    android:padding="10sp"
-                    android:text="@string/DairyCol1"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="499dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="3"
-                    android:padding="10sp"
-                    android:text="@string/DairyCol2"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="4"
-                    android:padding="10sp"
-                    android:text="@string/DairyCol4"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
-            </TableRow>
-
-            <!--    table data    -->
-            <TableRow>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="4"
-                    android:padding="10sp"
-                    android:text="Milk"
-                    android:textSize="14sp" />
-
-                <LinearLayout
+                <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/white">
+                    <!--        table head-->
+                    <TableRow android:background="@color/purple_200">
 
-                    <ImageButton
-                        android:id="@+id/plus1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/plus2" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="@string/DairyCol1"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
 
-                    <EditText
-                        android:id="@+id/num1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="1"
-                        android:gravity="center"
-                        android:inputType="numberSigned"
-                        android:text="75" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="@string/DairyCol2"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
 
-                    <ImageButton
-                        android:id="@+id/minus1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/minus" />
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="@string/DairyCol4"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </TableRow>
+
+                    <!--    table data    -->
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="Milk"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="75" />
+
+                            <ImageButton
+                                android:id="@+id/minus1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="White Cheese"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="50" />
+
+                            <ImageButton
+                                android:id="@+id/minus2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="Yellow Cheese"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="38" />
+
+                            <ImageButton
+                                android:id="@+id/minus3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="Eggs"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="43" />
+
+                            <ImageButton
+                                android:id="@+id/minus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="Eggs"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="43" />
+
+                            <ImageButton
+                                android:id="@+id/minus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="Eggs"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="43" />
+
+                            <ImageButton
+                                android:id="@+id/minus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="Eggs"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="43" />
+
+                            <ImageButton
+                                android:id="@+id/minus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="Eggs"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="43" />
+
+                            <ImageButton
+                                android:id="@+id/minus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="Eggs"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="43" />
+
+                            <ImageButton
+                                android:id="@+id/minus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="Eggs"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/plus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/plus2" />
+
+                            <EditText
+                                android:id="@+id/num4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="1"
+                                android:gravity="center"
+                                android:inputType="numberSigned"
+                                android:text="43" />
+
+                            <ImageButton
+                                android:id="@+id/minus4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:src="@drawable/minus" />
+                        </LinearLayout>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:text="@string/chooseOrderBtn" />
+
+                    </TableRow>
+
+
+                </TableLayout>
 
                 <Button
-                    android:layout_width="0dp"
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="@string/chooseOrderBtn" />
+                    android:layout_marginStart="150dp"
+                    android:layout_marginLeft="150dp"
+                    android:text="Button" />
+            </LinearLayout>
+        </ScrollView>
 
-            </TableRow>
+    </LinearLayout>
 
-            <TableRow>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:padding="10sp"
-                    android:text="White Cheese"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/plus2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/plus2" />
-
-                    <EditText
-                        android:id="@+id/num2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="1"
-                        android:gravity="center"
-                        android:inputType="numberSigned"
-                        android:text="50" />
-
-                    <ImageButton
-                        android:id="@+id/minus2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/minus" />
-                </LinearLayout>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/chooseOrderBtn" />
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:padding="10sp"
-                    android:text="Yellow Cheese"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/plus3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/plus2" />
-
-                    <EditText
-                        android:id="@+id/num3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="1"
-                        android:gravity="center"
-                        android:inputType="numberSigned"
-                        android:text="38" />
-
-                    <ImageButton
-                        android:id="@+id/minus3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/minus" />
-                </LinearLayout>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="@string/chooseOrderBtn" />
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:padding="10sp"
-                    android:text="Eggs"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/plus4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/plus2" />
-
-                    <EditText
-                        android:id="@+id/num4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="1"
-                        android:gravity="center"
-                        android:inputType="numberSigned"
-                        android:text="43" />
-
-                    <ImageButton
-                        android:id="@+id/minus4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/minus" />
-                </LinearLayout>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="@string/chooseOrderBtn" />
-
-            </TableRow>
-
-
-        </TableLayout>
-    </ScrollView>
 
 </RelativeLayout>
