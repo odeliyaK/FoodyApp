@@ -21,22 +21,50 @@ public class InventoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FragmentManager fm = getFragmentManager();
-                DairyActivity fragmet2 = new DairyActivity();
+                DairyActivity fragment = new DairyActivity();
                 FragmentTransaction t = fm.beginTransaction();
-                t.replace(R.id.root_layout, fragmet2);
+                t.replace(R.id.root_layout, fragment);
                 t.addToBackStack(null);
                 t.commit();
 
             }
         });
-        Button secondBtn = findViewById(R.id.bakerkyBtn);
-        secondBtn.setOnClickListener(new View.OnClickListener() {
+        Button groceryBtn = findViewById(R.id.groceryBtn);
+        groceryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fm = getFragmentManager();
-                BakeryScrollingFragment fragmet = new BakeryScrollingFragment();
+                GroceryFragment fragment = new GroceryFragment();
                 FragmentTransaction t = fm.beginTransaction();
-                t.replace(R.id.root_layout, fragmet);
+                t.replace(R.id.root_layout, fragment);
+                t.addToBackStack(null);
+                t.commit();
+
+            }
+        });
+
+        Button mpBtn = findViewById(R.id.meatBtn);
+        mpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                MeatPoultryFragment fragment = new MeatPoultryFragment();
+                FragmentTransaction t = fm.beginTransaction();
+                t.replace(R.id.root_layout, fragment);
+                t.addToBackStack(null);
+                t.commit();
+
+            }
+        });
+
+        Button fvBtn = findViewById(R.id.fvBtn);
+        fvBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                FruitsVegFragment fragment = new FruitsVegFragment();
+                FragmentTransaction t = fm.beginTransaction();
+                t.replace(R.id.root_layout, fragment);
                 t.addToBackStack(null);
                 t.commit();
 
