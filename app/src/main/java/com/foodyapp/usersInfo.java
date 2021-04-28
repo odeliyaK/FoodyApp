@@ -3,17 +3,21 @@ package com.foodyapp;
 public class usersInfo {
 
 
-
+    private int packageNum;
     private String name;
     private String address;
     private int image;
 
 
-    public usersInfo(String name, String address, int image) {
+    public usersInfo(int packageNum,String name, String address, int image) {
+        this.packageNum = packageNum;
         this.name = name;
         this.address = address;
         this.image = image;
 
+    }
+    public int getNum() {
+        return packageNum;
     }
 
     public String getName() {
@@ -29,7 +33,9 @@ public class usersInfo {
     }
 
 
-
+    public void setNun(String name) {
+        this.packageNum = packageNum;
+    }
 
     public void setName(String name) {
         this.name = name;

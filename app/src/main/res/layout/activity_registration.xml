@@ -53,15 +53,6 @@
         android:inputType="textPassword"
         android:layout_gravity="center"/>
 
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:ems="10"
-        android:hint="Address"
-        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/phone"
@@ -75,25 +66,6 @@
         android:digits="0123456789"
         android:maxLength="10"/>
 
-    <Spinner
-        android:id="@+id/role"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:hint="Choose your role"/>
-
-    <EditText
-        android:id="@+id/num_of_people"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:ems="10"
-        android:hint="number of people"
-        android:inputType="textPersonName"
-        android:visibility="invisible" />
-
 
     <Button
         android:id="@+id/present_organizations"
@@ -101,8 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="choose an organization"
-        android:visibility="invisible" />
+        android:text="choose an organization" />
 
     <Button
         android:id="@+id/registration_btn"
@@ -110,8 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="Registration"
-        android:visibility="invisible" />
+        android:text="Registration" />
 
 
     <Button

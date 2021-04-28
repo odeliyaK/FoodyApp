@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodyApp">
-        <activity android:name=".FruitsVegFragment"></activity>
+        <activity android:name=".FruitsVegFragment" />
         <activity android:name=".MeatPoultryFragment" />
         <activity android:name=".UsersActivity" />
         <activity android:name=".OrganizationListActivity" />

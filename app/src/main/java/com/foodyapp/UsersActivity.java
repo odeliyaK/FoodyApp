@@ -25,12 +25,12 @@ public class UsersActivity extends Activity {
 
 
         List<usersInfo> itemInfos = new ArrayList<usersInfo>();
-        itemInfos.add(new usersInfo("Bill Johnson","Haifa, Herzel st 12", R.drawable.sendparcel));
-        itemInfos.add(new usersInfo("Amanda Smith","Haifa, Horen st 1", R.drawable.sendparcel));
-        itemInfos.add(new usersInfo("Linda Ron","Haifa, Hgalil st 23", R.drawable.sendparcel));
-        itemInfos.add(new usersInfo("John Cohen","Kiryat Ata, Tal st 1", R.drawable.sendparcel));
-        itemInfos.add(new usersInfo("Chris Levis","Nesher, Yael st 31", R.drawable.sendparcel));
-        itemInfos.add(new usersInfo("Loren Li","Nesher, oren st 51", R.drawable.sendparcel));
+        itemInfos.add(new usersInfo(1,"Bill Johnson","Haifa, Herzel st 12", R.drawable.sendparcel));
+        itemInfos.add(new usersInfo(2,"Amanda Smith","Haifa, Horen st 1", R.drawable.sendparcel));
+        itemInfos.add(new usersInfo(3,"Linda Ron","Haifa, Hgalil st 23", R.drawable.sendparcel));
+        itemInfos.add(new usersInfo(4,"John Cohen","Kiryat Ata, Tal st 1", R.drawable.sendparcel));
+        itemInfos.add(new usersInfo(5,"Chris Levis","Nesher, Yael st 31", R.drawable.sendparcel));
+        itemInfos.add(new usersInfo(6,"Loren Li","Nesher, oren st 51", R.drawable.sendparcel));
 
 
         list = (ListView) findViewById(R.id.list);
