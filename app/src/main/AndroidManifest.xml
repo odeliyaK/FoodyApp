@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodyApp">
+        <activity android:name=".FruitsVegOrder" />
+        <activity android:name=".DairyActivityOrder" />
+        <activity android:name=".OrderActivity" />
         <activity android:name=".FruitsVegFragment" />
         <activity android:name=".MeatPoultryFragment" />
         <activity android:name=".UsersActivity" />

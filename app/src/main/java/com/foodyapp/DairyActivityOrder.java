@@ -20,23 +20,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class DairyActivity extends Fragment implements View.OnClickListener{
+public class DairyActivityOrder extends Fragment implements View.OnClickListener{
     private static final int[] idArray = {R.id.plus1,R.id.plus2,R.id.plus3,R.id.plus4,R.id.plus5,R.id.plus6,R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4,R.id.minus5,R.id.minus6};
-//  private static final int[] idArrayMinus = {R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4};
+    //  private static final int[] idArrayMinus = {R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4};
     private ImageButton[] buttons = new ImageButton[idArray.length];
-//    private ImageButton[] minusButtons = new ImageButton[idArrayMinus.length];
+    //    private ImageButton[] minusButtons = new ImageButton[idArrayMinus.length];
     ImageButton p1,p2,p3,p4,m1,m2,m3,m4;
     EditText num1,num2,num3,num4,num5,num6;
     String be1,be2,be3,be4,be5,be6;
     Button save;
 
-    public DairyActivity() {
+    public DairyActivityOrder() {
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.activity_dairy2, container, false);
+        View view =  inflater.inflate(R.layout.activity_dairy_order, container, false);
 
 //        p1 = (ImageButton) view.findViewById(R.id.plus1);
 //        p2 = (ImageButton) view.findViewById(R.id.plus2);
@@ -83,7 +83,7 @@ public class DairyActivity extends Fragment implements View.OnClickListener{
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(getContext(), "Saving inventory is cancelled",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Order cancelled",Toast.LENGTH_LONG).show();
                         num1.setText(be1);
                         num2.setText(be2);
                         num3.setText(be3);
@@ -97,7 +97,13 @@ public class DairyActivity extends Fragment implements View.OnClickListener{
                 builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(getContext(), "Saving inventory succeeded",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Order from 'OSEM' succeeded",Toast.LENGTH_LONG).show();
+                        num1.setText(be1);
+                        num2.setText(be2);
+                        num3.setText(be3);
+                        num4.setText(be4);
+                        num5.setText(be5);
+                        num6.setText(be6);
                     }
                 });
 
@@ -105,16 +111,15 @@ public class DairyActivity extends Fragment implements View.OnClickListener{
                 AlertDialog dialog = builder.create();
 
                 dialog.show();
-                break;
             case R.id.plus1:
                 num = 0;
-                    num = Integer.parseInt(num1.getText().toString());
+                num = Integer.parseInt(num1.getText().toString());
                 num++;
                 num1.setText(String.valueOf(num));
                 break;
             case R.id.plus2:
                 num = 0;
-                    num = Integer.parseInt(num2.getText().toString());
+                num = Integer.parseInt(num2.getText().toString());
                 num++;
                 num2.setText(String.valueOf(num));
                 break;
@@ -126,7 +131,7 @@ public class DairyActivity extends Fragment implements View.OnClickListener{
                 break;
             case R.id.plus4:
                 num = 0;
-                    num = Integer.parseInt(num4.getText().toString());
+                num = Integer.parseInt(num4.getText().toString());
                 num++;
                 num4.setText(String.valueOf(num));
                 break;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DairyActivity">
+    tools:context=".MeatPoultryOrderFragment">
 
 
     <LinearLayout
@@ -14,11 +14,11 @@
 
         <TextView
 
-            android:id="@+id/dairyTitle"
+            android:id="@+id/MeatPoultryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="130dp"
-            android:text="@string/DairyTitle"
+            android:layout_marginLeft="110dp"
+            android:text="@string/MeatPoultryTitle"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
@@ -72,7 +72,7 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Milk"
+                            android:text="Minced Meat"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -100,7 +100,8 @@
                                 android:ems="1"
                                 android:gravity="center"
                                 android:inputType="numberSigned"
-                                android:text="75" />
+                                android:text="0"/>
+
 
                             <ImageButton
                                 android:id="@+id/minus1"
@@ -111,7 +112,7 @@
                                 android:background="@color/white"
                                 android:gravity="center"
                                 android:src="@drawable/minus" />
-                        </LinearLayout>F
+                        </LinearLayout>
 
                     </TableRow>
 
@@ -123,7 +124,7 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="White Cheese"
+                            android:text="Chicken Breast"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -151,7 +152,7 @@
                                 android:ems="1"
                                 android:gravity="center"
                                 android:inputType="numberSigned"
-                                android:text="50" />
+                                android:text="0" />
 
                             <ImageButton
                                 android:id="@+id/minus2"
@@ -174,7 +175,7 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Yellow Cheese"
+                            android:text="Chicken shanks"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -202,7 +203,7 @@
                                 android:ems="1"
                                 android:gravity="center"
                                 android:inputType="numberSigned"
-                                android:text="38" />
+                                android:text="0" />
 
                             <ImageButton
                                 android:id="@+id/minus3"
@@ -226,7 +227,7 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Eggs"
+                            android:text="Chicken Wings"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -254,7 +255,7 @@
                                 android:ems="1"
                                 android:gravity="center"
                                 android:inputType="numberSigned"
-                                android:text="43" />
+                                android:text="0" />
 
                             <ImageButton
                                 android:id="@+id/minus4"
@@ -277,7 +278,7 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Butter"
+                            android:text="Amnon Fish"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -305,7 +306,7 @@
                                 android:ems="1"
                                 android:gravity="center"
                                 android:inputType="numberSigned"
-                                android:text="43" />
+                                android:text="0" />
 
                             <ImageButton
                                 android:id="@+id/minus5"
@@ -318,56 +319,6 @@
                                 android:src="@drawable/minus" />
                         </LinearLayout>
 
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:gravity="center"
-                            android:padding="10sp"
-                            android:text="Cottage'"
-                            android:textSize="18sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_weight="3"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/plus6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/plus2" />
-
-                            <EditText
-                                android:id="@+id/num6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="1"
-                                android:gravity="center"
-                                android:inputType="numberSigned"
-                                android:text="43" />
-
-                            <ImageButton
-                                android:id="@+id/minus6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/minus" />
-                        </LinearLayout>
 
                     </TableRow>
 
@@ -377,10 +328,9 @@
                     android:id="@+id/saveBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="120dp"
-                    android:layout_marginLeft="120dp"
-                    android:text="Save Inventory" />
+                    android:layout_marginStart="105dp"
+                    android:layout_marginLeft="105dp"
+                    android:text="Order from butcher"/>
             </LinearLayout>
         </ScrollView>
 

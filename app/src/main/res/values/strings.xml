@@ -40,6 +40,7 @@
     <string name="signIn_title">Sign In </string>
     <string name="volunteertitle">Volunteers page </string>
     <string name="manageTitle">Inventory Management </string>
+    <string name="orderTitle">Orders from suppliers </string>
     <string name="backFromOrders">Back </string>
     <string name="DairyBtn">Dairy</string>
     <string name="FVBtn">Fruits and Vegetables </string>
@@ -57,6 +58,7 @@
     <string name="updateBtn">Update</string>
     <string name="chooseOrderBtn">Choose Amount</string>
     <string name="confirm">Are you sure you want to save the inventory?</string>
+    <string name="less0">0 is the minimum number of product</string>
     <string name="dialogTitle">Confirm Saving</string>
     <string name="save">save</string>
     <string name="cancel">cancel</string>

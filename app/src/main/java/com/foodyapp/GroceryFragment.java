@@ -141,38 +141,64 @@ public class GroceryFragment extends Fragment implements View.OnClickListener{
             case R.id.minus1:
                 num = 0;
                 num = Integer.parseInt(num1.getText().toString());
-                num--;
-                num1.setText(String.valueOf(num));
+                if(num <= 0)
+                    break;
+                else{
+                    num--;
+                    num1.setText(String.valueOf(num));
+                }
                 break;
             case R.id.minus2:
                 num = 0;
                 num = Integer.parseInt(num2.getText().toString());
-                num--;
-                num2.setText(String.valueOf(num));
+                if(num <= 0)
+                    break;
+                else{
+                    num--;
+                    num2.setText(String.valueOf(num));
+                }
                 break;
             case R.id.minus3:
                 num = 0;
                 num = Integer.parseInt(num3.getText().toString());
+                if(num <= 0)
+                    break;
+                else{
+                    num--;
+                    num3.setText(String.valueOf(num));
+                }
                 num--;
                 num3.setText(String.valueOf(num));
                 break;
             case R.id.minus4:
                 num = 0;
                 num = Integer.parseInt(num4.getText().toString());
-                num--;
-                num4.setText(String.valueOf(num));
+                if(num <= 0)
+                    break;
+                else{
+                    num--;
+                    num4.setText(String.valueOf(num));
+                }
                 break;
             case R.id.minus5:
                 num = 0;
                 num = Integer.parseInt(num5.getText().toString());
-                num--;
-                num5.setText(String.valueOf(num));
+                if(num <= 0)
+                    break;
+                else{
+                    num--;
+                    num5.setText(String.valueOf(num));
+                }
                 break;
             case R.id.minus6:
                 num = 0;
                 num = Integer.parseInt(num6.getText().toString());
-                num--;
-                num6.setText(String.valueOf(num));
+                if(num <= 0)
+                    break;
+                else{
+                    num--;
+                    num6.setText(String.valueOf(num));
+                }
                 break;
         }
     }

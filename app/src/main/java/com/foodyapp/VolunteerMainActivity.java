@@ -38,6 +38,10 @@ public class VolunteerMainActivity extends AppCompatActivity {
                 else if(position==1){
                     openOrdersActivity();
                 }
+                //if "order food from suppliers" was clicked
+                else if(position==2){
+                    openOrderFoodActivity();
+                }
                 //if "inventory management" was clicked
                 else if(position==3){
                     openInventoryActivity();
@@ -60,6 +64,11 @@ public class VolunteerMainActivity extends AppCompatActivity {
 
     public void openInventoryActivity(){
         Intent intent=new Intent(this, InventoryActivity.class);
+        startActivity(intent);
+    }
+
+    public void openOrderFoodActivity(){
+        Intent intent=new Intent(this, OrderActivity.class);
         startActivity(intent);
     }
 }
