@@ -1,23 +1,20 @@
 package com.foodyapp;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
-    private List<usersInfo> dataList = null;
+public class HistoryAdapter extends ArrayAdapter<HistoryInfo> {
+
+
+    private List<HistoryInfo> dataList = null;
     private Context context = null;
-    public UsersLIstAdapter(Context context, List<usersInfo> dataList) {
+    public HistoryAdapter(Context context, List<HistoryInfo> dataList) {
         super( context, R.layout.users_list, dataList);
         this.dataList = dataList;
         this.context = context;
@@ -29,22 +26,23 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
     }
 
     @Override
-    public usersInfo getItem(int position) {
+    public HistoryInfo getItem(int position) {
         return dataList.get(position);
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater= LayoutInflater.from(context);
-        View rowView=inflater.inflate(R.layout.users_list, null,false);
-        TextView pNum = (TextView) rowView.findViewById(R.id.pNum);
-        TextView name = (TextView) rowView.findViewById(R.id.userInfo);
-        TextView address = (TextView) rowView.findViewById(R.id.useraddress);
-        final usersInfo itemInfo = dataList.get(position);
-        pNum.setText(String.valueOf(itemInfo.getNum()));
+        View rowView=inflater.inflate(R.layout.history_list, null,false);
+        TextView pNum = (TextView) rowView.findViewById(R.id.HNum);
+        TextView name = (TextView) rowView.findViewById(R.id.HistoryInfo);
+        TextView address = (TextView) rowView.findViewById(R.id.historyaddress);
+        TextView date = (TextView) rowView.findViewById(R.id.date);
+        final HistoryInfo itemInfo = dataList.get(position);
+        pNum.setText( String.valueOf(itemInfo.getNum()));
         name.setText(itemInfo.getName());
         address.setText(itemInfo.getAddress());
-
+        date.setText(itemInfo.getDate());
         return rowView;
 
     };

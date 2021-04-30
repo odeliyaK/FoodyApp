@@ -1,21 +1,22 @@
 package com.foodyapp;
 
-public class usersInfo {
-
+public class HistoryInfo {
 
     private int packageNum;
     private String name;
     private String address;
-    private int image;
+    private String Date;
 
-
-    public usersInfo(int packageNum,String name, String address, int image) {
+    public HistoryInfo(int packageNum,String name, String address, String Date) {
+        super();
         this.packageNum = packageNum;
         this.name = name;
         this.address = address;
-        this.image = image;
+        this.Date = Date;
 
     }
+
+
     public int getNum() {
         return packageNum;
     }
@@ -28,12 +29,12 @@ public class usersInfo {
         return address;
     }
 
-    public int getImage() {
-        return image;
+    public String  getDate() {
+        return Date;
     }
 
 
-    public void setNum(int num) {
+    public void setNum(int packageNum) {
         this.packageNum = packageNum;
     }
 
@@ -45,8 +46,7 @@ public class usersInfo {
         this.address = address;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setDate(String Date) {
+        this.Date = Date;
     }
-
 }

@@ -47,9 +47,18 @@ public class VolunteerMainActivity extends AppCompatActivity implements organiza
                 else if(position==3){
                     openInventoryActivity();
                 }
+                ////if "Parcels history" was clicked
+                else if (position==4){
+                    openHistoryActivity();
+                }
             }
         });
 
+    }
+
+    private void openHistoryActivity() {
+        Intent intent=new Intent(this, HistoryActivity.class);
+        startActivity(intent);
     }
 
     private void showCustomAlertDialog() {
