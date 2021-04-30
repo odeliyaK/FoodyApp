@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
-public class RegistrationActivity extends AppCompatActivity  {
+public class RegistrationActivity extends AppCompatActivity  implements  organizationsAlertDialogFragmentListener {
       Button organization_btn;
       Button back;
       EditText email;
@@ -89,10 +89,28 @@ public class RegistrationActivity extends AppCompatActivity  {
             confirm_pass.requestFocus();
         }
         else {
-            Intent intent=new Intent(this, OrganizationListActivity.class);
-            startActivity(intent);
+            showCustomAlertDialog();
         }
 
+    }
+
+    private void showCustomAlertDialog() {
+        OganizationDialogFragment frag = new OganizationDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt("title", 1);
+        frag.setArguments(args);
+        frag.show(getFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void onDialogPositiveClick(OganizationDialogFragment dialog) {
+//        String res= dialog.getFirstNameField() + " " + dialog.getLastNameField() + " " + dialog.getIdField() ;
+//        Toast.makeText(this, "onDialogPositiveClick " + res,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDialogNegativeClick(OganizationDialogFragment dialog) {
+        Toast.makeText(this, "onDialogNegativeClick " ,Toast.LENGTH_SHORT).show();
     }
 
     public void openMainActivity(){

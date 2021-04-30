@@ -15,7 +15,6 @@
         <activity android:name=".FruitsVegFragment" />
         <activity android:name=".MeatPoultryFragment" />
         <activity android:name=".UsersActivity" />
-        <activity android:name=".OrganizationListActivity" />
         <activity android:name=".InventoryActivity" />
         <activity android:name=".DairyActivity" />
         <activity android:name=".DairyActivityFragment" />

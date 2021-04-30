@@ -8,10 +8,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class VolunteerMainActivity extends AppCompatActivity {
+public class VolunteerMainActivity extends AppCompatActivity implements organizationsAlertDialogFragmentListener {
 
     String items[] = new String[]{"Choose organization", "Manage Orders", "order food from supplier", "inventory management",
             "Parcels history"};
@@ -32,7 +33,7 @@ public class VolunteerMainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //if "choose organization" was clicked
                 if (position==0){
-                    openOrganizationActivity();
+                    showCustomAlertDialog();
                 }
                 //if "Manage Orders" was clicked
                 else if(position==1){
@@ -51,11 +52,25 @@ public class VolunteerMainActivity extends AppCompatActivity {
 
     }
 
-
-    public void openOrganizationActivity(){
-        Intent intent=new Intent(this, OrganizationListActivity.class);
-        startActivity(intent);
+    private void showCustomAlertDialog() {
+        OganizationDialogFragment frag = new OganizationDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt("title", 1);
+        frag.setArguments(args);
+        frag.show(getFragmentManager(), "dialog");
     }
+
+    @Override
+    public void onDialogPositiveClick(OganizationDialogFragment dialog) {
+//        String res= dialog.getFirstNameField() + " " + dialog.getLastNameField() + " " + dialog.getIdField() ;
+//        Toast.makeText(this, "onDialogPositiveClick " + res,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDialogNegativeClick(OganizationDialogFragment dialog) {
+        Toast.makeText(this, "onDialogNegativeClick " ,Toast.LENGTH_SHORT).show();
+    }
+
 
     public void openOrdersActivity(){
         Intent intent=new Intent(this, UsersActivity.class);

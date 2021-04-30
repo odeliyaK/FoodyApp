@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="4dip" >
+
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/latet"-->
+<!--        />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/idtxt"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="my id" />-->
+
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:inputType="textPersonName"-->
+<!--        android:id="@+id/idfield" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/firstnametxt"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="first name"-->
+<!--        />-->
+
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:inputType="textPersonName"-->
+<!--        android:id="@+id/firstnamefield" />-->
+
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/lastnametxt"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="last name"-->
+<!--        />-->
+
+
+<!--    <EditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:inputType="textPersonName"-->
+<!--        android:id="@+id/lastnamefield" />-->
+
+<!--    <Button-->
+<!--        android:text="@string/save"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/saveBtn" />-->
+
+<!--    <Button-->
+<!--        android:text="@string/cancel"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/cancelBtn" />-->
+
+    <ListView
+        android:id="@+id/listOrg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contextClickable="true"/>
+
+
+
+</LinearLayout>
