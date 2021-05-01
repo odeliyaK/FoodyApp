@@ -53,7 +53,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:src="@drawable/sendparcel"
-            android:text="Send"/>
+            android:text="Send"
+            />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

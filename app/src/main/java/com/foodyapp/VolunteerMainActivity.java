@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class VolunteerMainActivity extends AppCompatActivity implements organizationsAlertDialogFragmentListener {
 
-    String items[] = new String[]{"Choose organization", "Manage Orders", "order food from supplier", "inventory management",
-            "Parcels history"};
+    String items[] = new String[]{"Choose organization", "Manage Packages", "order food from supplier", "inventory management",
+            "Packages history"};
     ListView volList;
 
     @Override

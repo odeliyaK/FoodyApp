@@ -3,6 +3,7 @@ package com.foodyapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,15 +41,30 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
         TextView pNum = (TextView) rowView.findViewById(R.id.pNum);
         TextView name = (TextView) rowView.findViewById(R.id.userInfo);
         TextView address = (TextView) rowView.findViewById(R.id.useraddress);
+        ImageButton sendBtn= (ImageButton)rowView.findViewById(R.id.image);
         final usersInfo itemInfo = dataList.get(position);
         pNum.setText(String.valueOf(itemInfo.getNum()));
         name.setText(itemInfo.getName());
         address.setText(itemInfo.getAddress());
 
+        //sends the package to history and delete from current page
+    sendBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
+            pNum.setText("");
+            name.setText("");
+            address.setText("");
+            sendBtn.setVisibility(View.INVISIBLE);
+        }
+    });
+
+
+
+
         return rowView;
 
     };
-
 
 
 }
