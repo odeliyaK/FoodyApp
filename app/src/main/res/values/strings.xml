@@ -56,6 +56,7 @@
     <string name="DairyCol3">Update Amount</string>
     <string name="DairyCol4">Order</string>
     <string name="updateBtn">Update</string>
+    <string name="MyName">Name</string>
     <string name="chooseOrderBtn">Choose Amount</string>
     <string name="confirm">Are you sure you want to save the inventory?</string>
     <string name="less0">0 is the minimum number of product</string>

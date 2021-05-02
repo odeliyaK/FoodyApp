@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +24,10 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
       EditText email;
       EditText pass;
     EditText confirm_pass;
+    EditText name;
       Button reg_btn;
     EditText phone;
+    int whoIsChecked;
 
 
     @Override
@@ -46,32 +49,8 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
         pass=(EditText)findViewById(R.id.password);
         confirm_pass=(EditText)findViewById(R.id.confirm_password);
         phone=(EditText)findViewById(R.id.phone);
-        back=(Button)findViewById(R.id.back_btn);
+        name = (EditText)findViewById(R.id.myName);
         reg_btn=(Button)findViewById(R.id.registration_btn);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMainActivity();
-            }
-        });
-
-        reg_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(email.getText())){
-                    email.setError("Enter an email");
-                    email.requestFocus();
-                } else if (TextUtils.isEmpty(pass.getText())){
-                    pass.setError("Enter an password");
-                    pass.requestFocus();
-                }else if (!TextUtils.equals(pass.getText(), confirm_pass.getText())){
-                    pass.setError("password not equal");
-                    pass.requestFocus();
-                    confirm_pass.setError("password not equal");
-                    confirm_pass.requestFocus();
-                }
-            }
-        });
 
     }
 
@@ -115,6 +94,66 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
 
     public void openMainActivity(){
         Intent intent=new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void valid(){
+        if (TextUtils.isEmpty(email.getText())){
+            email.setError("Enter an email");
+            email.requestFocus();
+        } else if (TextUtils.isEmpty(pass.getText())){
+            pass.setError("Enter a password");
+            pass.requestFocus();
+        }else if (!TextUtils.equals(pass.getText(), confirm_pass.getText())){
+            pass.setError("password not equal");
+            pass.requestFocus();
+            confirm_pass.setError("password not equal");
+            confirm_pass.requestFocus();
+        }else if (TextUtils.isEmpty(name.getText())){
+            name.setError("Enter your name");
+            name.requestFocus();
+        }
+        else if(whoIsChecked == 2)
+            openVolunteerActivity();
+
+
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.orgBtn:
+                if (checked){
+                    organization_btn.setVisibility(View.GONE);
+                    whoIsChecked = 1;
+                    reg_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            valid();
+                        }
+                    });
+                }
+                    break;
+            case R.id.volBtn:
+                if (checked){
+                    organization_btn.setVisibility(View.VISIBLE);
+                    whoIsChecked = 2;
+                    reg_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            valid();
+                        }
+                    });
+                }
+                    break;
+        }
+    }
+
+    public void openVolunteerActivity(){
+        Intent intent=new Intent(this, VolunteerMainActivity.class);
         startActivity(intent);
     }
 

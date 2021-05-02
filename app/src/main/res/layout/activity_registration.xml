@@ -5,6 +5,7 @@
     android:id="@+id/registration"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context=".RegistrationActivity">
 
@@ -12,47 +13,58 @@
         android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registration"
-        android:textSize="25dp"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
         android:gravity="center"
+        android:text="Registration"
         android:textColor="@color/black"
+        android:textSize="25dp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_gravity="center"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/emailAddress"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
+        android:ems="10"
         android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:layout_gravity="center"/>
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
+        android:ems="10"
         android:hint="@string/password"
-        android:inputType="textPassword"
-        android:layout_gravity="center" />
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/confirm_password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
+        android:ems="10"
         android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        android:layout_gravity="center"/>
+        android:inputType="textPassword" />
 
+
+    <EditText
+        android:id="@+id/myName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:hint="@string/MyName"
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/phone"
@@ -60,39 +72,66 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
+        android:digits="0123456789"
         android:ems="10"
         android:hint="Phone"
         android:inputType="phone"
-        android:digits="0123456789"
-        android:maxLength="10"/>
+        android:maxLength="10" />
 
+    <TextView
+        android:id="@+id/as"
+        android:layout_width="132dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="145dp"
+        android:text="Register as?"
+        android:textColor="#009688"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/orgBtn"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:checked="true"
+            android:onClick="onRadioButtonClicked"
+            android:text="ORGANIZATION" />
+
+        <RadioButton
+            android:id="@+id/volBtn"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="VOLUNTEER"
+            android:onClick="onRadioButtonClicked"/>
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/present_organizations"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="choose an organization" />
+        android:shadowColor="#FFFFFF"
+        android:text="choose an organization"
+        android:visibility="gone"
+        app:backgroundTint="#2D83BD"/>
 
     <Button
         android:id="@+id/registration_btn"
-        android:layout_width="300dp"
+        android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="Registration" />
-
-
-    <Button
-        android:id="@+id/back_btn"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:text="Back" />
-
-
+        android:text="@string/register"
+        app:backgroundTint="@color/purple_500" />
 
 
 </LinearLayout>
