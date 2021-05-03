@@ -71,6 +71,7 @@
     <string name="cancel">cancel</string>
     <string name="updateHouse">Update</string>
     <string name="removeHouse">Remove</string>
+    <string name="Update">update</string>
 
 
     <string-array name="roles">

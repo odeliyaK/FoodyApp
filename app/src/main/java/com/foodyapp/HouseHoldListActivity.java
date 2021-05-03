@@ -13,10 +13,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HouseHoldListActivity extends Activity implements AddInputDialogFragment {
+public class HouseHoldListActivity extends Activity implements AddInputDialogFragment, UpdateInputDialogFragment {
     static List<usersInfo> itemInfos;
     static UsersAdapterOrg adapter;
-    Integer indexVal;
+    static Integer indexVal;
     String item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,17 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
         Button removeBtn=findViewById(R.id.removeBtn);
         Button addBtn = findViewById(R.id.addBtn);
 
+
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragmentInputUpdate frag = new DialogFragmentInputUpdate();
+                Bundle args = new Bundle();
+                args.putInt("title", R.string.alert_dialog_two_buttons_title);
+                frag.setArguments(args);
+                frag.show(getFragmentManager(), "dialog");
+            }
+        });
         //add new house holds to the list
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +103,17 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 
     @Override
     public void onDialogNegativeClick(DialogFragmentInputAdd dialog) {
+        Toast.makeText(this, "onDialogNegativeClick " ,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragmentInputUpdate dialog) {
+        String res= dialog.getFirstNameField() + " " + dialog.getLastNameField() + " " + dialog.getIdField() ;
+        Toast.makeText(this, "onDialogPositiveClick " + res,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragmentInputUpdate dialog) {
         Toast.makeText(this, "onDialogNegativeClick " ,Toast.LENGTH_SHORT).show();
     }
 }
