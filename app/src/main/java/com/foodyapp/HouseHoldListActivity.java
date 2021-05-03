@@ -37,7 +37,18 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
         Button removeBtn=findViewById(R.id.removeBtn);
         Button addBtn = findViewById(R.id.addBtn);
 
+        //gets us the position of the pressed item in the list
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                item=itemInfos.get(position).getName().toString()+ " has been selected";
 
+                indexVal=position;
+                Toast.makeText(HouseHoldListActivity.this, item, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //update house holds
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +59,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                 frag.show(getFragmentManager(), "dialog");
             }
         });
+
         //add new house holds to the list
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,36 +74,18 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
             }
         });
 
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                item=parent.getItemAtPosition(position).toString()+ " has been selected";
-                indexVal=position;
-                Toast.makeText(HouseHoldListActivity.this, item, Toast.LENGTH_SHORT).show();
-            }
-        });
+
         //remove house holds from the list
         removeBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-
-                    itemInfos.remove(indexVal);
-                adapter.notifyDataSetChanged();
+                usersInfo u=itemInfos.get(indexVal);
+                HouseHoldListActivity.itemInfos.remove(u);
+               adapter.notifyDataSetChanged();
             }
         } );
 
-        myList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                item=parent.getItemAtPosition(position).toString()+ " has been deleted";
-                Toast.makeText(HouseHoldListActivity.this, item, Toast.LENGTH_SHORT).show();
-                itemInfos.remove(position);
-                adapter.notifyDataSetChanged();
-
-                return true;
-            }
-        });
 
     }
 
