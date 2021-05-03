@@ -28,7 +28,6 @@ public class DialogFragmentInputAdd extends DialogFragment {
     private Button cancelBtn;
     private Activity activity;
 
-
     // Use this instance of the interface to deliver action events
     AddInputDialogFragment mListener;
 
@@ -67,9 +66,10 @@ public class DialogFragmentInputAdd extends DialogFragment {
                 String res= getFirstNameField() + " " + getLastNameField() + " " + getIdField() ;
                 Toast.makeText(activity, "Data " ,Toast.LENGTH_SHORT).show();
                 mListener.onDialogPositiveClick(DialogFragmentInputAdd.this);
-                HouseHoldListActivity h=new HouseHoldListActivity();
-                h.itemInfos.add(new usersInfo("getFirstNameField()" ,"getLastNameField()","getIdField()"));
-                h.adapter.notifyDataSetChanged();
+
+                HouseHoldListActivity.itemInfos.add(new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
+                HouseHoldListActivity.adapter.notifyDataSetChanged();
+                dismiss();
             }
         });
 

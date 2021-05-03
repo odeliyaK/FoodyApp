@@ -63,13 +63,37 @@
         android:layout_width="match_parent"
         android:layout_height="385dp"
         android:layout_marginTop="125dp" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
+    <Button
+        android:id="@+id/updateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="527dp"
+        android:text="@string/updateHouse" />
 
     <Button
         android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="125dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="527dp"
         android:text="@string/addHouse" />
+
+    <Button
+        android:id="@+id/removeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="527dp"
+        android:text="@string/removeHouse" />
+
+</LinearLayout>
+
 
 </RelativeLayout>

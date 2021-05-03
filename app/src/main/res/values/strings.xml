@@ -24,7 +24,7 @@
     <string name="houseId">Household ID</string>
     <string name="houseAddress">Household address</string>
     <string name="latetOrg">LATET ORGANIZATION</string>
-    <string name="addHouse">Add household</string>
+    <string name="addHouse">Add </string>
     <string name="latetlogo">latatlogo</string>
     <string name="pithonlevlogo">pithonlevlogo</string>
     <string name="lasovalogo">lasovalogo</string>
@@ -69,6 +69,9 @@
     <string name="dialogTitle">Confirm Saving</string>
     <string name="save">save</string>
     <string name="cancel">cancel</string>
+    <string name="updateHouse">Update</string>
+    <string name="removeHouse">Remove</string>
+
 
     <string-array name="roles">
         <item>Volunteer</item>
