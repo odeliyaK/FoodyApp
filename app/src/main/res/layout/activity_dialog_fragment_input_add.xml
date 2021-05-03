@@ -21,7 +21,7 @@
         android:id="@+id/firstnametxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="first name"
+        android:text="Name"
         />
 
     <EditText
@@ -36,7 +36,7 @@
         android:id="@+id/lastnametxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="last name"
+        android:text="Address"
         />
 
 
@@ -50,13 +50,13 @@
         android:text="@string/save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/saveBtn" />
+        android:id="@+id/saveAddBtn"/>
 
     <Button
         android:text="@string/cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cancelBtn" />
+        android:id="@+id/cancelAddBtn" />
 
 
 </LinearLayout>

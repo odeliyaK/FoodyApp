@@ -22,8 +22,8 @@ public class DialogFragmentInputAdd extends DialogFragment {
 
 
     private EditText idField;
-    private EditText firstNameField;
-    private EditText lastNameField;
+    private EditText NameField;
+    private EditText Address;
     private Button saveBtn;
     private Button cancelBtn;
     private Activity activity;
@@ -55,24 +55,27 @@ public class DialogFragmentInputAdd extends DialogFragment {
         View v = inflater.inflate(R.layout.activity_dialog_fragment_input_add, null);
 
         idField = (EditText) v .findViewById(R.id.idfield);
-        firstNameField = (EditText)v .findViewById(R.id.firstnamefield);
-        lastNameField =  (EditText)v.findViewById(R.id.lastnamefield);
-        saveBtn = (Button) v.findViewById(R.id.saveBtn);
-        cancelBtn = (Button) v.findViewById(R.id.cancelBtn);
+        NameField = (EditText)v .findViewById(R.id.firstnamefield);
+        Address =  (EditText)v.findViewById(R.id.lastnamefield);
+        saveBtn = (Button) v.findViewById(R.id.saveAddBtn);
+        cancelBtn = (Button) v.findViewById(R.id.cancelAddBtn);
 
-
+//user save his changes
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String res= getFirstNameField() + " " + getLastNameField() + " " + getIdField() ;
-                Toast.makeText(activity, "Data " + res,Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Data " ,Toast.LENGTH_SHORT).show();
                 mListener.onDialogPositiveClick(DialogFragmentInputAdd.this);
+                HouseHoldListActivity h=new HouseHoldListActivity();
+                h.itemInfos.add(new usersInfo("getFirstNameField()" ,"getLastNameField()","getIdField()"));
+                h.adapter.notifyDataSetChanged();
             }
         });
 
 
 
-
+//user want to close the dialog (cancel)
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,11 +88,11 @@ public class DialogFragmentInputAdd extends DialogFragment {
     }
 
     public String getFirstNameField() {
-        return firstNameField.getText().toString();
+        return NameField.getText().toString();
     }
 
     public String getLastNameField() {
-        return lastNameField.getText().toString();
+        return Address.getText().toString();
     }
 
     public String getIdField() {
