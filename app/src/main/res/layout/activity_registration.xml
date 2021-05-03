@@ -63,8 +63,8 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:ems="10"
-        android:hint="@string/MyName"
-        android:inputType="textPassword" />
+        android:inputType="textPersonName"
+        android:hint="Name" />
 
     <EditText
         android:id="@+id/phone"
@@ -99,7 +99,6 @@
             android:layout_width="144dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="55dp"
-            android:checked="true"
             android:onClick="onRadioButtonClicked"
             android:text="ORGANIZATION" />
 

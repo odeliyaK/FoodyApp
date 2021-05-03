@@ -20,13 +20,18 @@
     <string name="address_hamasger_44_tel_aviv_67214_po_box_57636">Address: Hamasger 44 Tel Aviv 67214, PO Box 57636</string>
     <string name="phone_03_5576000">phone: 03-5576000</string>
     <string name="phone_02_5912222">phone: 02-5912222</string>
+    <string name="houseName">Household name</string>
+    <string name="houseId">Household ID</string>
+    <string name="houseAddress">Household address</string>
+    <string name="latetOrg">LATET ORGANIZATION</string>
+    <string name="addHouse">Add household</string>
     <string name="latetlogo">latatlogo</string>
     <string name="pithonlevlogo">pithonlevlogo</string>
     <string name="lasovalogo">lasovalogo</string>
     <string name="yadeliezerlogo">yadeliezerlogo</string>
     <string name="todo">latatimg</string>
     <string name="ordersTitle">Orders</string>
-    <string name="col1">Name of customer</string>
+    <string name="col1">Household name</string>
     <string name="col2">Special requests</string>
     <string name="col3">Delivery confirmation</string>
     <string name="customer1">Bill Johnson</string>
@@ -59,6 +64,7 @@
     <string name="MyName">Name</string>
     <string name="chooseOrderBtn">Choose Amount</string>
     <string name="confirm">Are you sure you want to save the inventory?</string>
+    <string name="alert_dialog_two_buttons_title">Are you sure?</string>
     <string name="less0">0 is the minimum number of product</string>
     <string name="dialogTitle">Confirm Saving</string>
     <string name="save">save</string>

@@ -34,7 +34,16 @@ public class SignInActivity extends AppCompatActivity {
                         password.setError("Incorrect password");
                         password.requestFocus();
                     }
-                } else if (TextUtils.isEmpty(password.getText())){
+                }
+                else if(TextUtils.equals(email.getText(), "latet@gmail.com")){
+                    if (TextUtils.equals(password.getText(), "latet")) {
+                        openOrgActivity();
+                    }else {
+                        password.setError("Incorrect password");
+                        password.requestFocus();
+                    }
+                }
+                else if (TextUtils.isEmpty(password.getText())){
                     password.setError("Password is empty");
                     password.requestFocus();
                 } else {
@@ -50,6 +59,11 @@ public class SignInActivity extends AppCompatActivity {
 
     public void openVolunteerActivity(){
         Intent intent=new Intent(this, VolunteerMainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openOrgActivity(){
+        Intent intent=new Intent(this, HouseHoldListActivity.class);
         startActivity(intent);
     }
 }

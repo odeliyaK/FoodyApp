@@ -6,6 +6,7 @@ public class usersInfo {
     private int packageNum;
     private String name;
     private String address;
+    private String id;
     private int image;
 
 
@@ -16,12 +17,22 @@ public class usersInfo {
         this.image = image;
 
     }
+    public usersInfo(String name, String address, String id) {
+        this.name = name;
+        this.address = address;
+        this.id = id;
+
+    }
     public int getNum() {
         return packageNum;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getAddress() {
@@ -39,6 +50,10 @@ public class usersInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setAddress(String address) {

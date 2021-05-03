@@ -20,7 +20,6 @@ import org.w3c.dom.Text;
 
 public class RegistrationActivity extends AppCompatActivity  implements  organizationsAlertDialogFragmentListener {
       Button organization_btn;
-      Button back;
       EditText email;
       EditText pass;
     EditText confirm_pass;
@@ -29,15 +28,12 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
     EditText phone;
     int whoIsChecked;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-
         organization_btn=(Button)findViewById(R.id.present_organizations);
-
         organization_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +111,8 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
         }
         else if(whoIsChecked == 2)
             openVolunteerActivity();
+        else if(whoIsChecked == 1)
+            openOrgActivity();
 
 
     }
@@ -154,6 +152,11 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
 
     public void openVolunteerActivity(){
         Intent intent=new Intent(this, VolunteerMainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openOrgActivity(){
+        Intent intent=new Intent(this, HouseHoldListActivity.class);
         startActivity(intent);
     }
 
