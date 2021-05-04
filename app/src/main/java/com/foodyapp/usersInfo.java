@@ -45,7 +45,7 @@ public class usersInfo {
 
 
     public void setNum(int num) {
-        this.packageNum = packageNum;
+        this.packageNum = num;
     }
 
     public void setName(String name) {

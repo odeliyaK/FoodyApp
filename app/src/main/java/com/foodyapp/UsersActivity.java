@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,7 +20,10 @@ import java.util.Locale;
 public class UsersActivity extends Activity {
 
     private ListView list;
-    private UsersLIstAdapter adapter;
+    static  UsersLIstAdapter adapter;
+    static Integer indexVal;
+    static List<usersInfo> itemInfos;
+    String item;
 
 
     @Override
@@ -28,7 +32,8 @@ public class UsersActivity extends Activity {
         setContentView(R.layout.activity_users);
 
 
-        List<usersInfo> itemInfos = new ArrayList<usersInfo>();
+
+        itemInfos = new ArrayList<usersInfo>();
     //    itemInfos.add(new usersInfo(1,"Bill Johnson","Haifa, Herzel st 12", R.drawable.sendparcel));
   //      itemInfos.add(new usersInfo(2,"Amanda Smith","Haifa, Horen st 1", R.drawable.sendparcel));
         itemInfos.add(new usersInfo(3,"Linda Ron","Haifa, Hgalil st 23", R.drawable.sendparcel));
@@ -38,24 +43,13 @@ public class UsersActivity extends Activity {
 
 
         list = (ListView) findViewById(R.id.list);
-
         adapter = new UsersLIstAdapter(this, itemInfos);
 
 
         list.setAdapter(adapter);
 
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                usersInfo selecteditem = adapter.getItem(position);
-//
-//                Toast.makeText(getApplicationContext(), selecteditem.getName(),
-//                        Toast.LENGTH_SHORT).show();
-//
-//                //adapter.remove(selecteditem);
-//            }
-//        });
+
     }
+
+
 }

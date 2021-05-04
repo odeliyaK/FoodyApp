@@ -72,6 +72,9 @@
     <string name="updateHouse">Update</string>
     <string name="removeHouse">Remove</string>
     <string name="Update">update</string>
+    <string name="household_id">Household Id</string>
+    <string name="household_name">Household name</string>
+
 
 
     <string-array name="roles">
@@ -170,4 +173,5 @@
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="household_address">Household address</string>
 </resources>

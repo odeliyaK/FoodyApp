@@ -69,8 +69,6 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                 args.putInt("title", R.string.alert_dialog_two_buttons_title);
                 frag.setArguments(args);
                 frag.show(getFragmentManager(), "dialog");
-//                itemInfos.add(new usersInfo("Moshe Ron","Haifa, Hgalil st 25", "555"));
-//                adapter.notifyDataSetChanged();
             }
         });
 

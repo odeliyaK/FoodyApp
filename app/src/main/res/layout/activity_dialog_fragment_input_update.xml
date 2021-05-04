@@ -3,25 +3,26 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="4dip" >
+    android:padding="10dip">
 
     <TextView
         android:id="@+id/idtxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="my id" />
+        android:text="@string/household_id" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:id="@+id/idfield" />
+        android:id="@+id/idfield"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/firstnametxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/household_name"
         />
 
     <EditText
@@ -36,7 +37,7 @@
         android:id="@+id/lastnametxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Address"
+        android:text="@string/household_address"
         />
 
 

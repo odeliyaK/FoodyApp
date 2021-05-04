@@ -18,6 +18,7 @@ import java.util.List;
 public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
     private List<usersInfo> dataList = null;
     private Context context = null;
+    int pos;
     public UsersLIstAdapter(Context context, List<usersInfo> dataList) {
         super( context, R.layout.users_list, dataList);
         this.dataList = dataList;
@@ -47,15 +48,15 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
         name.setText(itemInfo.getName());
         address.setText(itemInfo.getAddress());
 
-        //sends the package to history and delete from current page
+
+        //sends the package and delete from current page
     sendBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+        UsersActivity.itemInfos.remove(UsersActivity.itemInfos.get(position));
+        UsersActivity.adapter.notifyDataSetChanged();
+
             Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
-            pNum.setText("");
-            name.setText("");
-            address.setText("");
-            sendBtn.setVisibility(View.INVISIBLE);
         }
     });
 
