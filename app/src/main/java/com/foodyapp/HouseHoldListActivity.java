@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -71,17 +72,11 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                     bundle.putString("id", selectedID);
                     bundle.putString("name", selectedName);
                     bundle.putString("address", selecteAddress);
-
                     DialogFragmentInputUpdate frag = new DialogFragmentInputUpdate();
-//                    Bundle args = new Bundle();
-//                    args.putInt("title", R.string.alert_dialog_two_buttons_title);
-//                    frag.setArguments(args);
                     bundle.putInt("title", R.string.alert_dialog_two_buttons_title);
                     frag.setArguments(bundle);
-//                    frag.setIdField(selectedID);
-//                    frag.setNameField(selectedName);
-//                    frag.setAddress(selecteAddress);
                     frag.show(getFragmentManager(), "dialog");
+
                     upFlag = false;
                 }
                 else{
@@ -127,23 +122,17 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 
     @Override
     public void onDialogPositiveClick(DialogFragmentInputAdd dialog) {
-        String res= dialog.getFirstNameField() + " " + dialog.getLastNameField() + " " + dialog.getIdField() ;
-        Toast.makeText(this, "onDialogPositiveClick " + res,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragmentInputAdd dialog) {
-        Toast.makeText(this, "onDialogNegativeClick " ,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDialogPositiveClick(DialogFragmentInputUpdate dialog) {
-        String res= dialog.getFirstNameField() + " " + dialog.getLastNameField() + " " + dialog.getIdField() ;
-        Toast.makeText(this, "onDialogPositiveClick " + res,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragmentInputUpdate dialog) {
-        Toast.makeText(this, "onDialogNegativeClick " ,Toast.LENGTH_SHORT).show();
     }
 }

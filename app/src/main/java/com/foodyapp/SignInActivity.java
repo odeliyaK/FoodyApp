@@ -43,12 +43,13 @@ public class SignInActivity extends AppCompatActivity {
                         password.requestFocus();
                     }
                 }
-                else if (TextUtils.isEmpty(password.getText())){
-                    password.setError("Password is empty");
-                    password.requestFocus();
-                } else {
+                else if (TextUtils.isEmpty(email.getText())){
                     email.setError("Email is not exists");
                     email.requestFocus();
+
+                } else if (TextUtils.isEmpty(password.getText())){
+                    password.setError("Password is empty");
+                    password.requestFocus();
                 }
             }
         });

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,9 +68,24 @@ public class DialogFragmentInputAdd extends DialogFragment {
                 Toast.makeText(activity, "Data " ,Toast.LENGTH_SHORT).show();
                 mListener.onDialogPositiveClick(DialogFragmentInputAdd.this);
 
-                HouseHoldListActivity.itemInfos.add(new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
-                HouseHoldListActivity.adapter.notifyDataSetChanged();
-                dismiss();
+                if(TextUtils.isEmpty(idField.getText()) )
+                {
+                    idField.setError("ID is empty");
+                    idField.requestFocus();
+                }
+                else if(TextUtils.isEmpty(NameField.getText())){
+                    NameField.setError("Name is empty");
+                    NameField.requestFocus();
+                }
+                else if(TextUtils.isEmpty(Address.getText())){
+                    Address.setError("Address is empty");
+                    Address.requestFocus();
+                }
+                else{
+                    HouseHoldListActivity.itemInfos.add(new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
+                    HouseHoldListActivity.adapter.notifyDataSetChanged();
+                    dismiss();
+                }
             }
         });
 

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,8 @@ public class DialogFragmentInputUpdate extends DialogFragment {
         saveBtn = (Button) v.findViewById(R.id.updateAddBtn);
         cancelBtn = (Button) v.findViewById(R.id.cancelAddBtn);
 
+        idField.requestFocus();
+
         myID = this.getArguments().getString("id");
         myName = this.getArguments().getString("name");
         myAddress = this.getArguments().getString("address");
@@ -69,17 +72,32 @@ public class DialogFragmentInputUpdate extends DialogFragment {
             setNameField(myName);
         if(myAddress != null)
             setAddress(myAddress);
+
 //user save his changes
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String res= getFirstNameField() + " " + getLastNameField() + " " + getIdField() ;
-//                Toast.makeText(activity, "Data " ,Toast.LENGTH_SHORT).show();
+
                 mListener.onDialogPositiveClick(DialogFragmentInputUpdate.this);
 
-                HouseHoldListActivity.itemInfos.set(HouseHoldListActivity.indexVal,new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
-                HouseHoldListActivity.adapter.notifyDataSetChanged();
-                dismiss();
+                if(TextUtils.isEmpty(idField.getText()) )
+                {
+                   idField.setError("ID is empty");
+                   idField.requestFocus();
+                }
+                else if(TextUtils.isEmpty(NameField.getText())){
+                    NameField.setError("Name is empty");
+                    NameField.requestFocus();
+                }
+                else if(TextUtils.isEmpty(Address.getText())){
+                    Address.setError("Address is empty");
+                    Address.requestFocus();
+                }
+                else{
+                    HouseHoldListActivity.itemInfos.set(HouseHoldListActivity.indexVal,new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
+                    HouseHoldListActivity.adapter.notifyDataSetChanged();
+                    dismiss();
+                }
             }
         });
 
@@ -96,6 +114,11 @@ public class DialogFragmentInputUpdate extends DialogFragment {
         return v;
 
     }
+    public EditText getEditID(){ return idField;}
+
+    public EditText getEditName(){ return NameField;}
+
+    public EditText getEditAddress(){ return Address;}
 
     public String getFirstNameField() {
         return NameField.getText().toString();
