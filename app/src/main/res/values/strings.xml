@@ -67,7 +67,9 @@
     <string name="alert_dialog_two_buttons_title">Are you sure?</string>
     <string name="less0">0 is the minimum number of product</string>
     <string name="dialogTitle">Confirm Saving</string>
+    <string name="ok">OK</string>
     <string name="save">save</string>
+    <string name="add">Add</string>
     <string name="cancel">cancel</string>
     <string name="updateHouse">Update</string>
     <string name="removeHouse">Remove</string>

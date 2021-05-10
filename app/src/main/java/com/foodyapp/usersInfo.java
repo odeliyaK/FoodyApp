@@ -64,4 +64,11 @@ public class usersInfo {
         this.image = image;
     }
 
+    public String toStringOrg() {
+        return "usersInfo{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

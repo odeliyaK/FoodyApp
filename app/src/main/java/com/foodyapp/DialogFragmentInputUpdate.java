@@ -27,6 +27,7 @@ public class DialogFragmentInputUpdate extends DialogFragment {
     private Button saveBtn;
     private Button cancelBtn;
     private Activity activity;
+    String myID, myName, myAddress;
 
     // Use this instance of the interface to deliver action events
     UpdateInputDialogFragment mListener;
@@ -51,20 +52,29 @@ public class DialogFragmentInputUpdate extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.activity_dialog_fragment_input_add, null);
-
+        View v = inflater.inflate(R.layout.activity_dialog_fragment_input_update, null);
         idField = (EditText) v .findViewById(R.id.idfield);
         NameField = (EditText)v .findViewById(R.id.firstnamefield);
         Address =  (EditText)v.findViewById(R.id.lastnamefield);
-        saveBtn = (Button) v.findViewById(R.id.saveAddBtn);
+        saveBtn = (Button) v.findViewById(R.id.updateAddBtn);
         cancelBtn = (Button) v.findViewById(R.id.cancelAddBtn);
 
+        myID = this.getArguments().getString("id");
+        myName = this.getArguments().getString("name");
+        myAddress = this.getArguments().getString("address");
+
+        if(myID != null)
+            setIdField(myID);
+        if(myName != null)
+            setNameField(myName);
+        if(myAddress != null)
+            setAddress(myAddress);
 //user save his changes
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String res= getFirstNameField() + " " + getLastNameField() + " " + getIdField() ;
-                Toast.makeText(activity, "Data " ,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, "Data " ,Toast.LENGTH_SHORT).show();
                 mListener.onDialogPositiveClick(DialogFragmentInputUpdate.this);
 
                 HouseHoldListActivity.itemInfos.set(HouseHoldListActivity.indexVal,new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
@@ -97,5 +107,14 @@ public class DialogFragmentInputUpdate extends DialogFragment {
 
     public String getIdField() {
         return idField.getText().toString();
+    }
+
+    public void setIdField(String id){ idField.setText(id); }
+
+    public void setNameField(String name){
+        NameField.setText(name);
+    }
+
+    public void setAddress(String address){ Address.setText(address);
     }
 }

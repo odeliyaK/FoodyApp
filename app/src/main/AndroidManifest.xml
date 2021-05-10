@@ -9,24 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodyApp">
-        <activity android:name=".DialogFragmentInputUpdate"></activity>
-        <activity android:name=".DialogFragmentInputAdd" />
-        <activity android:name=".UsersAdapterOrg" />
         <activity android:name=".HouseHoldListActivity" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".FruitsVegOrder" />
-        <activity android:name=".DairyActivityOrder" />
         <activity android:name=".OrderActivity" />
-        <activity android:name=".FruitsVegFragment" />
-        <activity android:name=".MeatPoultryFragment" />
         <activity android:name=".UsersActivity" />
         <activity android:name=".InventoryActivity" />
-        <activity android:name=".DairyActivity" />
-        <activity android:name=".DairyActivityFragment" />
         <activity android:name=".VolunteerMainActivity" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".OredersActivity" />
-        <activity android:name=".OganizationsActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
