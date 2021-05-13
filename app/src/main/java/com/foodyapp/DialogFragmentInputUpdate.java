@@ -131,7 +131,6 @@ public class DialogFragmentInputUpdate extends DialogFragment {
     public String getIdField() {
         return idField.getText().toString();
     }
-
     public void setIdField(String id){ idField.setText(id); }
 
     public void setNameField(String name){

@@ -20,6 +20,8 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        MyInfoManager.getInstance().openDataBase(this);
+
         email=(EditText)findViewById(R.id.emailsignIn);
         password=(EditText)findViewById(R.id.passwordSignIn);
         signIn_btn=(Button)findViewById(R.id.sign_btn);
@@ -66,5 +68,10 @@ public class SignInActivity extends AppCompatActivity {
     public void openOrgActivity(){
         Intent intent=new Intent(this, HouseHoldListActivity.class);
         startActivity(intent);
+    }
+
+    protected void onPause() {
+        MyInfoManager.getInstance().closeDataBase();
+        super.onPause();
     }
 }
