@@ -53,10 +53,29 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
     sendBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-        UsersActivity.itemInfos.remove(UsersActivity.itemInfos.get(position));
-        UsersActivity.adapter.notifyDataSetChanged();
 
-            Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
+            //alert dialog to approve the sending
+            AlertDialog.Builder sendingApprovalDialog=new AlertDialog.Builder(getContext());
+            sendingApprovalDialog.setMessage("Are you sure you want to send the package of  "+itemInfo.getName()+" "+ " ?");
+            sendingApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    UsersActivity.itemInfos.remove(UsersActivity.itemInfos.get(position));
+                    UsersActivity.adapter.notifyDataSetChanged();
+
+                    Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            sendingApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(context,  itemInfo.getName()+"'s package didn't sent", Toast.LENGTH_SHORT).show();
+                }
+            });
+            sendingApprovalDialog.show();
         }
     });
 

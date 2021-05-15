@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.foodyapp.R;
 import com.foodyapp.organizationsAlertDialogFragmentListener;
@@ -73,8 +76,11 @@ public class DialogFragmentInputUpdate extends DialogFragment {
         if(myAddress != null)
             setAddress(myAddress);
 
+
+
 //user save his changes
         saveBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 
@@ -93,10 +99,26 @@ public class DialogFragmentInputUpdate extends DialogFragment {
                     Address.setError("Address is empty");
                     Address.requestFocus();
                 }
+                //alert dialog opens to save the new details
                 else{
-                    HouseHoldListActivity.itemInfos.set(HouseHoldListActivity.indexVal,new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
-                    HouseHoldListActivity.adapter.notifyDataSetChanged();
-                    dismiss();
+                    AlertDialog.Builder updateApprovalDialog=new AlertDialog.Builder(getContext());
+                    updateApprovalDialog.setMessage("Are you suer you want to update "+getFirstNameField()+" "+ " ?");
+                    updateApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            HouseHoldListActivity.itemInfos.set(HouseHoldListActivity.indexVal,new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
+                            HouseHoldListActivity.adapter.notifyDataSetChanged();
+                            dismiss();
+                        }
+                    });
+                    updateApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dismiss();
+                        }
+                    });
+                    updateApprovalDialog.show();
                 }
             }
         });

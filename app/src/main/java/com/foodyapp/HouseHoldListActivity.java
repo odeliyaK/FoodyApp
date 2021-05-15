@@ -111,9 +111,23 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 
             @Override
             public void onClick(View v) {
-                usersInfo u=itemInfos.get(indexVal);
-                HouseHoldListActivity.itemInfos.remove(u);
-               adapter.notifyDataSetChanged();
+                AlertDialog.Builder removeApprovalDialog=new AlertDialog.Builder(context);
+                removeApprovalDialog.setMessage("Are you sure you want to remove "+ itemInfos.get(indexVal).getName());
+                removeApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        usersInfo u=itemInfos.get(indexVal);
+                        HouseHoldListActivity.itemInfos.remove(u);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                removeApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                removeApprovalDialog.show();
             }
         } );
 
