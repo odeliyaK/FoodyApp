@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Manage packages"
+        android:id="@+id/manage"/>
+    <item
+        android:title="Order food from supplier"
+        android:id="@+id/orderFood"/>
+    <item
+        android:title="Inventory management"
+        android:id="@+id/inventoryManagement"/>
+
+    <item
+        android:title="Package history"
+        android:id="@+id/packageHistory"/>
+
+</menu>
