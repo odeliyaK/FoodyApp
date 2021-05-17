@@ -54,7 +54,7 @@ public class DialogFragmentInputAdd extends DialogFragment {
 
         View v = inflater.inflate(R.layout.activity_dialog_fragment_input_add, null);
 
-        idField = (EditText) v .findViewById(R.id.idfield);
+//        idField = (EditText) v .findViewById(R.id.idfield);
         NameField = (EditText)v .findViewById(R.id.firstnamefield);
         Address =  (EditText)v.findViewById(R.id.lastnamefield);
         saveBtn = (Button) v.findViewById(R.id.saveAddBtn);
@@ -65,15 +65,14 @@ public class DialogFragmentInputAdd extends DialogFragment {
             @Override
             public void onClick(View view) {
                 String res= getFirstNameField() + " " + getLastNameField() + " " + getIdField() ;
-                Toast.makeText(activity, "Data " ,Toast.LENGTH_SHORT).show();
                 mListener.onDialogPositiveClick(DialogFragmentInputAdd.this);
 
-                if(TextUtils.isEmpty(idField.getText()) )
-                {
-                    idField.setError("ID is empty");
-                    idField.requestFocus();
-                }
-                else if(TextUtils.isEmpty(NameField.getText())){
+//                if(TextUtils.isEmpty(idField.getText()) )
+//                {
+//                    idField.setError("ID is empty");
+//                    idField.requestFocus();
+//                }
+                 if(TextUtils.isEmpty(NameField.getText())){
                     NameField.setError("Name is empty");
                     NameField.requestFocus();
                 }
@@ -82,8 +81,11 @@ public class DialogFragmentInputAdd extends DialogFragment {
                     Address.requestFocus();
                 }
                 else{
-                    HouseHoldListActivity.itemInfos.add(new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
-                    HouseHoldListActivity.adapter.notifyDataSetChanged();
+                    DataBase myDB=new DataBase(activity);
+                    myDB.addHouseHold( getFirstNameField().trim(),getLastNameField().trim());
+                    String newId=String.valueOf(myDB.newId);
+                     HouseHoldListActivity.itemInfos.add(new usersInfo(getFirstNameField() ,getLastNameField(),newId));
+                     HouseHoldListActivity.adapter.notifyDataSetChanged();
                     dismiss();
                 }
             }

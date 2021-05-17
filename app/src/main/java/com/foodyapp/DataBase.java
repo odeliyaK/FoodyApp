@@ -1,16 +1,21 @@
 package com.foodyapp;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 public class DataBase extends SQLiteOpenHelper {
-
+    private Context context;
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "FoodyDB";
 
+    long newId=0;
+    long updateId=0;
     //household table
     private static final String TABLE_HOUSEHOLDS_NAME = "households";
     private static final String HOUSEHOLDS_COLUMN_ID = "ID";
@@ -72,19 +77,22 @@ public class DataBase extends SQLiteOpenHelper {
 
     public DataBase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context=context;
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            // SQL statement to create item table
+
+            // SQL statement to create houseHold table
             String CREATE_HOUSEHOLDS_TABLE = "create table if not exists " + TABLE_HOUSEHOLDS_NAME +" ( "
                     + HOUSEHOLDS_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + HOUSEHOLDS_COLUMN_NAME +" TEXT, "
                     + HOUSEHOLDS_COLUMN_ADDRESS + " TEXT)";
             db.execSQL(CREATE_HOUSEHOLDS_TABLE);
 
+            // SQL statement to create packages table
             String CREATE_PACKAGES_TABLE = "create table if not exists " + TABLE_PACKAGES_NAME +" ( "
                     + PACKAGES_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + PACKAGES_COLUMN_HOUSEHOLD_ID +" INTEGER, "
@@ -101,6 +109,8 @@ public class DataBase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HOUSEHOLDS_NAME);
+        onCreate(db);
         try {
 
         } catch (Throwable t) {
@@ -124,4 +134,82 @@ public class DataBase extends SQLiteOpenHelper {
             t.printStackTrace();
         }
     }
+
+    //adds house holds to the db
+    void addHouseHold( String name, String address){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put(HOUSEHOLDS_COLUMN_NAME, name);
+        cv.put(HOUSEHOLDS_COLUMN_ADDRESS, address);
+        long result= db.insert(TABLE_HOUSEHOLDS_NAME, null, cv);
+        if (result ==-1){
+            Toast.makeText(context, "failed adding household to db", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "success adding household to db", Toast.LENGTH_SHORT).show();
+            newId=result;
+        }
+    }
+
+
+    //updates households
+    void updateHouseHold(String id, String newName, String newAddress){
+        SQLiteDatabase db=this.getWritableDatabase();
+       ContentValues cv=new ContentValues();
+       cv.put(HOUSEHOLDS_COLUMN_NAME, newName);
+        cv.put(HOUSEHOLDS_COLUMN_ADDRESS, newAddress);
+
+        long result=db.update(TABLE_HOUSEHOLDS_NAME, cv, HOUSEHOLDS_COLUMN_ID + " =?", new String[] { String.valueOf(id) });
+        if (result==-1){
+            Toast.makeText(context, "failed update db", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "success update  db", Toast.LENGTH_SHORT).show();
+            updateId=result;
+        }
+    }
+
+    //removes households
+    void reomoveHouseHold(String id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        try {
+
+            // delete items
+            long result=  db.delete(TABLE_HOUSEHOLDS_NAME, HOUSEHOLDS_COLUMN_ID + " = ?",
+                    new String[] { String.valueOf(id) });
+            if (result==-1){
+                Toast.makeText(context, "failed delete from db", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(context, "success delete from  db", Toast.LENGTH_SHORT).show();
+
+
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+    }
+
+
+    Cursor readAllHouseHolds(){
+        String query=" SELECT * FROM " + TABLE_HOUSEHOLDS_NAME;
+        SQLiteDatabase db=this.getReadableDatabase();
+
+        Cursor cursor=null;
+        if (db!=null){
+            cursor=db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    Cursor readAllPackages(){
+        String query=" SELECT * FROM " + TABLE_PACKAGES_NAME;
+        SQLiteDatabase db=this.getReadableDatabase();
+
+        Cursor cursor=null;
+        if (db!=null){
+            cursor=db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+
 }

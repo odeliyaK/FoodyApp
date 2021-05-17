@@ -1,5 +1,6 @@
 package com.foodyapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class UsersAdapterOrg extends ArrayAdapter<usersInfo> {
     private Context mContext;
+    Activity activiy;
     int mResource;
 
     public UsersAdapterOrg(Context context, int resource, List<usersInfo> dataList) {
@@ -44,10 +46,7 @@ public class UsersAdapterOrg extends ArrayAdapter<usersInfo> {
         myid.setText(id);
         myname.setText(name);
         myaddress.setText(address);
-//        final usersInfo itemInfo = dataList.get(position);
-//        id.setText(itemInfo.getId());
-//        name.setText(itemInfo.getName());
-//        address.setText(itemInfo.getAddress());
+
 
         return view;
 

@@ -5,13 +5,13 @@
     android:orientation="vertical"
     android:padding="10dip">
 
-    <EditText
-        android:id="@+id/idfield"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:hint="ID"
-        android:inputType="textPersonName" />
+<!--    <EditText-->
+<!--        android:id="@+id/idfield"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:hint="ID"-->
+<!--        android:inputType="textPersonName" />-->
 
     <EditText
         android:layout_width="match_parent"

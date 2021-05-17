@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:hint="ID"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:visibility="invisible"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -19,7 +20,8 @@
         android:inputType="textPersonName"
         android:layout_marginTop="100dp"
         android:hint="Name"
-        android:id="@+id/firstnamefield" />
+        android:id="@+id/firstnamefield"
+        />
 
 
     <EditText

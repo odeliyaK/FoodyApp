@@ -86,12 +86,12 @@ public class DialogFragmentInputUpdate extends DialogFragment {
 
                 mListener.onDialogPositiveClick(DialogFragmentInputUpdate.this);
 
-                if(TextUtils.isEmpty(idField.getText()) )
-                {
-                   idField.setError("ID is empty");
-                   idField.requestFocus();
-                }
-                else if(TextUtils.isEmpty(NameField.getText())){
+//                if(TextUtils.isEmpty(idField.getText()) )
+//                {
+//                   idField.setError("ID is empty");
+//                   idField.requestFocus();
+//                }
+                 if(TextUtils.isEmpty(NameField.getText())){
                     NameField.setError("Name is empty");
                     NameField.requestFocus();
                 }
@@ -107,6 +107,10 @@ public class DialogFragmentInputUpdate extends DialogFragment {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+//
+                            Toast.makeText(activity, "id= "+ idField.getText().toString(), Toast.LENGTH_SHORT).show();
+                            DataBase myDB= new DataBase(activity);
+                            myDB.updateHouseHold(idField.getText().toString().trim(), NameField.getText().toString().trim(), Address.getText().toString().trim());
                             HouseHoldListActivity.itemInfos.set(HouseHoldListActivity.indexVal,new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
                             HouseHoldListActivity.adapter.notifyDataSetChanged();
                             dismiss();

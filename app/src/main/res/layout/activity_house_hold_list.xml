@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HouseHoldListActivity">
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar_allscreens"/>
 
 <!--    <TextView-->
 <!--        android:id="@+id/orgName"-->
