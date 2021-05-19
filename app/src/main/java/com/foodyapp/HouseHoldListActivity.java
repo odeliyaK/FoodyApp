@@ -25,6 +25,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
     static UsersAdapterOrg adapter;
     static Integer indexVal;
     boolean upFlag = false;
+    boolean reFlag=false;
     String item;
     String selectedID;
     String selectedName;
@@ -72,6 +73,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                 selecteAddress = itemInfos.get(position).getAddress().toString();
                 selectedName = itemInfos.get(position).getName().toString();
                 upFlag = true;
+                reFlag=true;
                 indexVal=position;
                 Toast.makeText(HouseHoldListActivity.this, item, Toast.LENGTH_SHORT).show();
             }
@@ -125,25 +127,38 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder removeApprovalDialog=new AlertDialog.Builder(context);
-                removeApprovalDialog.setMessage("Are you sure you want to remove "+ itemInfos.get(indexVal).getName());
-                removeApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DataBase db=new DataBase(HouseHoldListActivity.this);
-                        db.reomoveHouseHold(itemInfos.get(indexVal).getId());
-                        usersInfo u=itemInfos.get(indexVal);
-                        HouseHoldListActivity.itemInfos.remove(u);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-                removeApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                if (reFlag) {
+                    AlertDialog.Builder removeApprovalDialog = new AlertDialog.Builder(context);
+                    removeApprovalDialog.setMessage("Are you sure you want to remove " + itemInfos.get(indexVal).getName());
+                    removeApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DataBase db = new DataBase(HouseHoldListActivity.this);
+                            db.reomoveHouseHold(itemInfos.get(indexVal).getId());
+                            usersInfo u = itemInfos.get(indexVal);
+                            HouseHoldListActivity.itemInfos.remove(u);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    removeApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-                removeApprovalDialog.show();
+                        }
+                    });
+                    removeApprovalDialog.show();
+                    reFlag=false;
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("PAY ATTENTION").setMessage("You have to choose one household").setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+
+                    dialog.show();
+            }
+
             }
         } );
 

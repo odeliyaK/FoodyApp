@@ -36,17 +36,7 @@ public class UsersActivity extends Activity {
         list = (ListView) findViewById(R.id.list);
         myDB=new DataBase(UsersActivity.this);
         itemInfos = new ArrayList<usersInfo>();
-        Cursor cursor=myDB.readAllPackages();
-        if (cursor.getCount()==0){
-            Toast.makeText(context, "There are no households", Toast.LENGTH_SHORT).show();
-        }else {
-            while (cursor.moveToNext()){
-                usersInfo u=new usersInfo(cursor.getString(1), cursor.getString(2), cursor.getString(0));
-                itemInfos.add(u);
-                adapter = new UsersLIstAdapter(this, itemInfos);
-                list.setAdapter(adapter);
-            }
-        }
+      
 
 
 //        adapter = new UsersLIstAdapter(this, itemInfos);

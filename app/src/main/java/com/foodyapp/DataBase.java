@@ -150,7 +150,6 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-
     //updates households
     void updateHouseHold(String id, String newName, String newAddress){
         SQLiteDatabase db=this.getWritableDatabase();
@@ -200,16 +199,6 @@ public class DataBase extends SQLiteOpenHelper {
         return cursor;
     }
 
-    Cursor readAllPackages(){
-        String query=" SELECT * FROM " + TABLE_PACKAGES_NAME;
-        SQLiteDatabase db=this.getReadableDatabase();
-
-        Cursor cursor=null;
-        if (db!=null){
-            cursor=db.rawQuery(query, null);
-        }
-        return cursor;
-    }
 
 
 }

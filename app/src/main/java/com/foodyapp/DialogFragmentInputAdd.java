@@ -54,9 +54,9 @@ public class DialogFragmentInputAdd extends DialogFragment {
 
         View v = inflater.inflate(R.layout.activity_dialog_fragment_input_add, null);
 
-//        idField = (EditText) v .findViewById(R.id.idfield);
-        NameField = (EditText)v .findViewById(R.id.firstnamefield);
-        Address =  (EditText)v.findViewById(R.id.lastnamefield);
+        idField = (EditText) v .findViewById(R.id.idfield);
+        NameField = (EditText)v .findViewById(R.id.firstnamefieldAdd);
+        Address =  (EditText)v.findViewById(R.id.AddressAdd);
         saveBtn = (Button) v.findViewById(R.id.saveAddBtn);
         cancelBtn = (Button) v.findViewById(R.id.cancelAddBtn);
 
@@ -64,27 +64,22 @@ public class DialogFragmentInputAdd extends DialogFragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String res= getFirstNameField() + " " + getLastNameField() + " " + getIdField() ;
+              //  String res= getFirstNameField() + " " + getAddress() + " " + getIdField() ;
                 mListener.onDialogPositiveClick(DialogFragmentInputAdd.this);
 
-//                if(TextUtils.isEmpty(idField.getText()) )
-//                {
-//                    idField.setError("ID is empty");
-//                    idField.requestFocus();
-//                }
                  if(TextUtils.isEmpty(NameField.getText())){
                     NameField.setError("Name is empty");
                     NameField.requestFocus();
                 }
-                else if(TextUtils.isEmpty(Address.getText())){
+              else  if(TextUtils.isEmpty(Address.getText())){
                     Address.setError("Address is empty");
                     Address.requestFocus();
                 }
                 else{
                     DataBase myDB=new DataBase(activity);
-                    myDB.addHouseHold( getFirstNameField().trim(),getLastNameField().trim());
+                    myDB.addHouseHold( getFirstNameField().trim(),getAddress().trim());
                     String newId=String.valueOf(myDB.newId);
-                     HouseHoldListActivity.itemInfos.add(new usersInfo(getFirstNameField() ,getLastNameField(),newId));
+                     HouseHoldListActivity.itemInfos.add(new usersInfo(getFirstNameField() ,getAddress(),newId));
                      HouseHoldListActivity.adapter.notifyDataSetChanged();
                     dismiss();
                 }
@@ -109,7 +104,7 @@ public class DialogFragmentInputAdd extends DialogFragment {
         return NameField.getText().toString();
     }
 
-    public String getLastNameField() {
+    public String getAddress() {
         return Address.getText().toString();
     }
 

@@ -86,11 +86,7 @@ public class DialogFragmentInputUpdate extends DialogFragment {
 
                 mListener.onDialogPositiveClick(DialogFragmentInputUpdate.this);
 
-//                if(TextUtils.isEmpty(idField.getText()) )
-//                {
-//                   idField.setError("ID is empty");
-//                   idField.requestFocus();
-//                }
+
                  if(TextUtils.isEmpty(NameField.getText())){
                     NameField.setError("Name is empty");
                     NameField.requestFocus();

@@ -5,13 +5,14 @@
     android:orientation="vertical"
     android:padding="10dip">
 
-<!--    <EditText-->
-<!--        android:id="@+id/idfield"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="30dp"-->
-<!--        android:hint="ID"-->
-<!--        android:inputType="textPersonName" />-->
+    <EditText
+        android:id="@+id/idfield"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="ID"
+        android:inputType="textPersonName"
+        android:visibility="invisible"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
         android:inputType="textPersonName"
         android:layout_marginTop="100dp"
         android:hint="Name"
-        android:id="@+id/firstnamefield" />
+        android:id="@+id/firstnamefieldAdd" />
 
 
     <EditText
@@ -28,7 +29,7 @@
         android:inputType="textPersonName"
         android:layout_marginTop="170dp"
         android:hint="Address"
-        android:id="@+id/lastnamefield" />
+        android:id="@+id/AddressAdd" />
 
     <Button
         android:text="@string/add"
