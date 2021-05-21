@@ -21,13 +21,13 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class DairyActivityOrder extends Fragment implements View.OnClickListener{
-    private static final int[] idArray = {R.id.plus1,R.id.plus2,R.id.plus3,R.id.plus4,R.id.plus5,R.id.plus6,R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4,R.id.minus5,R.id.minus6};
+    private static final int[] idArray = {R.id.plus1,R.id.plus2,R.id.plus3,R.id.plus4,R.id.plus5,R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4,R.id.minus5};
     //  private static final int[] idArrayMinus = {R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4};
     private ImageButton[] buttons = new ImageButton[idArray.length];
     //    private ImageButton[] minusButtons = new ImageButton[idArrayMinus.length];
     ImageButton p1,p2,p3,p4,m1,m2,m3,m4;
-    EditText num1,num2,num3,num4,num5,num6;
-    String be1,be2,be3,be4,be5,be6;
+    EditText num1,num2,num3,num4,num5;
+    String be1,be2,be3,be4,be5;
     Button save;
 
     public DairyActivityOrder() {
@@ -47,13 +47,11 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
         num3 = (EditText) view.findViewById(R.id.num3);
         num4 = (EditText) view.findViewById(R.id.num4);
         num5 = (EditText) view.findViewById(R.id.num5);
-        num6 = (EditText) view.findViewById(R.id.num6);
         be1 = num1.getText().toString();
         be2 = num2.getText().toString();
         be3 = num3.getText().toString();
         be4 = num4.getText().toString();
         be5 = num5.getText().toString();
-        be6 = num6.getText().toString();
 
         for(int i=0; i<idArray.length; i++) {
             buttons[i] = (ImageButton) view.findViewById(idArray[i]);
@@ -89,7 +87,6 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                         num3.setText(be3);
                         num4.setText(be4);
                         num5.setText(be5);
-                        num6.setText(be6);
                         getActivity().closeContextMenu();
 
                     }
@@ -103,7 +100,6 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                         num3.setText(be3);
                         num4.setText(be4);
                         num5.setText(be5);
-                        num6.setText(be6);
                     }
                 });
 
@@ -140,12 +136,6 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                 num = Integer.parseInt(num5.getText().toString());
                 num++;
                 num5.setText(String.valueOf(num));
-                break;
-            case R.id.plus6:
-                num = 0;
-                num = Integer.parseInt(num6.getText().toString());
-                num++;
-                num6.setText(String.valueOf(num));
                 break;
             case R.id.minus1:
                 num = 0;
@@ -197,16 +187,6 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                 else{
                     num--;
                     num5.setText(String.valueOf(num));
-                }
-                break;
-            case R.id.minus6:
-                num = 0;
-                num = Integer.parseInt(num6.getText().toString());
-                if(num <= 0)
-                    break;
-                else{
-                    num--;
-                    num6.setText(String.valueOf(num));
                 }
                 break;
         }

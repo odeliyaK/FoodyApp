@@ -1,4 +1,4 @@
-package com.foodyapp;
+package com.foodyapp.model;
 
 public class usersInfo {
 

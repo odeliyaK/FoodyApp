@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SignInActivity">
+    <include layout="@layout/toolbar_allscreens"/>
 
     <TextView
         android:id="@+id/title_signIn"
@@ -50,6 +51,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="@string/signIn_btn" />
+        android:text="@string/signIn_btn"
+        app:backgroundTint="@color/theme_color"
+        />
+
 
 </LinearLayout>

@@ -53,11 +53,21 @@
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="@string/DairyCol2"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="@string/DairyCol5"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -73,6 +83,15 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="Milk"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -123,7 +142,16 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="White Cheese"
+                            android:text="Cheese"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -166,6 +194,7 @@
 
                     </TableRow>
 
+
                     <TableRow>
 
                         <TextView
@@ -174,7 +203,15 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Yellow Cheese"
+                            android:text="Eggs"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -217,7 +254,6 @@
 
                     </TableRow>
 
-
                     <TableRow>
 
                         <TextView
@@ -226,7 +262,15 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Eggs"
+                            android:text="Butter"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -277,7 +321,15 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Butter"
+                            android:text="Cottage'"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -309,57 +361,6 @@
 
                             <ImageButton
                                 android:id="@+id/minus5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/minus" />
-                        </LinearLayout>
-
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:gravity="center"
-                            android:padding="10sp"
-                            android:text="Cottage'"
-                            android:textSize="18sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_weight="3"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/plus6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/plus2" />
-
-                            <EditText
-                                android:id="@+id/num6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="1"
-                                android:gravity="center"
-                                android:inputType="numberSigned"
-                                android:text="0" />
-
-                            <ImageButton
-                                android:id="@+id/minus6"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"

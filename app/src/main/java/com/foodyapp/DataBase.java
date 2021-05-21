@@ -21,8 +21,6 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String HOUSEHOLDS_COLUMN_ID = "ID";
     private static final String HOUSEHOLDS_COLUMN_NAME = "name";
     private static final String HOUSEHOLDS_COLUMN_ADDRESS = "address";
-//    private static final String HOUSEHOLDS_COLUMN_PACKAGE = "package number";
-//    private static final String HOUSEHOLDS_COLUMN_ORGANIZATION = "organizationID";
     private static final String[] TABLE_HOUSEHOLD_COLUMNS = {HOUSEHOLDS_COLUMN_ID, HOUSEHOLDS_COLUMN_NAME, HOUSEHOLDS_COLUMN_ADDRESS};
 
     //packages table
@@ -99,6 +97,25 @@ public class DataBase extends SQLiteOpenHelper {
                     + PACKAGES_COLUMN_STATUS + " TEXT)";
             db.execSQL(CREATE_PACKAGES_TABLE);
 
+            // SQL statement to create order table
+            String CREATE_ORDERS_TABLE = "create table if not exists " + TABLE_ORDERS_NAME +" ( "
+                    + PACKAGES_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + ORDERS_COLUMN_VOLUNTEER +" INTEGER, "
+                    + ORDERS_COLUMN_DATE + " TEXT)";
+            db.execSQL(CREATE_ORDERS_TABLE);
+
+            // SQL statement to create suppliers table
+            String CREATE_SUPPLIERS_TABLE = "create table if not exists " + TABLE_SUPPLIERS_NAME +" ( "
+                    + SUPPLIERS_COLUMN_NAME +" TEXT PRIMARY KEY)";
+            db.execSQL(CREATE_SUPPLIERS_TABLE);
+
+            // SQL statement to create products table
+            String CREATE_PRODUCTS_TABLE = "create table if not exists " + TABLE_PRODUCTS_NAME +" ( "
+                    + PRODUCTS_COLUMN_NAME +" TEXT PRIMARY KEY, "
+                    + PRODUCTS_COLUMN_SUPPLIER +" TEXT, "
+                    + PRODUCTS_COLUMN_UPDATES +" TEXT, "
+                    + PRODUCTS_COLUMN_QUANTITY + " INTEGER)";
+            db.execSQL(CREATE_PRODUCTS_TABLE);
 
         } catch (Throwable t) {
             t.printStackTrace();
@@ -133,6 +150,32 @@ public class DataBase extends SQLiteOpenHelper {
         } catch (Throwable t) {
             t.printStackTrace();
         }
+    }
+
+    void checkOrder(){
+        Cursor cursor = null;
+
+    }
+
+    void makeOrder(){
+
+    }
+
+    void Products(){
+
+        try {
+            // make values to be inserted
+            ContentValues values = new ContentValues();
+            values.put(PRODUCTS_COLUMN_NAME, "Milk");
+            values.put(PRODUCTS_COLUMN_QUANTITY, 20);
+            values.put(PRODUCTS_COLUMN_SUPPLIER, "Tenuva");
+            values.putNull(PRODUCTS_COLUMN_UPDATES);
+            // insert folder
+            db.insert(TABLE_PRODUCTS_NAME, null, values);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
     }
 
     //adds house holds to the db
