@@ -6,8 +6,11 @@ public class Products {
 
     String name;
     int quantity;
-    Date update;
+    String update;
     String supplier;
+
+    public Products() {
+    }
 
     public String getName() {
         return name;
@@ -25,11 +28,11 @@ public class Products {
         this.quantity = quantity;
     }
 
-    public Date getUpdate() {
+    public String getUpdate() {
         return update;
     }
 
-    public void setUpdate(Date update) {
+    public void setUpdate(String update) {
         this.update = update;
     }
 
@@ -41,7 +44,7 @@ public class Products {
         this.supplier = supplier;
     }
 
-    public Products(String name, int quantity, Date update, String supplier) {
+    public Products(String name, int quantity, String update, String supplier) {
         this.name = name;
         this.quantity = quantity;
         this.update = update;

@@ -5,9 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.foodyapp.model.Products;
+
+import java.util.ArrayList;
 
 public class DataBase extends SQLiteOpenHelper {
     private Context context;
@@ -43,7 +49,7 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String PRODUCTS_COLUMN_QUANTITY = "quantity";
     private static final String PRODUCTS_COLUMN_UPDATES = "updateDate";
     private static final String PRODUCTS_COLUMN_SUPPLIER = "supplier";
-    private static final String[] TABLE_INVENTORY_COLUMNS = {PRODUCTS_COLUMN_NAME, PRODUCTS_COLUMN_QUANTITY, PRODUCTS_COLUMN_UPDATES, PRODUCTS_COLUMN_SUPPLIER};
+    private static final String[] TABLE_PRODUCTS_COLUMNS = {PRODUCTS_COLUMN_NAME, PRODUCTS_COLUMN_QUANTITY, PRODUCTS_COLUMN_UPDATES, PRODUCTS_COLUMN_SUPPLIER};
 
     //suppliers table
     private static final String TABLE_SUPPLIERS_NAME = "suppliers";
@@ -152,28 +158,121 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-    void checkOrder(){
+    public void checkOrder(){
         Cursor cursor = null;
 
     }
 
-    void makeOrder(){
+    public void makeOrder(){
 
     }
 
-    void Products(){
-
+    public Products cursorToProduct(Cursor cursor) {
+        Products result = new Products();
         try {
-            // make values to be inserted
-            ContentValues values = new ContentValues();
-            values.put(PRODUCTS_COLUMN_NAME, "Milk");
-            values.put(PRODUCTS_COLUMN_QUANTITY, 20);
-            values.put(PRODUCTS_COLUMN_SUPPLIER, "Tenuva");
-            values.putNull(PRODUCTS_COLUMN_UPDATES);
-            // insert folder
-            db.insert(TABLE_PRODUCTS_NAME, null, values);
+            result.setName(cursor.getString(0));
+            result.setSupplier(cursor.getString(1));
+            result.setUpdate(cursor.getString(2));
+            result.setQuantity(cursor.getInt(3));
         } catch (Throwable t) {
             t.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public ArrayList<Products> allProducts(){
+        ArrayList<Products> products = new ArrayList<>();
+
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_PRODUCTS_NAME, TABLE_PRODUCTS_COLUMNS, null, null,
+                    null, null, null);
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Products product = cursorToProduct(cursor);
+                products.add(product);
+                cursor.moveToNext();
+            }
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        finally {
+            // make sure to close the cursor
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+
+        return products;
+    }
+
+    public void Products(){
+        ArrayList<Products> currentProducts = allProducts();
+
+        if(currentProducts.isEmpty()){
+            try {
+                // make values to be inserted
+                ContentValues values = new ContentValues();
+                values.put(PRODUCTS_COLUMN_NAME, "Milk");
+                values.put(PRODUCTS_COLUMN_QUANTITY, 20);
+                values.put(PRODUCTS_COLUMN_SUPPLIER, "Tenuva");
+                values.putNull(PRODUCTS_COLUMN_UPDATES);
+
+                db.insert(TABLE_PRODUCTS_NAME, null, values);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            try {
+                // make values to be inserted
+                ContentValues values = new ContentValues();
+                values.put(PRODUCTS_COLUMN_NAME, "Cheese");
+                values.put(PRODUCTS_COLUMN_QUANTITY, 20);
+                values.put(PRODUCTS_COLUMN_SUPPLIER, "Tenuva");
+                values.putNull(PRODUCTS_COLUMN_UPDATES);
+
+                db.insert(TABLE_PRODUCTS_NAME, null, values);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            try {
+                // make values to be inserted
+                ContentValues values = new ContentValues();
+                values.put(PRODUCTS_COLUMN_NAME, "Eggs");
+                values.put(PRODUCTS_COLUMN_QUANTITY, 20);
+                values.put(PRODUCTS_COLUMN_SUPPLIER, "Tenuva");
+                values.putNull(PRODUCTS_COLUMN_UPDATES);
+
+                db.insert(TABLE_PRODUCTS_NAME, null, values);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            try {
+                // make values to be inserted
+                ContentValues values = new ContentValues();
+                values.put(PRODUCTS_COLUMN_NAME, "Butter");
+                values.put(PRODUCTS_COLUMN_QUANTITY, 20);
+                values.put(PRODUCTS_COLUMN_SUPPLIER, "Tenuva");
+                values.putNull(PRODUCTS_COLUMN_UPDATES);
+
+                db.insert(TABLE_PRODUCTS_NAME, null, values);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            try {
+                // make values to be inserted
+                ContentValues values = new ContentValues();
+                values.put(PRODUCTS_COLUMN_NAME, "Cottage");
+                values.put(PRODUCTS_COLUMN_QUANTITY, 20);
+                values.put(PRODUCTS_COLUMN_SUPPLIER, "Tenuva");
+                values.putNull(PRODUCTS_COLUMN_UPDATES);
+
+                db.insert(TABLE_PRODUCTS_NAME, null, values);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
         }
 
     }
