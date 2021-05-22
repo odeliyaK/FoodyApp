@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +20,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
     static List<usersInfo> itemInfos;
     static UsersAdapterOrg adapter;
     static Integer indexVal;
+    static ListView myList;
     boolean upFlag = false;
     boolean reFlag=false;
     String item;
@@ -29,30 +29,23 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
     String selecteAddress;
     Context context;
 
+
+
     DataBase myDB;
     ArrayList<String> household_id, household_name, household_address;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_hold_list);
-        ListView myList = (ListView) findViewById(R.id.listView);
+        myList = (ListView) findViewById(R.id.listView);
         this.context = this;
-        myDB=new DataBase(HouseHoldListActivity.this);
-        household_id=new ArrayList<>();
-        household_name=new ArrayList<>();
-        household_address=new ArrayList<>();
-        itemInfos = new ArrayList<usersInfo>();
-        Cursor cursor=myDB.readAllHouseHolds();
-        if (cursor.getCount()==0){
-            Toast.makeText(context, "There are no households", Toast.LENGTH_SHORT).show();
-        }else {
-            while (cursor.moveToNext()){
-                usersInfo u=new usersInfo(cursor.getString(1), cursor.getString(2), cursor.getString(0));
-                itemInfos.add(u);
-                adapter = new UsersAdapterOrg(this, R.layout.activity_users_adapter_org, itemInfos);
-                myList.setAdapter(adapter);
-            }
-        }
+
+
+        List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
+        adapter = new UsersAdapterOrg(this, R.layout.activity_users_adapter_org, list);
+        myList.setAdapter(adapter);
 
         Button updateBtn=findViewById(R.id.updateBtn);
         Button removeBtn=findViewById(R.id.removeBtn);
@@ -62,14 +55,15 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                item=itemInfos.get(position).getName().toString()+ " has been selected";
-                selectedID = itemInfos.get(position).getId().toString();
-                selecteAddress = itemInfos.get(position).getAddress().toString();
-                selectedName = itemInfos.get(position).getName().toString();
+//                item=itemInfos.get(position).getName()+ " has been selected";
+//                selectedID = itemInfos.get(position).getId();
+//                selecteAddress = itemInfos.get(position).getAddress();
+//                selectedName = itemInfos.get(position).getName();
                 upFlag = true;
                 reFlag=true;
                 indexVal=position;
-                Toast.makeText(HouseHoldListActivity.this, item, Toast.LENGTH_SHORT).show();
+                String a=indexVal.toString();
+                Toast.makeText(HouseHoldListActivity.this, a, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -104,6 +98,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
         });
 
         //add new house holds to the list
+
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +109,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                 frag.show(getFragmentManager(), "dialog");
             }
         });
+
 
 
         //remove house holds from the list
@@ -127,11 +123,14 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                     removeApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            DataBase db = new DataBase(HouseHoldListActivity.this);
-                            db.reomoveHouseHold(itemInfos.get(indexVal).getId());
-                            usersInfo u = itemInfos.get(indexVal);
-                            HouseHoldListActivity.itemInfos.remove(u);
-                            adapter.notifyDataSetChanged();
+           //                 DataBase db = new DataBase(HouseHoldListActivity.this);
+//                            db.reomoveHouseHold(itemInfos.get(indexVal).getId());
+//                            usersInfo u = itemInfos.get(indexVal);
+//                            HouseHoldListActivity.itemInfos.remove(u);
+//                            adapter.notifyDataSetChanged();
+//                            MyInfoManager.getInstance().deleteHousehold(currentuser);
+//                            adapter.remove(currentuser);
+//                            adapter.notifyDataSetChanged();
                         }
                     });
                     removeApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -174,5 +173,8 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
     @Override
     public void onDialogNegativeClick(DialogFragmentInputUpdate dialog) {
     }
+
+
+
 
 }

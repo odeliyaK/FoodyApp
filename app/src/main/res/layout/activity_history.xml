@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HistoryActivity">
+    <include layout="@layout/toolbar_volunteer"/>
 
 
 
@@ -18,7 +19,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
@@ -36,7 +37,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintBottom_toBottomOf="@+id/titleHistory"
         android:background="@color/white">
 
@@ -91,7 +92,7 @@
         android:id="@+id/HistoryList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp">
+        android:layout_marginTop="160dp">
     </ListView>
 
 

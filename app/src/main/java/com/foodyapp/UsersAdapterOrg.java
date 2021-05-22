@@ -16,12 +16,12 @@ public class UsersAdapterOrg extends ArrayAdapter<usersInfo> {
     private Context mContext;
     Activity activiy;
     int mResource;
-
+    private List<usersInfo> users;
     public UsersAdapterOrg(Context context, int resource, List<usersInfo> dataList) {
         super(context,resource,dataList);
         mContext = context;
         mResource = resource;
-
+        users=dataList;
     }
 
     @Override

@@ -9,6 +9,14 @@ public class usersInfo {
     private String id;
     private int image;
 
+    public usersInfo(){
+
+    }
+
+    public usersInfo(String name, String address){
+        this.name = name;
+        this.address = address;
+    }
 
     public usersInfo(int packageNum,String name, String address, int image) {
         this.packageNum = packageNum;

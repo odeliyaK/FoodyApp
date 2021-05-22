@@ -2,6 +2,7 @@ package com.foodyapp;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.foodyapp.model.usersInfo;
+
+import java.util.List;
 
 
 public class DialogFragmentInputAdd extends DialogFragment {
@@ -22,6 +26,8 @@ public class DialogFragmentInputAdd extends DialogFragment {
     private Button saveBtn;
     private Button cancelBtn;
     private Activity activity;
+    UsersAdapterOrg adapter;
+    private Context context = null;
 
     // Use this instance of the interface to deliver action events
     AddInputDialogFragment mListener;
@@ -47,7 +53,7 @@ public class DialogFragmentInputAdd extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.activity_dialog_fragment_input_add, null);
-
+         context=v.getContext();
         idField = (EditText) v .findViewById(R.id.idfield);
         NameField = (EditText)v .findViewById(R.id.firstnamefieldAdd);
         Address =  (EditText)v.findViewById(R.id.AddressAdd);
@@ -70,11 +76,13 @@ public class DialogFragmentInputAdd extends DialogFragment {
                     Address.requestFocus();
                 }
                 else{
-                    DataBase myDB=new DataBase(activity);
-                    myDB.addHouseHold( getFirstNameField().trim(),getAddress().trim());
-                    String newId=String.valueOf(myDB.newId);
-                     HouseHoldListActivity.itemInfos.add(new usersInfo(getFirstNameField() ,getAddress(),newId));
-                     HouseHoldListActivity.adapter.notifyDataSetChanged();
+                    String name=NameField.getText().toString();
+                    String address=Address.getText().toString();
+                        usersInfo user=new usersInfo(name,address);
+                     MyInfoManager.getInstance().createHouseHold(user);
+                     List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
+                     adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,list);
+                    HouseHoldListActivity.myList.setAdapter(adapter);
                     dismiss();
                 }
             }

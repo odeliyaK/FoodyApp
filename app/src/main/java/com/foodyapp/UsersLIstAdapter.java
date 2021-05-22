@@ -64,8 +64,8 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
                     UsersActivity.itemInfos.remove(UsersActivity.itemInfos.get(position));
                     UsersActivity.adapter.notifyDataSetChanged();
                     DataBase myDB=new DataBase(context);
-                    myDB.reomovePackages(itemInfo.getId());
-                    myDB.updateHouseHoldStatus("Got",itemInfo.getId());
+//                    myDB.reomovePackages(itemInfo.getId());
+//                    myDB.updateHouseHoldStatus("Got",itemInfo.getId());
                  //   Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
 
                 }

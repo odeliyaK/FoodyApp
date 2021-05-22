@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UsersActivity">
+    <include layout="@layout/toolbar_volunteer"/>
 
     <TextView
         android:id="@+id/titleOrders"
@@ -15,9 +16,9 @@
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="100dp"
         android:gravity="center"
         android:text="Packages list"
         android:textColor="@color/black"
@@ -34,8 +35,7 @@
         android:layout_height="49dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="70dp"
         android:gravity="center"
         android:text="Packages can only be sent on Sundays"
         android:textColor="@color/purple_200"
@@ -46,7 +46,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="110dp"
         app:layout_constraintBottom_toBottomOf="@+id/descriptionUsers"
         android:background="@color/white">
 
@@ -101,7 +101,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp">
+        android:layout_marginTop="165dp">
     </ListView>
 
 

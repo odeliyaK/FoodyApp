@@ -5,17 +5,23 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.foodyapp.model.usersInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBase extends SQLiteOpenHelper {
     private Context context;
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "FoodyDB";
 
-    long newId=0;
-    long updateId=0;
+
     //household table
     private static final String TABLE_HOUSEHOLDS_NAME = "households";
     private static final String HOUSEHOLDS_COLUMN_ID = "ID";
@@ -136,23 +142,21 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     //adds house holds to the db
-    void addHouseHold( String name, String address){
-        SQLiteDatabase db=this.getWritableDatabase();
-        ContentValues cv=new ContentValues();
-        cv.put(HOUSEHOLDS_COLUMN_NAME, name);
-        cv.put(HOUSEHOLDS_COLUMN_ADDRESS, address);
-        long result= db.insert(TABLE_HOUSEHOLDS_NAME, null, cv);
-        if (result ==-1){
-            Toast.makeText(context, "failed adding household to db", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(context, "success adding household to db", Toast.LENGTH_SHORT).show();
-            newId=result;
+    void addHouseHold(usersInfo user){
+//        SQLiteDatabase db=this.getWritableDatabase();
+        try {
+            ContentValues cv=new ContentValues();
+            cv.put(HOUSEHOLDS_COLUMN_NAME, user.getName());
+            cv.put(HOUSEHOLDS_COLUMN_ADDRESS, user.getAddress());
+            db.insert(TABLE_HOUSEHOLDS_NAME, null, cv);
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
     //updates households
     void updateHouseHold(String id, String newName, String newAddress){
-        SQLiteDatabase db=this.getWritableDatabase();
+//        SQLiteDatabase db=this.getWritableDatabase();
        ContentValues cv=new ContentValues();
        cv.put(HOUSEHOLDS_COLUMN_NAME, newName);
         cv.put(HOUSEHOLDS_COLUMN_ADDRESS, newAddress);
@@ -162,25 +166,18 @@ public class DataBase extends SQLiteOpenHelper {
             Toast.makeText(context, "failed update db", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(context, "success update  db", Toast.LENGTH_SHORT).show();
-            updateId=result;
+      //      updateId=result;
         }
     }
 
     //removes households
-    void reomoveHouseHold(String id){
-        SQLiteDatabase db=this.getWritableDatabase();
+    void reomoveHouseHold(usersInfo household){
+//        SQLiteDatabase db=this.getWritableDatabase();
         try {
 
             // delete items
-            long result=  db.delete(TABLE_HOUSEHOLDS_NAME, HOUSEHOLDS_COLUMN_ID + " = ?",
-                    new String[] { String.valueOf(id) });
-            if (result==-1){
-                Toast.makeText(context, "failed delete from db", Toast.LENGTH_SHORT).show();
-            }else {
-                Toast.makeText(context, "success delete from  db", Toast.LENGTH_SHORT).show();
-
-
-            }
+             db.delete(TABLE_HOUSEHOLDS_NAME, HOUSEHOLDS_COLUMN_ID + " = ?",
+                    new String[] { String.valueOf(household.getId()) });
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -190,15 +187,57 @@ public class DataBase extends SQLiteOpenHelper {
 
     Cursor readAllHouseHolds(){
         String query=" SELECT * FROM " + TABLE_HOUSEHOLDS_NAME;
-        SQLiteDatabase db=this.getReadableDatabase();
+       // SQLiteDatabase db=this.getReadableDatabase();
 
         Cursor cursor=null;
+        cursor=db.query(TABLE_HOUSEHOLDS_NAME,null,null,null,null,null,null);
         if (db!=null){
             cursor=db.rawQuery(query, null);
         }
         return cursor;
     }
 
+    public List<usersInfo>getAllHouseHolds(){
+        List<usersInfo> result = new ArrayList<>();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_HOUSEHOLDS_NAME,TABLE_HOUSEHOLD_COLUMNS, null, null,
+                    null, null, null);
 
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                usersInfo item = cursorToHouseHold(cursor);
+                result.add(item);
+                cursor.moveToNext();
+            }
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        finally {
+            // make sure to close the cursor
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+
+        return result;
+
+    }
+
+    private usersInfo cursorToHouseHold(Cursor cursor) {
+        usersInfo result = new usersInfo();
+        try {
+            //result.setId(Integer.parseInt(cursor.getString(0)));
+            result.setId(cursor.getString(0));
+            result.setName(cursor.getString(1));
+            result.setAddress(cursor.getString(2));
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return result;
+    }
 
 }
