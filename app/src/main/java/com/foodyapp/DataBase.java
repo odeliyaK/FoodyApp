@@ -21,16 +21,16 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String HOUSEHOLDS_COLUMN_ID = "ID";
     private static final String HOUSEHOLDS_COLUMN_NAME = "name";
     private static final String HOUSEHOLDS_COLUMN_ADDRESS = "address";
-//    private static final String HOUSEHOLDS_COLUMN_PACKAGE = "package number";
+    private static final String HOUSEHOLDS_COLUMN_STATUS = "status";
 //    private static final String HOUSEHOLDS_COLUMN_ORGANIZATION = "organizationID";
-    private static final String[] TABLE_HOUSEHOLD_COLUMNS = {HOUSEHOLDS_COLUMN_ID, HOUSEHOLDS_COLUMN_NAME, HOUSEHOLDS_COLUMN_ADDRESS};
+    private static final String[] TABLE_HOUSEHOLD_COLUMNS = {HOUSEHOLDS_COLUMN_ID, HOUSEHOLDS_COLUMN_NAME, HOUSEHOLDS_COLUMN_ADDRESS, HOUSEHOLDS_COLUMN_STATUS};
 
     //packages table
     private static final String TABLE_PACKAGES_NAME = "packages";
     private static final String PACKAGES_COLUMN_ID = "ID";
     private static final String PACKAGES_COLUMN_HOUSEHOLD_ID = "householdID";
-    private static final String PACKAGES_COLUMN_STATUS = "status";
-    private static final String[] TABLE_PACKAGES_COLUMNS = {PACKAGES_COLUMN_ID, PACKAGES_COLUMN_HOUSEHOLD_ID, PACKAGES_COLUMN_STATUS};
+    private static final String PACKAGES_COLUMN_ADDRESS= "householdAddress";
+    private static final String[] TABLE_PACKAGES_COLUMNS = {PACKAGES_COLUMN_ID, PACKAGES_COLUMN_HOUSEHOLD_ID, PACKAGES_COLUMN_ADDRESS};
 
     //delivery table
     private static final String TABLE_DELIVERY_NAME = "deliveries";
@@ -89,14 +89,15 @@ public class DataBase extends SQLiteOpenHelper {
             String CREATE_HOUSEHOLDS_TABLE = "create table if not exists " + TABLE_HOUSEHOLDS_NAME +" ( "
                     + HOUSEHOLDS_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + HOUSEHOLDS_COLUMN_NAME +" TEXT, "
-                    + HOUSEHOLDS_COLUMN_ADDRESS + " TEXT)";
+                    + HOUSEHOLDS_COLUMN_ADDRESS + " TEXT, "
+                    + HOUSEHOLDS_COLUMN_STATUS +"TEXT)";
             db.execSQL(CREATE_HOUSEHOLDS_TABLE);
 
             // SQL statement to create packages table
             String CREATE_PACKAGES_TABLE = "create table if not exists " + TABLE_PACKAGES_NAME +" ( "
                     + PACKAGES_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + PACKAGES_COLUMN_HOUSEHOLD_ID +" INTEGER, "
-                    + PACKAGES_COLUMN_STATUS + " TEXT)";
+                    + PACKAGES_COLUMN_ADDRESS + " TEXT)";
             db.execSQL(CREATE_PACKAGES_TABLE);
 
 
@@ -110,6 +111,7 @@ public class DataBase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HOUSEHOLDS_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PACKAGES_NAME);
         onCreate(db);
         try {
 
@@ -140,13 +142,30 @@ public class DataBase extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put(HOUSEHOLDS_COLUMN_NAME, name);
+        String id=HOUSEHOLDS_COLUMN_ID;
         cv.put(HOUSEHOLDS_COLUMN_ADDRESS, address);
+        cv.put(HOUSEHOLDS_COLUMN_STATUS, "Waiting");
         long result= db.insert(TABLE_HOUSEHOLDS_NAME, null, cv);
         if (result ==-1){
             Toast.makeText(context, "failed adding household to db", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(context, "success adding household to db", Toast.LENGTH_SHORT).show();
             newId=result;
+            addPackage(id, address);
+        }
+    }
+
+    //adds packages to the db
+    void addPackage(String housholdID, String address){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, housholdID);
+        cv.put(PACKAGES_COLUMN_ADDRESS, address);
+        long result= db.insert(TABLE_PACKAGES_NAME, null, cv);
+        if (result ==-1){
+            Toast.makeText(context, "failed adding package to db", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "success adding package to db", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -157,6 +176,33 @@ public class DataBase extends SQLiteOpenHelper {
        cv.put(HOUSEHOLDS_COLUMN_NAME, newName);
         cv.put(HOUSEHOLDS_COLUMN_ADDRESS, newAddress);
 
+        long result=db.update(TABLE_HOUSEHOLDS_NAME, cv, HOUSEHOLDS_COLUMN_ID + " =?", new String[] { String.valueOf(id) });
+        if (result==-1){
+            Toast.makeText(context, "failed update db", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "success update  db", Toast.LENGTH_SHORT).show();
+            updateId=result;
+        }
+    }
+    void updateHouseHoldStatus(String status, String id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put(HOUSEHOLDS_COLUMN_STATUS, status);
+
+        long result=db.update(TABLE_HOUSEHOLDS_NAME, cv, HOUSEHOLDS_COLUMN_ID + " =?", new String[] { String.valueOf(id) });
+        if (result==-1){
+            Toast.makeText(context, "failed update db", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "success update  db", Toast.LENGTH_SHORT).show();
+            updateId=result;
+        }
+    }
+
+    //updates packages
+    void updatePackages(String id, String status){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put(HOUSEHOLDS_COLUMN_STATUS, status);
         long result=db.update(TABLE_HOUSEHOLDS_NAME, cv, HOUSEHOLDS_COLUMN_ID + " =?", new String[] { String.valueOf(id) });
         if (result==-1){
             Toast.makeText(context, "failed update db", Toast.LENGTH_SHORT).show();
@@ -187,9 +233,42 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    //removes packages
+    void reomovePackages(String id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        try {
+
+            // delete items
+            long result=  db.delete(TABLE_PACKAGES_NAME, PACKAGES_COLUMN_ID + " = ?",
+                    new String[] { String.valueOf(id) });
+            if (result==-1){
+                Toast.makeText(context, "failed sending package", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(context, "Package have been sent successfully ", Toast.LENGTH_SHORT).show();
+
+
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+    }
 
     Cursor readAllHouseHolds(){
         String query=" SELECT * FROM " + TABLE_HOUSEHOLDS_NAME;
+        SQLiteDatabase db=this.getReadableDatabase();
+
+        Cursor cursor=null;
+        if (db!=null){
+            cursor=db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    Cursor readAllPackages(){
+        String query=" SELECT " + " p. " + PACKAGES_COLUMN_ID + " , "+ " h. " + HOUSEHOLDS_COLUMN_NAME + " , " +
+                " h. " + HOUSEHOLDS_COLUMN_ADDRESS +   " FROM " + TABLE_PACKAGES_NAME + " p " + " JOIN " + TABLE_HOUSEHOLDS_NAME + " h "
+                + " ON p. " + HOUSEHOLDS_COLUMN_ID + " =h. " + PACKAGES_COLUMN_HOUSEHOLD_ID;
         SQLiteDatabase db=this.getReadableDatabase();
 
         Cursor cursor=null;

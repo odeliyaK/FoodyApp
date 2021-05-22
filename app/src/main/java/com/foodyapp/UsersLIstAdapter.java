@@ -63,8 +63,10 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
                 public void onClick(DialogInterface dialog, int which) {
                     UsersActivity.itemInfos.remove(UsersActivity.itemInfos.get(position));
                     UsersActivity.adapter.notifyDataSetChanged();
-
-                    Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
+                    DataBase myDB=new DataBase(context);
+                    myDB.reomovePackages(itemInfo.getId());
+                    myDB.updateHouseHoldStatus("Got",itemInfo.getId());
+                 //   Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
 
                 }
             });

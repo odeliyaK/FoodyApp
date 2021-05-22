@@ -50,9 +50,6 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
             Toast.makeText(context, "There are no households", Toast.LENGTH_SHORT).show();
         }else {
             while (cursor.moveToNext()){
-                household_id.add(cursor.getString(0));
-                household_name.add(cursor.getString(1));
-                household_address.add(cursor.getString(2));
                 usersInfo u=new usersInfo(cursor.getString(1), cursor.getString(2), cursor.getString(0));
                 itemInfos.add(u);
                 adapter = new UsersAdapterOrg(this, R.layout.activity_users_adapter_org, itemInfos);
