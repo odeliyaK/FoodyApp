@@ -121,7 +121,7 @@
         android:shadowColor="#FFFFFF"
         android:text="choose an organization"
         android:visibility="gone"
-        app:backgroundTint="#2D83BD"/>
+        app:backgroundTint="@color/theme_color"/>
 
     <Button
         android:id="@+id/registration_btn"

@@ -36,6 +36,12 @@ public class MyInfoManager {
 			
 		}
 
+		public void products(){
+			if(db != null){
+				db.Products();
+			}
+		}
+
 		public void openDataBase(Context context) {
 			this.context = context;
 			if (context != null) {

@@ -53,11 +53,22 @@
 
                         <TextView
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="5"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="@string/DairyCol2"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+
+                        <TextView
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="@string/DairyCol2"
+                            android:text="@string/DairyCol5"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -73,6 +84,15 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="Minced Meat"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -127,6 +147,15 @@
                             android:text="Chicken Breast"
                             android:textSize="18sp" />
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="20"
+                            android:textSize="18sp" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -169,13 +198,45 @@
 
                     <TableRow>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal"/>
+
+                    </TableRow>
+
+
+                    <TableRow>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal"/>
+
+                    </TableRow>
+
+                    <TableRow>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Chicken shanks"
+                            android:text="Amnon Fish"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -216,109 +277,6 @@
                                 android:src="@drawable/minus" />
                         </LinearLayout>
 
-                    </TableRow>
-
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:gravity="center"
-                            android:padding="10sp"
-                            android:text="Chicken Wings"
-                            android:textSize="18sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_weight="3"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/plus4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/plus2" />
-
-                            <EditText
-                                android:id="@+id/num4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="1"
-                                android:gravity="center"
-                                android:inputType="numberSigned"
-                                android:text="0" />
-
-                            <ImageButton
-                                android:id="@+id/minus4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/minus" />
-                        </LinearLayout>
-
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:gravity="center"
-                            android:padding="10sp"
-                            android:text="Amnon Fish"
-                            android:textSize="18sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_weight="3"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/plus5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/plus2" />
-
-                            <EditText
-                                android:id="@+id/num5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="1"
-                                android:gravity="center"
-                                android:inputType="numberSigned"
-                                android:text="0" />
-
-                            <ImageButton
-                                android:id="@+id/minus5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/minus" />
-                        </LinearLayout>
-
 
                     </TableRow>
 
@@ -330,7 +288,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="105dp"
                     android:layout_marginLeft="105dp"
-                    android:text="Order from butcher"/>
+                    android:text="Order from butcher" />
             </LinearLayout>
         </ScrollView>
 
