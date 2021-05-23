@@ -83,9 +83,8 @@ public class MyInfoManager {
 
 
 	public void makeOrderTenuva(HashMap<String,Integer> dairy){
-		if(dairy != null){
-			if(db != null)
-				makeOrderTenuva(dairy);
+			if(db != null && !dairy.isEmpty()){
+				db.makeOrderTenuva(dairy);
 		}
 	}
 

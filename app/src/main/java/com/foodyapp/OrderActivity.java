@@ -16,6 +16,8 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        MyInfoManager.getInstance().openDataBase(this);
+
         Button back = (Button) findViewById(R.id.backBtn);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +82,11 @@ public class OrderActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    protected void onPause() {
+        MyInfoManager.getInstance().closeDataBase();
+        super.onPause();
     }
 
 }
