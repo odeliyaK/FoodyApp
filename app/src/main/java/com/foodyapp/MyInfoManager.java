@@ -5,6 +5,7 @@ import android.content.Context;
 import com.foodyapp.model.usersInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MyInfoManager {
@@ -76,9 +77,24 @@ public class MyInfoManager {
 
 		public void products(){
 			if(db != null){
-//				db.Products();
+				db.Products();
 			}
 		}
+
+
+	public void makeOrderTenuva(HashMap<String,Integer> dairy){
+		if(dairy != null){
+			if(db != null)
+				makeOrderTenuva(dairy);
+		}
+	}
+
+	public boolean checkOrderTenuva(){
+		if(db != null){
+			return db.checkOrderTenuva();
+		}
+		return false;
+	}
 
 
 
