@@ -50,6 +50,16 @@
                             android:text="@string/DairyCol1"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="5"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="@string/DairyCol5"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
 
                         <TextView
                             android:layout_width="0dp"
@@ -73,6 +83,14 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="Bread"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -126,6 +144,14 @@
                             android:padding="10sp"
                             android:text="Pasta"
                             android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:textSize="18sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -169,13 +195,33 @@
 
                     <TableRow>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="3"
+                            android:orientation="horizontal"/>
+
+                    </TableRow>
+
+
+                    <TableRow>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Green Olives"
+                            android:text="Oil"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -218,7 +264,6 @@
 
                     </TableRow>
 
-
                     <TableRow>
 
                         <TextView
@@ -227,7 +272,15 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Oil"
+                            android:text="Rice"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -268,6 +321,7 @@
                                 android:src="@drawable/minus" />
                         </LinearLayout>
 
+
                     </TableRow>
 
                     <TableRow>
@@ -278,7 +332,15 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="Rice"
+                            android:text="Coffee"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -310,58 +372,6 @@
 
                             <ImageButton
                                 android:id="@+id/minus5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/minus" />
-                        </LinearLayout>
-
-
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:gravity="center"
-                            android:padding="10sp"
-                            android:text="Coffee"
-                            android:textSize="18sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_weight="3"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/plus6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:src="@drawable/plus2" />
-
-                            <EditText
-                                android:id="@+id/num6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="1"
-                                android:gravity="center"
-                                android:inputType="numberSigned"
-                                android:text="0" />
-
-                            <ImageButton
-                                android:id="@+id/minus6"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"

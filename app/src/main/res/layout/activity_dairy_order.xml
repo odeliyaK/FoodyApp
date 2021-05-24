@@ -86,12 +86,12 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/amount1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -146,12 +146,12 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/amount2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -206,12 +206,12 @@
                             android:text="Eggs"
                             android:textSize="18sp" />
                         <TextView
+                            android:id="@+id/amount3"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -265,12 +265,12 @@
                             android:text="Butter"
                             android:textSize="18sp" />
                         <TextView
+                            android:id="@+id/amount4"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -324,12 +324,12 @@
                             android:text="Cottage"
                             android:textSize="18sp" />
                         <TextView
+                            android:id="@+id/amount5"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout

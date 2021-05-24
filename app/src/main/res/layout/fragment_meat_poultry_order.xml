@@ -92,7 +92,6 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -153,7 +152,6 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -236,7 +234,6 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="20"
                             android:textSize="18sp" />
 
                         <LinearLayout

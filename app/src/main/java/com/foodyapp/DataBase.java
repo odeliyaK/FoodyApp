@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -116,10 +117,12 @@ public class DataBase extends SQLiteOpenHelper {
                     + ORDERS_COLUMN_SUPPLIER +" TEXT, "
                     + ORDERS_COLUMN_DATE + " TEXT)";
             db.execSQL(CREATE_ORDERS_TABLE);
+
             // SQL statement to create suppliers table
             String CREATE_SUPPLIERS_TABLE = "create table if not exists " + TABLE_SUPPLIERS_NAME +" ( "
                     + SUPPLIERS_COLUMN_NAME +" TEXT PRIMARY KEY)";
             db.execSQL(CREATE_SUPPLIERS_TABLE);
+
             // SQL statement to create products table
             String CREATE_PRODUCTS_TABLE = "create table if not exists " + TABLE_PRODUCTS_NAME +" ( "
                     + PRODUCTS_COLUMN_NAME +" TEXT PRIMARY KEY, "
@@ -127,6 +130,13 @@ public class DataBase extends SQLiteOpenHelper {
                     + PRODUCTS_COLUMN_UPDATES +" TEXT, "
                     + PRODUCTS_COLUMN_QUANTITY + " INTEGER)";
             db.execSQL(CREATE_PRODUCTS_TABLE);
+
+            // SQL statement to create order_products table
+            String CREATE_ORDER_PRODUCTS_TABLE = "create table if not exists " + TABLE_ORDER_PRODUCT_NAME +" ( "
+                    + ORDER_PRODUCT_COLUMN_ORDER +" INTEGER , "
+                    + ORDER_PRODUCT_COLUMN_PRODUCT +" TEXT , "
+                    + ORDER_PRODUCT_COLUMN_QUANTITY +" INTEGER, PRIMARY KEY ( " + ORDER_PRODUCT_COLUMN_ORDER + "," + ORDER_PRODUCT_COLUMN_PRODUCT+ "))";
+            db.execSQL(CREATE_ORDER_PRODUCTS_TABLE);
 
 
         } catch (Throwable t) {
@@ -164,6 +174,30 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+    public boolean checkIfOrderHappen(String supplier){
+        boolean flag = false;
+        Cursor cursor = null;
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+        try {
+            cursor = db.query(TABLE_ORDERS_NAME, TABLE_ORDERS_COLUMNS, ORDERS_COLUMN_SUPPLIER + " = ? and " + ORDERS_COLUMN_DATE + " = ?", new String[] {supplier, currentDate},
+                    null, null, null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                flag = true;
+                cursor.moveToNext();
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        finally {
+            // make sure to close the cursor
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+        return flag;
+    }
     //check if an order happened today from Tenuva.
     public boolean checkOrderTenuva(){
         boolean flag = false;
@@ -270,29 +304,65 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     //make an order from Tenuva/Meshek/Osem/Butcher.
-    public void makeOrderTenuva(HashMap<String,Integer> dairy){
-        if(dairy != null)
+    public void makeOrder(HashMap<String,Integer> products){
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+        Cursor cursor = null;
+        long orderID;
+        if(products != null)
         {
-            for(String pro : dairy.keySet()){
-                try{
-                    ContentValues values = new ContentValues();
-                    values.put(PRODUCTS_COLUMN_QUANTITY, dairy.get(pro));
-                    db.update(TABLE_PRODUCTS_NAME, values, PRODUCTS_COLUMN_NAME + " = ?",
-                            new String[] { pro });
-                } catch (Throwable t) {
-                    t.printStackTrace();
+            orderID = createOrderSQL("Tenuva");
+            //it means we succeeded create an order.
+            if(orderID >= 0){
+                for(String pro : products.keySet()){
+                    try{
+                        ContentValues values = new ContentValues();
+                        values.put(PRODUCTS_COLUMN_QUANTITY, products.get(pro));
+                        values.put(PRODUCTS_COLUMN_UPDATES, currentDate);
+                        db.update(TABLE_PRODUCTS_NAME, values, PRODUCTS_COLUMN_NAME + " = ?",
+                                new String[] { pro });
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+                    try{
+                        ContentValues values = new ContentValues();
+                        values.put(ORDER_PRODUCT_COLUMN_ORDER, orderID);
+                        values.put(ORDER_PRODUCT_COLUMN_PRODUCT, pro);
+                        values.put(ORDER_PRODUCT_COLUMN_QUANTITY, products.get(pro));
+                        db.insert(TABLE_ORDER_PRODUCT_NAME,null, values);
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+
                 }
             }
         }
+    }
+
+    public long createOrderSQL(String supplier){
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+        try{
+            ContentValues values = new ContentValues();
+            values.put(ORDERS_COLUMN_SUPPLIER,"Tenuva");
+            values.put(ORDERS_COLUMN_DATE,currentDate);
+
+            return db.insert(TABLE_ORDERS_NAME, null, values);
+        }
+        catch (Throwable t){
+            t.printStackTrace();
+
+        }
+        return -1;
     }
 
     public Products cursorToProduct(Cursor cursor) {
         Products result = new Products();
         try {
             result.setName(cursor.getString(0));
-            result.setSupplier(cursor.getString(1));
+            result.setSupplier(cursor.getString(3));
             result.setUpdate(cursor.getString(2));
-            result.setQuantity(cursor.getInt(3));
+            result.setQuantity(cursor.getInt(1));
         } catch (Throwable t) {
             t.printStackTrace();
         }

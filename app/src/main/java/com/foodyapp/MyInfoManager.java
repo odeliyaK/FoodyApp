@@ -2,6 +2,7 @@ package com.foodyapp;
 
 import android.content.Context;
 
+import com.foodyapp.model.Products;
 import com.foodyapp.model.usersInfo;
 
 import java.util.ArrayList;
@@ -81,10 +82,23 @@ public class MyInfoManager {
 			}
 		}
 
+	public ArrayList<Products> allProducts(){
+		if(db != null)
+			return db.allProducts();
+		return null;
+	}
 
-	public void makeOrderTenuva(HashMap<String,Integer> dairy){
-			if(db != null && !dairy.isEmpty()){
-				db.makeOrderTenuva(dairy);
+	public boolean checkIfOrderHappen(String supplier){
+		if(db != null){
+			return db.checkIfOrderHappen(supplier);
+		}
+		return false;
+	}
+
+
+	public void makeOrder(HashMap<String,Integer> products){
+			if(db != null && !products.isEmpty()){
+				db.makeOrder(products);
 		}
 	}
 
