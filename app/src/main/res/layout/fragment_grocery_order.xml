@@ -56,7 +56,7 @@
                             android:layout_weight="5"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="@string/DairyCol5"
+                            android:text="@string/DairyCol2"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -67,7 +67,7 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="@string/DairyCol2"
+                            android:text="@string/DairyCol5"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 

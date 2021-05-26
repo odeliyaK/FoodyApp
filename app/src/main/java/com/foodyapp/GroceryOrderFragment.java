@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -34,6 +35,7 @@ public class GroceryOrderFragment extends Fragment implements View.OnClickListen
     String be1,be2,be3,be4,be5;
     TextView a1,a2,a3,a4,a5;
     Button save;
+    HashMap<String, Integer> current = new HashMap<>();
     HashMap<String, Integer> myOrder = new HashMap<>();
 
     public GroceryOrderFragment() {
@@ -120,24 +122,26 @@ public class GroceryOrderFragment extends Fragment implements View.OnClickListen
                             myOrder.clear();
 
                         if(Integer.parseInt(num1.getText().toString()) > 0){
-                            myOrder.put("Bread", Integer.parseInt(num1.getText().toString()) + Integer.parseInt(a1.getText().toString()));
+                            current.put("Bread", Integer.parseInt(num1.getText().toString()) + Integer.parseInt(a1.getText().toString()));
+                            myOrder.put("Bread", Integer.parseInt(num1.getText().toString()));
                         }
-//                        if(Integer.parseInt(num2.getText().toString()) > 0){
-//                            myOrder.put("Pasta", Integer.parseInt(num2.getText().toString()) + Integer.parseInt(a2.getText().toString()));
-//                        }
                         if(Integer.parseInt(num2.getText().toString()) > 0){
-                            myOrder.put("Pasta", Integer.parseInt(num2.getText().toString()) + Integer.parseInt(a2.getText().toString()));
+                            current.put("Pasta", Integer.parseInt(num2.getText().toString()) + Integer.parseInt(a2.getText().toString()));
+                            myOrder.put("Pasta", Integer.parseInt(num2.getText().toString()));
                         }
                         if(Integer.parseInt(num3.getText().toString()) > 0){
-                            myOrder.put("Oil", Integer.parseInt(num3.getText().toString()) + Integer.parseInt(a3.getText().toString()));
+                            current.put("Oil", Integer.parseInt(num3.getText().toString()) + Integer.parseInt(a3.getText().toString()));
+                            myOrder.put("Oil", Integer.parseInt(num3.getText().toString()));
                         }
                         if(Integer.parseInt(num4.getText().toString()) > 0){
-                            myOrder.put("Rice", Integer.parseInt(num4.getText().toString()) + Integer.parseInt(a4.getText().toString()));
+                            current.put("Rice", Integer.parseInt(num4.getText().toString()) + Integer.parseInt(a4.getText().toString()));
+                            myOrder.put("Rice", Integer.parseInt(num4.getText().toString()));
                         }
                         if(Integer.parseInt(num5.getText().toString()) > 0){
-                            myOrder.put("Coffee", Integer.parseInt(num5.getText().toString()) + Integer.parseInt(a5.getText().toString()));
+                            current.put("Coffee", Integer.parseInt(num5.getText().toString()) + Integer.parseInt(a5.getText().toString()));
+                            myOrder.put("Coffee", Integer.parseInt(num5.getText().toString()));
                         }
-                        MyInfoManager.getInstance().makeOrder(myOrder);
+                        MyInfoManager.getInstance().makeOrder(myOrder, current,"Osem");
                         num1.setText(be1);
                         num2.setText(be2);
                         num3.setText(be3);
@@ -154,6 +158,8 @@ public class GroceryOrderFragment extends Fragment implements View.OnClickListen
                                 }
                             }
                         }
+                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                        startActivity(intent);
                     }
                 });
 

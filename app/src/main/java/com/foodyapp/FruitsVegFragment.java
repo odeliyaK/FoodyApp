@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +21,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.foodyapp.model.Products;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class FruitsVegFragment extends Fragment implements View.OnClickListener{
     private static final int[] idArray = {R.id.plus1,R.id.plus2,R.id.plus3,R.id.plus4,R.id.plus5,R.id.plus6,R.id.plus7,R.id.plus6,R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4,R.id.minus5,R.id.minus6,R.id.minus7};
     //  private static final int[] idArrayMinus = {R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4};
@@ -29,6 +35,8 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
     EditText num1,num2,num3,num4,num5,num6,num7;
     String be1,be2,be3,be4,be5,be6,be7;
     Button save;
+    HashMap<String, Integer> current = new HashMap<>();
+    int[] quantity = new int[7];
 
     public FruitsVegFragment() {
         // Required empty public constructor
@@ -53,6 +61,20 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
         be6 = num6.getText().toString();
         be7 = num7.getText().toString();
 
+        EditText[] textQ = {num1, num2, num3, num4, num5, num6, num7};
+
+        ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
+        if(!products.isEmpty()){
+            int i=0;
+            for(Products p : products){
+                if(p.getSupplier().equals("Meshek")){
+                    textQ[i].setText(String.valueOf(p.getQuantity()));
+                    quantity[i] = p.getQuantity();
+                    i++;
+                }
+            }
+        }
+
         for(int i=0; i<idArray.length; i++) {
             buttons[i] = (ImageButton) view.findViewById(idArray[i]);
             buttons[i].setOnClickListener(this);
@@ -74,7 +96,7 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                 // 2. Chain together various setter methods to set the dialog characteristics
-                builder.setMessage(R.string.confirm);
+                builder.setMessage(R.string.confirmIn);
                 builder.setTitle(R.string.dialogTitle);
 
                 // Add the buttons
@@ -82,13 +104,13 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                     public void onClick(DialogInterface dialog, int id) {
 
                         Toast.makeText(getContext(), "Saving inventory is cancelled",Toast.LENGTH_LONG).show();
-                        num1.setText(be1);
-                        num2.setText(be2);
-                        num3.setText(be3);
-                        num4.setText(be4);
-                        num5.setText(be5);
-                        num6.setText(be6);
-                        num7.setText(be7);
+                        num1.setText(quantity[0]);
+                        num2.setText(quantity[1]);
+                        num3.setText(quantity[2]);
+                        num4.setText(quantity[3]);
+                        num5.setText(quantity[4]);
+                        num6.setText(quantity[5]);
+                        num7.setText(quantity[6]);
                         getActivity().closeContextMenu();
 
                     }
@@ -96,7 +118,40 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                 builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(getContext(), "Saving inventory succeeded",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Saving inventory succeeded", Toast.LENGTH_LONG).show();
+                        if (current != null)
+                            current.clear();
+
+                        if (Integer.parseInt(num1.getText().toString()) > 0) {
+                            current.put("Cucumber", Integer.parseInt(num1.getText().toString()));
+                        }
+                        if (Integer.parseInt(num2.getText().toString()) > 0) {
+                            current.put("Tomato", Integer.parseInt(num2.getText().toString()));
+                        }
+                        if (Integer.parseInt(num3.getText().toString()) > 0) {
+                            current.put("Potato", Integer.parseInt(num3.getText().toString()));
+                        }
+                        if (Integer.parseInt(num4.getText().toString()) > 0) {
+                            current.put("Apple", Integer.parseInt(num4.getText().toString()));
+                        }
+                        if (Integer.parseInt(num5.getText().toString()) > 0) {
+                            current.put("Banana", Integer.parseInt(num5.getText().toString()));
+                        }
+                        if (Integer.parseInt(num4.getText().toString()) > 0) {
+                            current.put("Butter", Integer.parseInt(num4.getText().toString()));
+                        }
+                        if (Integer.parseInt(num5.getText().toString()) > 0) {
+                            current.put("Cottage", Integer.parseInt(num5.getText().toString()));
+                        }
+                        if (Integer.parseInt(num6.getText().toString()) > 0) {
+                            current.put("Onion", Integer.parseInt(num6.getText().toString()));
+                        }
+                        if (Integer.parseInt(num7.getText().toString()) > 0) {
+                            current.put("Carrot", Integer.parseInt(num7.getText().toString()));
+                        }
+                        MyInfoManager.getInstance().saveInventory(current, "Meshek");
+                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                        startActivity(intent);
                     }
                 });
 

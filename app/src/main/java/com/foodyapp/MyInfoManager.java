@@ -96,10 +96,24 @@ public class MyInfoManager {
 	}
 
 
-	public void makeOrder(HashMap<String,Integer> products){
-			if(db != null && !products.isEmpty()){
-				db.makeOrder(products);
+	public void makeOrder(HashMap<String,Integer> products, HashMap<String,Integer> current, String supplier){
+			if(db != null && !products.isEmpty() && !current.isEmpty()){
+				db.makeOrder(products, current, supplier);
 		}
+	}
+
+	public void saveInventory(HashMap<String,Integer> current, String supplier){
+		if(db != null && !current.isEmpty()){
+			db.saveInventory(current, supplier);
+		}
+	}
+
+	public boolean isInventoryUpdated(String supplier){
+
+		if(db != null)
+			return db.isInventoryUpdated(supplier);
+		return false;
+
 	}
 
 	public boolean checkOrderTenuva(){

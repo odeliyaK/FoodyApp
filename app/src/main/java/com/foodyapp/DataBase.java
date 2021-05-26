@@ -304,21 +304,20 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     //make an order from Tenuva/Meshek/Osem/Butcher.
-    public void makeOrder(HashMap<String,Integer> products){
+    public void makeOrder(HashMap<String,Integer> products, HashMap<String,Integer> current, String supplier){
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
         Cursor cursor = null;
         long orderID;
         if(products != null)
         {
-            orderID = createOrderSQL("Tenuva");
-            //it means we succeeded create an order.
+            orderID = createOrderSQL(supplier);
+            //it means we succeeded to create an order.
             if(orderID >= 0){
                 for(String pro : products.keySet()){
                     try{
                         ContentValues values = new ContentValues();
-                        values.put(PRODUCTS_COLUMN_QUANTITY, products.get(pro));
-                        values.put(PRODUCTS_COLUMN_UPDATES, currentDate);
+                        values.put(PRODUCTS_COLUMN_QUANTITY, current.get(pro));
                         db.update(TABLE_PRODUCTS_NAME, values, PRODUCTS_COLUMN_NAME + " = ?",
                                 new String[] { pro });
                     } catch (Throwable t) {
@@ -339,12 +338,13 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+    //creating an order and return it's ID.
     public long createOrderSQL(String supplier){
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
         try{
             ContentValues values = new ContentValues();
-            values.put(ORDERS_COLUMN_SUPPLIER,"Tenuva");
+            values.put(ORDERS_COLUMN_SUPPLIER,supplier);
             values.put(ORDERS_COLUMN_DATE,currentDate);
 
             return db.insert(TABLE_ORDERS_NAME, null, values);
@@ -356,6 +356,7 @@ public class DataBase extends SQLiteOpenHelper {
         return -1;
     }
 
+    //create a new product by cursor (by getting a product from DB)
     public Products cursorToProduct(Cursor cursor) {
         Products result = new Products();
         try {
@@ -393,20 +394,54 @@ public class DataBase extends SQLiteOpenHelper {
         }
         return products;
     }
-    public void Products(){
-        ArrayList<Products> currentProducts = allProducts();
+
+    //saving the updates of the inventory.
+    public void saveInventory(HashMap<String,Integer> current, String supplier){
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-//        try {
-//            ContentValues values = new ContentValues();
-//            values.put(ORDERS_COLUMN_ID, 1);
-//            values.put(ORDERS_COLUMN_SUPPLIER, "Tenuva");
-//            values.put(ORDERS_COLUMN_DATE, currentDate);
-//
-//            db.insert(TABLE_ORDERS_NAME, null, values);
-//        } catch (Throwable t) {
-//            t.printStackTrace();
-//        }
+        for(String pro : current.keySet()) {
+            try {
+                ContentValues values = new ContentValues();
+                values.put(PRODUCTS_COLUMN_QUANTITY, current.get(pro));
+                values.put(PRODUCTS_COLUMN_UPDATES, currentDate);
+                db.update(TABLE_PRODUCTS_NAME, values, PRODUCTS_COLUMN_NAME + " = ? and " + PRODUCTS_COLUMN_SUPPLIER + " = ?",
+                        new String[]{pro, supplier});
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }
+
+    }
+
+    //check if someone updated the inventory today (by product kind - dairy/grocery..)
+    public boolean isInventoryUpdated(String supplier){
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+        boolean flag = false;
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_PRODUCTS_NAME, TABLE_PRODUCTS_COLUMNS, PRODUCTS_COLUMN_SUPPLIER + " = ? and " + PRODUCTS_COLUMN_UPDATES + " = ?",
+                    new String[]{supplier,currentDate}, null, null, PRODUCTS_COLUMN_NAME + " DESC", "1");
+            if(cursor.getCount()>0)
+                flag = true;
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        finally {
+            // make sure to close the cursor
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+
+
+        return flag;
+    }
+
+    //insert all products to DB for the first time we run this app.
+    public void Products(){
+        ArrayList<Products> currentProducts = allProducts();
+
         //check if there are already products in DB. If not - it means DB is empty and those insert will happen.
         if(currentProducts.isEmpty()){
             //dairy

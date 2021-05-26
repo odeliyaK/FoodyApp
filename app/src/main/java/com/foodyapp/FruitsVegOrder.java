@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +17,13 @@ import android.widget.Button;
 import android.app.Fragment;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.foodyapp.model.Products;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FruitsVegOrder extends Fragment implements View.OnClickListener{
     private static final int[] idArray = {R.id.plus1,R.id.plus2,R.id.plus3,R.id.plus4,R.id.plus5,R.id.plus6,R.id.plus7,R.id.plus6,R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4,R.id.minus5,R.id.minus6,R.id.minus7};
@@ -26,7 +33,10 @@ public class FruitsVegOrder extends Fragment implements View.OnClickListener{
     ImageButton p1,p2,p3,p4,m1,m2,m3,m4;
     EditText num1,num2,num3,num4,num5,num6,num7;
     String be1,be2,be3,be4,be5,be6,be7;
+    TextView a1,a2,a3,a4,a5,a6,a7;
     Button save;
+    HashMap<String, Integer> current = new HashMap<>();
+    HashMap<String, Integer> myOrder = new HashMap<>();
 
     public FruitsVegOrder() {
         // Required empty public constructor
@@ -43,6 +53,13 @@ public class FruitsVegOrder extends Fragment implements View.OnClickListener{
         num5 = (EditText) view.findViewById(R.id.num5);
         num6 = (EditText) view.findViewById(R.id.num6);
         num7 = (EditText) view.findViewById(R.id.num7);
+        a1 = (TextView) view.findViewById(R.id.amount1);
+        a2 = (TextView) view.findViewById(R.id.amount2);
+        a3 = (TextView) view.findViewById(R.id.amount3);
+        a4 = (TextView) view.findViewById(R.id.amount4);
+        a5 = (TextView) view.findViewById(R.id.amount5);
+        a6 = (TextView) view.findViewById(R.id.amount6);
+        a7 = (TextView) view.findViewById(R.id.amount7);
         be1 = num1.getText().toString();
         be2 = num2.getText().toString();
         be3 = num3.getText().toString();
@@ -50,6 +67,19 @@ public class FruitsVegOrder extends Fragment implements View.OnClickListener{
         be5 = num5.getText().toString();
         be6 = num6.getText().toString();
         be7 = num7.getText().toString();
+
+        TextView[] textQ = {a1,a2,a3,a4,a5,a6,a7};
+
+        ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
+        if(!products.isEmpty()){
+            int i=0;
+            for(Products p : products){
+                if(p.getSupplier().equals("Meshek")){
+                    textQ[i].setText(String.valueOf(p.getQuantity()));
+                    i++;
+                }
+            }
+        }
 
         for(int i=0; i<idArray.length; i++) {
             buttons[i] = (ImageButton) view.findViewById(idArray[i]);
@@ -93,13 +123,64 @@ public class FruitsVegOrder extends Fragment implements View.OnClickListener{
                 builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(getContext(), "Order from 'OSEM' succeeded",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Order from 'MESHEK' succeeded",Toast.LENGTH_LONG).show();
+
+                        if(current != null)
+                            current.clear();
+                        if(myOrder != null)
+                            myOrder.clear();
+
+                        if(Integer.parseInt(num1.getText().toString()) > 0){
+                            current.put("Cucumber", Integer.parseInt(num1.getText().toString()) + Integer.parseInt(a1.getText().toString()));
+                            myOrder.put("Cucumber", Integer.parseInt(num1.getText().toString()));
+                        }
+                        if(Integer.parseInt(num2.getText().toString()) > 0){
+                            current.put("Tomato", Integer.parseInt(num2.getText().toString()) + Integer.parseInt(a2.getText().toString()));
+                            myOrder.put("Tomato", Integer.parseInt(num2.getText().toString()));
+                        }
+                        if(Integer.parseInt(num3.getText().toString()) > 0){
+                            current.put("Potato", Integer.parseInt(num3.getText().toString()) + Integer.parseInt(a3.getText().toString()));
+                            myOrder.put("Potato", Integer.parseInt(num3.getText().toString()));
+                        }
+                        if(Integer.parseInt(num4.getText().toString()) > 0){
+                            current.put("Apple", Integer.parseInt(num4.getText().toString()) + Integer.parseInt(a4.getText().toString()));
+                            myOrder.put("Apple", Integer.parseInt(num4.getText().toString()));
+                        }
+                        if(Integer.parseInt(num5.getText().toString()) > 0){
+                            current.put("Banana", Integer.parseInt(num5.getText().toString()) + Integer.parseInt(a5.getText().toString()));
+                            myOrder.put("Banana", Integer.parseInt(num5.getText().toString()));
+                        }
+                        if(Integer.parseInt(num6.getText().toString()) > 0){
+                            current.put("Onion", Integer.parseInt(num6.getText().toString()) + Integer.parseInt(a6.getText().toString()));
+                            myOrder.put("Onion", Integer.parseInt(num6.getText().toString()));
+                        }
+                        if(Integer.parseInt(num7.getText().toString()) > 0){
+                            current.put("Carrot", Integer.parseInt(num7.getText().toString()) + Integer.parseInt(a7.getText().toString()));
+                            myOrder.put("Carrot", Integer.parseInt(num7.getText().toString()));
+                        }
+                        MyInfoManager.getInstance().makeOrder(myOrder, current,"Meshek");
+
                         num1.setText(be1);
                         num2.setText(be2);
                         num3.setText(be3);
                         num4.setText(be4);
                         num5.setText(be5);
                         num6.setText(be6);
+                        num7.setText(be7);
+
+                        TextView[] textQ = {a1,a2,a3,a4,a5,a6,a7};
+                        ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
+                        if(!products.isEmpty()){
+                            int i=0;
+                            for(Products p : products){
+                                if(p.getSupplier().equals("Meshek") && textQ.length>i){
+                                    textQ[i].setText(String.valueOf(p.getQuantity()));
+                                    i++;
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                        startActivity(intent);
                     }
                 });
 

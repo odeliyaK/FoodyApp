@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -35,7 +36,9 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
     String be1,be2,be3,be4,be5;
     TextView a1,a2,a3,a4,a5;
     Button save;
+    HashMap<String, Integer> current = new HashMap<>();
     HashMap<String, Integer> myOrder = new HashMap<>();
+    boolean flag = false;
 
     public DairyActivityOrder() {
         // Required empty public constructor
@@ -119,25 +122,32 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
 
                         Toast.makeText(getContext(), "Order from 'Tenuva' succeeded",Toast.LENGTH_LONG).show();
 
+                        if(current != null)
+                            current.clear();
                         if(myOrder != null)
                             myOrder.clear();
 
                         if(Integer.parseInt(num1.getText().toString()) > 0){
-                            myOrder.put("Milk", Integer.parseInt(num1.getText().toString()) + Integer.parseInt(a1.getText().toString()));
+                            current.put("Milk", Integer.parseInt(num1.getText().toString()) + Integer.parseInt(a1.getText().toString()));
+                            myOrder.put("Milk", Integer.parseInt(num1.getText().toString()));
                         }
                         if(Integer.parseInt(num2.getText().toString()) > 0){
-                            myOrder.put("Cheese", Integer.parseInt(num2.getText().toString()) + Integer.parseInt(a2.getText().toString()));
+                            current.put("Cheese", Integer.parseInt(num2.getText().toString()) + Integer.parseInt(a2.getText().toString()));
+                            myOrder.put("Cheese", Integer.parseInt(num2.getText().toString()));
                         }
                         if(Integer.parseInt(num3.getText().toString()) > 0){
-                            myOrder.put("Eggs", Integer.parseInt(num3.getText().toString()) + Integer.parseInt(a3.getText().toString()));
+                            current.put("Eggs", Integer.parseInt(num3.getText().toString()) + Integer.parseInt(a3.getText().toString()));
+                            myOrder.put("Eggs", Integer.parseInt(num3.getText().toString()));
                         }
                         if(Integer.parseInt(num4.getText().toString()) > 0){
-                            myOrder.put("Butter", Integer.parseInt(num4.getText().toString()) + Integer.parseInt(a4.getText().toString()));
+                            current.put("Butter", Integer.parseInt(num4.getText().toString()) + Integer.parseInt(a4.getText().toString()));
+                            myOrder.put("Butter", Integer.parseInt(num4.getText().toString()));
                         }
                         if(Integer.parseInt(num5.getText().toString()) > 0){
-                            myOrder.put("Cottage", Integer.parseInt(num5.getText().toString()) + Integer.parseInt(a5.getText().toString()));
+                            current.put("Cottage", Integer.parseInt(num5.getText().toString()) + Integer.parseInt(a5.getText().toString()));
+                            myOrder.put("Cottage", Integer.parseInt(num5.getText().toString()));
                         }
-                        MyInfoManager.getInstance().makeOrder(myOrder);
+                        MyInfoManager.getInstance().makeOrder(myOrder,current, "Tenuva");
                         num1.setText(be1);
                         num2.setText(be2);
                         num3.setText(be3);
@@ -155,6 +165,8 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                                 }
                             }
                         }
+                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                        startActivity(intent);
                     }
                 });
 
@@ -162,6 +174,8 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                 AlertDialog dialog = builder.create();
 
                 dialog.show();
+
+                break;
             case R.id.plus1:
                 num = 0;
                 num = Integer.parseInt(num1.getText().toString());

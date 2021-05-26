@@ -92,12 +92,24 @@ public class OrderActivity extends AppCompatActivity {
         mpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = getFragmentManager();
-                MeatPoultryOrderFragment fragment = new MeatPoultryOrderFragment();
-                FragmentTransaction t = fm.beginTransaction();
-                t.replace(R.id.root_layout, fragment);
-                t.addToBackStack(null);
-                t.commit();
+                if(!MyInfoManager.getInstance().checkIfOrderHappen("Butcher")) {
+                    FragmentManager fm = getFragmentManager();
+                    MeatPoultryOrderFragment fragment = new MeatPoultryOrderFragment();
+                    FragmentTransaction t = fm.beginTransaction();
+                    t.replace(R.id.root_layout, fragment);
+                    t.addToBackStack(null);
+                    t.commit();
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                    builder.setMessage(R.string.orderMadeToday);
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
 
             }
 
@@ -107,12 +119,24 @@ public class OrderActivity extends AppCompatActivity {
         fvBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = getFragmentManager();
-                FruitsVegOrder fragment = new FruitsVegOrder();
-                FragmentTransaction t = fm.beginTransaction();
-                t.replace(R.id.root_layout, fragment);
-                t.addToBackStack(null);
-                t.commit();
+                if(!MyInfoManager.getInstance().checkIfOrderHappen("Meshek")) {
+                    FragmentManager fm = getFragmentManager();
+                    FruitsVegOrder fragment = new FruitsVegOrder();
+                    FragmentTransaction t = fm.beginTransaction();
+                    t.replace(R.id.root_layout, fragment);
+                    t.addToBackStack(null);
+                    t.commit();
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                    builder.setMessage(R.string.orderMadeToday);
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
 
             }
         });

@@ -50,6 +50,15 @@
                             android:text="@string/DairyCol1"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="5"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:text="@string/DairyCol2"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -57,7 +66,7 @@
                             android:layout_weight="4"
                             android:gravity="center"
                             android:padding="10sp"
-                            android:text="@string/DairyCol2"
+                            android:text="@string/DairyCol5"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -73,6 +82,14 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="Cucumber"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -126,6 +143,14 @@
                             android:padding="10sp"
                             android:text="Tomato"
                             android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:textSize="18sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -176,6 +201,14 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="Potato"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -229,6 +262,14 @@
                             android:padding="10sp"
                             android:text="Apple"
                             android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:textSize="18sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -279,6 +320,14 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="Banana"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
                             android:textSize="18sp" />
 
                         <LinearLayout
@@ -332,6 +381,14 @@
                             android:padding="10sp"
                             android:text="Onion"
                             android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
+                            android:textSize="18sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -383,6 +440,14 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="Carrot"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/amount7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:padding="10sp"
                             android:textSize="18sp" />
 
                         <LinearLayout
