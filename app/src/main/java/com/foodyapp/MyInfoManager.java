@@ -3,6 +3,7 @@ package com.foodyapp;
 import android.content.Context;
 
 import com.foodyapp.model.Products;
+import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
 
 import java.util.ArrayList;
@@ -116,13 +117,11 @@ public class MyInfoManager {
 
 	}
 
-	public boolean checkOrderTenuva(){
-		if(db != null){
-			return db.checkOrderTenuva();
+	public long newVolunteer(String name, String phone) {
+		if (db != null) {
+			return db.newVolunteer(name, phone);
 		}
-		return false;
+		return -1;
 	}
-
-
 
 }

@@ -142,6 +142,13 @@ public class OrderActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        MyInfoManager.getInstance().openDataBase(this);
+        super.onResume();
+
+    }
+
     protected void onPause() {
         MyInfoManager.getInstance().closeDataBase();
         super.onPause();

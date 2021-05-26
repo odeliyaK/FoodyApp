@@ -16,6 +16,8 @@ import com.foodyapp.model.Products;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+
+import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
 
 import java.util.ArrayList;
@@ -131,9 +133,16 @@ public class DataBase extends SQLiteOpenHelper {
                     + PRODUCTS_COLUMN_QUANTITY + " INTEGER)";
             db.execSQL(CREATE_PRODUCTS_TABLE);
 
+            // SQL statement to create volunteer table
+            String CREATE_VOLUNTEER_TABLE = "create table if not exists " + TABLE_VOLUNTEER_NAME +" ( "
+                    + VOLUNTEER_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + VOLUNTEERS_COLUMN_NAME +" TEXT , "
+                    + VOLUNTEERS_COLUMN_PHONE +" INTEGER)";
+            db.execSQL(CREATE_VOLUNTEER_TABLE);
+
             // SQL statement to create order_products table
             String CREATE_ORDER_PRODUCTS_TABLE = "create table if not exists " + TABLE_ORDER_PRODUCT_NAME +" ( "
-                    + ORDER_PRODUCT_COLUMN_ORDER +" INTEGER , "
+                    + ORDER_PRODUCT_COLUMN_ORDER +" INTEGER, "
                     + ORDER_PRODUCT_COLUMN_PRODUCT +" TEXT , "
                     + ORDER_PRODUCT_COLUMN_QUANTITY +" INTEGER, PRIMARY KEY ( " + ORDER_PRODUCT_COLUMN_ORDER + "," + ORDER_PRODUCT_COLUMN_PRODUCT+ "))";
             db.execSQL(CREATE_ORDER_PRODUCTS_TABLE);
@@ -198,111 +207,20 @@ public class DataBase extends SQLiteOpenHelper {
         }
         return flag;
     }
-    //check if an order happened today from Tenuva.
-    public boolean checkOrderTenuva(){
-        boolean flag = false;
-        Cursor cursor = null;
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-        try {
-            cursor = db.query(TABLE_ORDERS_NAME, TABLE_ORDERS_COLUMNS, ORDERS_COLUMN_SUPPLIER + " = ? and " + ORDERS_COLUMN_DATE + " = ?", new String[] {"Tenuva", currentDate},
-                    null, null, null);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                flag = true;
-                cursor.moveToNext();
-            }
+    public long newVolunteer(String name, String phone){
+
+        try{
+            ContentValues values = new ContentValues();
+            values.put(VOLUNTEERS_COLUMN_NAME, name);
+            values.put(VOLUNTEERS_COLUMN_PHONE, phone);
+
+            return db.insert(TABLE_VOLUNTEER_NAME,null, values);
+
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        finally {
-            // make sure to close the cursor
-            if(cursor!=null){
-                cursor.close();
-            }
-        }
-        return flag;
+        return -1;
     }
-
-    //check if an order happened today from Butcher.
-    public boolean checkOrderButcher(){
-        boolean flag = false;
-        Cursor cursor = null;
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-        try {
-            cursor = db.query(TABLE_ORDERS_NAME, TABLE_ORDERS_COLUMNS, ORDERS_COLUMN_SUPPLIER + " = ? and " + ORDERS_COLUMN_DATE + " = ?", new String[] {"Butcher", currentDate},
-                    null, null, null);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                flag = true;
-                cursor.moveToNext();
-            }
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-        finally {
-            // make sure to close the cursor
-            if(cursor!=null){
-                cursor.close();
-            }
-        }
-        return flag;
-    }
-
-
-    //check if an order happened today from Butcher.
-    public boolean checkOrderOsem(){
-        boolean flag = false;
-        Cursor cursor = null;
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-        try {
-            cursor = db.query(TABLE_ORDERS_NAME, TABLE_ORDERS_COLUMNS, ORDERS_COLUMN_SUPPLIER + " = ? and " + ORDERS_COLUMN_DATE + " = ?", new String[] {"Osem", currentDate},
-                    null, null, null);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                flag = true;
-                cursor.moveToNext();
-            }
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-        finally {
-            // make sure to close the cursor
-            if(cursor!=null){
-                cursor.close();
-            }
-        }
-        return flag;
-    }
-
-    //check if an order happened today from Butcher.
-    public boolean checkOrderMeshek(){
-        boolean flag = false;
-        Cursor cursor = null;
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-        try {
-            cursor = db.query(TABLE_ORDERS_NAME, TABLE_ORDERS_COLUMNS, ORDERS_COLUMN_SUPPLIER + " = ? and " + ORDERS_COLUMN_DATE + " = ?", new String[] {"Meshek", currentDate},
-                    null, null, null);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                flag = true;
-                cursor.moveToNext();
-            }
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-        finally {
-            // make sure to close the cursor
-            if(cursor!=null){
-                cursor.close();
-            }
-        }
-        return flag;
-    }
-
     //make an order from Tenuva/Meshek/Osem/Butcher.
     public void makeOrder(HashMap<String,Integer> products, HashMap<String,Integer> current, String supplier){
         Calendar calendar = Calendar.getInstance();
