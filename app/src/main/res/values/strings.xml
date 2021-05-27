@@ -82,7 +82,6 @@
     <string name="household_name">Household name</string>
 
 
-
     <string-array name="roles">
         <item>Volunteer</item>
         <item>User</item>
