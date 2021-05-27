@@ -83,6 +83,7 @@ public class DialogFragmentInputAdd extends DialogFragment {
                      List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
                      adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,list);
                     HouseHoldListActivity.myList.setAdapter(adapter);
+                    HouseHoldListActivity.adapter.notifyDataSetChanged();
                     dismiss();
                 }
             }

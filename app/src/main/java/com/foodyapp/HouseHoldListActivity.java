@@ -42,9 +42,10 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
         myList = (ListView) findViewById(R.id.listView);
         this.context = this;
 
-
+        MyInfoManager.getInstance().openDataBase(this);
+        itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
         List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
-        adapter = new UsersAdapterOrg(this, R.layout.activity_users_adapter_org, list);
+        adapter = new UsersAdapterOrg(this, R.layout.activity_users_adapter_org, itemInfos);
         myList.setAdapter(adapter);
 
         Button updateBtn=findViewById(R.id.updateBtn);
@@ -62,8 +63,8 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                 upFlag = true;
                 reFlag=true;
                 indexVal=position;
-                String a=indexVal.toString();
-                Toast.makeText(HouseHoldListActivity.this, a, Toast.LENGTH_SHORT).show();
+                String a=itemInfos.get(position).getName();
+                Toast.makeText(HouseHoldListActivity.this, a+ " was clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -118,6 +119,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
             @Override
             public void onClick(View v) {
                 if (reFlag) {
+
                     AlertDialog.Builder removeApprovalDialog = new AlertDialog.Builder(context);
                     removeApprovalDialog.setMessage("Are you sure you want to remove " + itemInfos.get(indexVal).getName());
                     removeApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -125,12 +127,13 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                         public void onClick(DialogInterface dialog, int which) {
            //                 DataBase db = new DataBase(HouseHoldListActivity.this);
 //                            db.reomoveHouseHold(itemInfos.get(indexVal).getId());
-//                            usersInfo u = itemInfos.get(indexVal);
+                            usersInfo currentuser = itemInfos.get(indexVal);
 //                            HouseHoldListActivity.itemInfos.remove(u);
 //                            adapter.notifyDataSetChanged();
-//                            MyInfoManager.getInstance().deleteHousehold(currentuser);
-//                            adapter.remove(currentuser);
-//                            adapter.notifyDataSetChanged();
+                            MyInfoManager.getInstance().deleteHousehold(currentuser);
+                            adapter.remove(currentuser);
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(HouseHoldListActivity.this, currentuser.getName()+" was deleted",Toast.LENGTH_LONG);
                         }
                     });
                     removeApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -158,6 +161,18 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 
     }
 
+    @Override
+    protected void onResume() {
+        MyInfoManager.getInstance().openDataBase(this);
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        MyInfoManager.getInstance().closeDataBase();
+        super.onPause();
+    }
     @Override
     public void onDialogPositiveClick(DialogFragmentInputAdd dialog) {
     }
