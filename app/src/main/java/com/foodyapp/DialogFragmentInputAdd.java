@@ -2,6 +2,8 @@ package com.foodyapp;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -80,10 +82,14 @@ public class DialogFragmentInputAdd extends DialogFragment {
                     String address=Address.getText().toString();
                         usersInfo user=new usersInfo(name,address);
                      MyInfoManager.getInstance().createHouseHold(user);
+                     HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
                      List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
-                     adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,list);
+                     adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
+//
                     HouseHoldListActivity.myList.setAdapter(adapter);
                     HouseHoldListActivity.adapter.notifyDataSetChanged();
+
+
                     dismiss();
                 }
             }

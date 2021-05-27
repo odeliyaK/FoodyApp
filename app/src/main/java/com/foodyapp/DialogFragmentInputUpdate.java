@@ -3,7 +3,10 @@ package com.foodyapp;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,7 +32,7 @@ public class DialogFragmentInputUpdate extends DialogFragment {
     private Button cancelBtn;
     private Activity activity;
     String myID, myName, myAddress;
-
+    protected static final int NEW_ITEM_TAG = -111;
     // Use this instance of the interface to deliver action events
     UpdateInputDialogFragment mListener;
 
@@ -100,12 +103,36 @@ public class DialogFragmentInputUpdate extends DialogFragment {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-//
-                            Toast.makeText(activity, "id= "+ idField.getText().toString(), Toast.LENGTH_SHORT).show();
-                            DataBase myDB= new DataBase(activity);
-                            myDB.updateHouseHold(idField.getText().toString().trim(), NameField.getText().toString().trim(), Address.getText().toString().trim());
-                            HouseHoldListActivity.itemInfos.set(HouseHoldListActivity.indexVal,new usersInfo(getFirstNameField() ,getLastNameField(),getIdField()));
-                            HouseHoldListActivity.adapter.notifyDataSetChanged();
+                            try {
+                                String id= idField.getText().toString();
+                                String name=NameField.getText().toString();
+                                String address = Address.getText().toString();
+                                int selected=HouseHoldListActivity.indexVal;
+                                usersInfo currentuser = HouseHoldListActivity.itemInfos.get(selected);
+                               // usersInfo household =MyInfoManager.getInstance().getSelectedHouseHold();
+                                if(currentuser==null){
+                                    currentuser = new usersInfo(name, address);
+
+                                    MyInfoManager.getInstance().createHouseHold(currentuser);
+                                }
+                                else{
+                                    currentuser.setName(name);
+                                    currentuser.setAddress(address);
+                                    if(Integer.parseInt(currentuser.getId()) == NEW_ITEM_TAG){
+                                        MyInfoManager.getInstance().createHouseHold(currentuser);
+                                    }
+                                    else{
+                                        MyInfoManager.getInstance().updateHousehold(currentuser);
+                                    }
+                                }
+
+
+
+                            } catch (Throwable e) {
+                                e.printStackTrace();
+                            }
+
+
                             dismiss();
                         }
                     });
@@ -130,6 +157,8 @@ public class DialogFragmentInputUpdate extends DialogFragment {
                 dismiss();
             }
         });
+
+
         return v;
 
     }

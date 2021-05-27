@@ -56,15 +56,15 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                item=itemInfos.get(position).getName()+ " has been selected";
-//                selectedID = itemInfos.get(position).getId();
-//                selecteAddress = itemInfos.get(position).getAddress();
-//                selectedName = itemInfos.get(position).getName();
+                usersInfo user=(usersInfo)parent.getItemAtPosition(position);
+                item=itemInfos.get(position).getName()+ " has been selected";
+                selectedID = itemInfos.get(position).getId();
+                selecteAddress = itemInfos.get(position).getAddress();
+                selectedName = itemInfos.get(position).getName();
                 upFlag = true;
                 reFlag=true;
                 indexVal=position;
-                String a=itemInfos.get(position).getName();
-                Toast.makeText(HouseHoldListActivity.this, a+ " was clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HouseHoldListActivity.this, user.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -74,7 +74,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
             public void onClick(View v) {
                 if(upFlag){
                     Bundle bundle = new Bundle();
-                    bundle.putString("id", selectedID);
+         //           bundle.putString("id", selectedID);
                     bundle.putString("name", selectedName);
                     bundle.putString("address", selecteAddress);
                     DialogFragmentInputUpdate frag = new DialogFragmentInputUpdate();
@@ -131,8 +131,12 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 //                            HouseHoldListActivity.itemInfos.remove(u);
 //                            adapter.notifyDataSetChanged();
                             MyInfoManager.getInstance().deleteHousehold(currentuser);
+                         //   HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
+
                             adapter.remove(currentuser);
-                            adapter.notifyDataSetChanged();
+                            myList.setAdapter(adapter);
+                            //adapter.notifyDataSetChanged();
+
                             Toast.makeText(HouseHoldListActivity.this, currentuser.getName()+" was deleted",Toast.LENGTH_LONG);
                         }
                     });

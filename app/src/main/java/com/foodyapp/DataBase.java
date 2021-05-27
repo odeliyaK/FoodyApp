@@ -602,7 +602,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     //adds house holds to the db
     void addHouseHold(usersInfo user){
-//        SQLiteDatabase db=this.getWritableDatabase();
+
         try {
             ContentValues cv=new ContentValues();
             cv.put(HOUSEHOLDS_COLUMN_NAME, user.getName());
@@ -614,19 +614,22 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     //updates households
-    void updateHouseHold(String id, String newName, String newAddress){
-//        SQLiteDatabase db=this.getWritableDatabase();
-       ContentValues cv=new ContentValues();
-       cv.put(HOUSEHOLDS_COLUMN_NAME, newName);
-        cv.put(HOUSEHOLDS_COLUMN_ADDRESS, newAddress);
+    public int updateHousehold(usersInfo houseHold) {
+        int i = 0;
+        try {
 
-        long result=db.update(TABLE_HOUSEHOLDS_NAME, cv, HOUSEHOLDS_COLUMN_ID + " =?", new String[] { String.valueOf(id) });
-        if (result==-1){
-            Toast.makeText(context, "failed update db", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(context, "success update  db", Toast.LENGTH_SHORT).show();
-      //      updateId=result;
+            // make values to be inserted
+            ContentValues values = new ContentValues();
+            values.put(HOUSEHOLDS_COLUMN_NAME, houseHold.getName());
+            values.put(HOUSEHOLDS_COLUMN_ADDRESS, houseHold.getAddress());
+            // update
+            i = db.update(TABLE_HOUSEHOLDS_NAME, values, HOUSEHOLDS_COLUMN_ID + " = ?",
+                    new String[] { String.valueOf(houseHold.getId()) });
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
+
+        return i;
     }
 
     //removes households

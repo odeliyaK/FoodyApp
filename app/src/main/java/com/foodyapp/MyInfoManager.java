@@ -17,6 +17,7 @@ public class MyInfoManager {
 	private DataBase db = null;
 	int newId=0;
 	int updateId=0;
+	private usersInfo selectedHousehold = null;
 
 	public static MyInfoManager getInstance() {
 			if (instance == null) {
@@ -123,5 +124,16 @@ public class MyInfoManager {
 		}
 		return -1;
 	}
+
+	public void updateHousehold(usersInfo household) {
+		if (db != null && household != null) {
+			db.updateHousehold(household);
+		}
+	}
+
+	public usersInfo getSelectedHouseHold() {
+		return selectedHousehold;
+	}
+
 
 }
