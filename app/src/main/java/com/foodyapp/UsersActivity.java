@@ -54,20 +54,15 @@ public class UsersActivity extends Activity {
 
         this.context = this;
         list = (ListView) findViewById(R.id.list);
-        myDB=new DataBase(UsersActivity.this);
-        itemInfos = new ArrayList<usersInfo>();
-        Cursor cursor=myDB.readAllHouseHolds();
-        if (cursor.getCount()==0){
+
+        MyInfoManager.getInstance().openDataBase(this);
+        List<usersInfo> listOfPackages = MyInfoManager.getInstance().getAllPackages();
+        if (listOfPackages.isEmpty()){
             Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
         }else {
-            while (cursor.moveToNext()){
-                usersInfo u=new usersInfo( Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), R.drawable.sendparcel);
-                itemInfos.add(u);
-                adapter = new UsersLIstAdapter(this, itemInfos);
-                list.setAdapter(adapter);
-            }
+            adapter = new UsersLIstAdapter(this, listOfPackages);
+            list.setAdapter(adapter);
         }
-
 
 
     }
@@ -117,5 +112,16 @@ public class UsersActivity extends Activity {
         });
         popupMenu.show();
     }
+    @Override
+    protected void onResume() {
+        MyInfoManager.getInstance().openDataBase(this);
+        super.onResume();
 
+    }
+
+    @Override
+    protected void onPause() {
+        MyInfoManager.getInstance().closeDataBase();
+        super.onPause();
+    }
 }

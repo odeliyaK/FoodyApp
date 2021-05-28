@@ -11,8 +11,7 @@ import java.util.List;
 
 public class HistoryAdapter extends ArrayAdapter<HistoryInfo> {
 
-
-    private List<HistoryInfo> dataList = null;
+    static List<HistoryInfo> dataList = null;
     private Context context = null;
     public HistoryAdapter(Context context, List<HistoryInfo> dataList) {
         super( context, R.layout.users_list, dataList);

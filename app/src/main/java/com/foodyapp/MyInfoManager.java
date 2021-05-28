@@ -62,6 +62,12 @@ public class MyInfoManager {
 		}
 	}
 
+	public void createHistoryPackage(HistoryInfo user) {
+		if (db != null) {
+			db.addPackageToHistory(user);
+		}
+	}
+
 	public List<usersInfo> getAllHouseHolds() {
 		List<usersInfo> result = new ArrayList<usersInfo>();
 		if (db != null) {
@@ -75,6 +81,36 @@ public class MyInfoManager {
 		if (db != null) {
 			db.reomoveHouseHold(household);
 		}
+	}
+
+	public void deletePackage(usersInfo household) {
+		if (db != null) {
+			db.reomovePackage(household);
+		}
+	}
+
+	public List<usersInfo> getAllPackages() {
+		List<usersInfo> result = new ArrayList<usersInfo>();
+		if (db != null) {
+			result = db.getAllPackages();
+		}
+		return result;
+	}
+
+	public List<HistoryInfo> getAllHistoryPackages() {
+		List<HistoryInfo> result = new ArrayList<HistoryInfo>();
+		if (db != null) {
+			result = db.getAllHistoryPackages();
+		}
+		return result;
+	}
+
+	public List<usersInfo> getAllActivePackages() {
+		List<usersInfo> result = new ArrayList<usersInfo>();
+		if (db != null) {
+			result = db.getAllActivePackages();
+		}
+		return result;
 	}
 
 
@@ -134,6 +170,8 @@ public class MyInfoManager {
 	public usersInfo getSelectedHouseHold() {
 		return selectedHousehold;
 	}
+
+
 
 
 }

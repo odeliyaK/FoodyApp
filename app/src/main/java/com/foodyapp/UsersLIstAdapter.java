@@ -13,11 +13,16 @@ import android.widget.Toast;
 
 import com.foodyapp.model.usersInfo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
     private List<usersInfo> dataList = null;
     private Context context = null;
+    private HistoryAdapter adapter;
     int pos;
     public UsersLIstAdapter(Context context, List<usersInfo> dataList) {
         super( context, R.layout.users_list, dataList);
@@ -61,12 +66,22 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    UsersActivity.itemInfos.remove(UsersActivity.itemInfos.get(position));
-                    UsersActivity.adapter.notifyDataSetChanged();
-                    DataBase myDB=new DataBase(context);
-//                    myDB.reomovePackages(itemInfo.getId());
-//                    myDB.updateHouseHoldStatus("Got",itemInfo.getId());
-                 //   Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
+                    Date c = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                    String currentDate = df.format(c);
+                    HistoryInfo send=new HistoryInfo(itemInfo.getNum(), itemInfo.getName(), itemInfo.getAddress(),currentDate);
+              MyInfoManager.getInstance().createHistoryPackage(send);
+
+                    List<HistoryInfo> list = MyInfoManager.getInstance().getAllHistoryPackages();
+                    HistoryActivity.itemInfos=list;
+                    HistoryActivity.adapter=new HistoryAdapter(context, list);
+                    HistoryActivity.adapter.notifyDataSetChanged();
+
+              MyInfoManager.getInstance().deletePackage(itemInfo);
+                    UsersLIstAdapter.this.remove(itemInfo);
+                    UsersLIstAdapter.this.notifyDataSetChanged();
+
+                    Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
 
                 }
             });

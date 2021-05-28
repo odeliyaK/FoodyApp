@@ -80,6 +80,7 @@
     <string name="Update">update</string>
     <string name="household_id">Household Id</string>
     <string name="household_name">Household name</string>
+    <string name="noPackagesInDB">There are no packages</string>
 
 
     <string-array name="roles">

@@ -16,6 +16,23 @@ public class HistoryInfo {
 
     }
 
+    public HistoryInfo(int packageNum,String name, String address) {
+        super();
+        this.packageNum = packageNum;
+        this.name = name;
+        this.address = address;
+        this.Date = Date;
+
+    }
+
+    public HistoryInfo() {
+        super();
+        this.packageNum = packageNum;
+        this.name = name;
+        this.address = address;
+        this.Date = Date;
+
+    }
 
     public int getNum() {
         return packageNum;

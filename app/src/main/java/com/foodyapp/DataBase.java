@@ -14,7 +14,9 @@ import androidx.annotation.Nullable;
 
 import com.foodyapp.model.Products;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import com.foodyapp.model.Volunteers;
@@ -22,6 +24,7 @@ import com.foodyapp.model.usersInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DataBase extends SQLiteOpenHelper {
     private Context context;
@@ -42,8 +45,10 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String TABLE_PACKAGES_NAME = "packages";
     private static final String PACKAGES_COLUMN_ID = "ID";
     private static final String PACKAGES_COLUMN_HOUSEHOLD_ID = "householdID";
+    private static final String PACKAGES_COLUMN_HOUSEHOLD_NAME = "householdName";
+    private static final String PACKAGES_COLUMN_HOUSEHOLD_ADDRESS = "householdAddress";
     private static final String PACKAGES_COLUMN_STATUS = "status";
-    private static final String[] TABLE_PACKAGES_COLUMNS = {PACKAGES_COLUMN_ID, PACKAGES_COLUMN_HOUSEHOLD_ID, PACKAGES_COLUMN_STATUS};
+    private static final String[] TABLE_PACKAGES_COLUMNS = {PACKAGES_COLUMN_ID, PACKAGES_COLUMN_HOUSEHOLD_ID,PACKAGES_COLUMN_HOUSEHOLD_NAME, PACKAGES_COLUMN_HOUSEHOLD_ADDRESS, PACKAGES_COLUMN_STATUS};
 
     //delivery table
     private static final String TABLE_DELIVERY_NAME = "deliveries";
@@ -52,6 +57,13 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String DELIVERY_COLUMN_DATE = "date";
     private static final String[] TABLE_DELIVERY_COLUMNS = {DELIVERY_COLUMN_ID, DELIVERY_COLUMN_PACKAGE, DELIVERY_COLUMN_DATE};
 
+    //history table
+    private static final String TABLE_HISTORY_NAME = "packages history";
+    private static final String HISTORY_COLUMN_PACKAGE_ID = "packageID";
+    private static final String HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME = "household name";
+    private static final String HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS = "household address";
+    private static final String HISTORY_COLUMN_DATE = "date";
+    private static final String[] TABLE_HISTORY_COLUMNS = { HISTORY_COLUMN_PACKAGE_ID,HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME,HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS, HISTORY_COLUMN_DATE};
     //products table
     private static final String TABLE_PRODUCTS_NAME = "products";
     private static final String PRODUCTS_COLUMN_NAME = "name";
@@ -109,7 +121,17 @@ public class DataBase extends SQLiteOpenHelper {
             String CREATE_PACKAGES_TABLE = "create table if not exists " + TABLE_PACKAGES_NAME +" ( "
                     + PACKAGES_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + PACKAGES_COLUMN_HOUSEHOLD_ID +" INTEGER, "
+                    + PACKAGES_COLUMN_HOUSEHOLD_NAME +" TEXT, "
+                    + PACKAGES_COLUMN_HOUSEHOLD_ADDRESS +" TEXT, "
                     + PACKAGES_COLUMN_STATUS + " TEXT)";
+            db.execSQL(CREATE_PACKAGES_TABLE);
+
+            // SQL statement to create packages history table
+            String CREATE_HISTORY_TABLE = "create table if not exists " + TABLE_HISTORY_NAME +" ( "
+                    + HISTORY_COLUMN_PACKAGE_ID +" INTEGER, "
+                    + HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME +" TEXT, "
+                    + PACKAGES_COLUMN_HOUSEHOLD_ADDRESS +" TEXT, "
+                    + HISTORY_COLUMN_DATE + " TEXT)";
             db.execSQL(CREATE_PACKAGES_TABLE);
 
 
@@ -608,6 +630,38 @@ public class DataBase extends SQLiteOpenHelper {
             cv.put(HOUSEHOLDS_COLUMN_NAME, user.getName());
             cv.put(HOUSEHOLDS_COLUMN_ADDRESS, user.getAddress());
             db.insert(TABLE_HOUSEHOLDS_NAME, null, cv);
+            //after adding new household, creating new package
+            addPackage(user);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+    //adds packages to the db
+    void addPackage(usersInfo user){
+
+        try {
+            ContentValues cv=new ContentValues();
+            String status="ACTIVE";
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, user.getId());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_NAME, user.getName());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ADDRESS, user.getAddress());
+            cv.put(PACKAGES_COLUMN_STATUS, status);
+            db.insert(TABLE_PACKAGES_NAME, null, cv);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+    //adds packages to history table in the db
+    void addPackageToHistory(HistoryInfo user){
+
+        try {
+            ContentValues cv=new ContentValues();
+            cv.put(HISTORY_COLUMN_PACKAGE_ID, user.getNum());
+            cv.put(HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME, user.getName());
+            cv.put(HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS, user.getAddress());
+            cv.put(HISTORY_COLUMN_DATE,user.getDate());
+            db.insert(TABLE_HISTORY_NAME, null, cv);
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -625,6 +679,10 @@ public class DataBase extends SQLiteOpenHelper {
             // update
             i = db.update(TABLE_HOUSEHOLDS_NAME, values, HOUSEHOLDS_COLUMN_ID + " = ?",
                     new String[] { String.valueOf(houseHold.getId()) });
+            if (i!=0){
+                updatePackages(houseHold);
+            }
+
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -632,20 +690,63 @@ public class DataBase extends SQLiteOpenHelper {
         return i;
     }
 
-    //removes households
+    //updates households
+    public int updatePackages(usersInfo houseHold) {
+        int i = 0;
+        try {
+
+            // make values to be inserted
+            ContentValues values = new ContentValues();
+
+            values.put(PACKAGES_COLUMN_HOUSEHOLD_NAME,houseHold.getName());
+            values.put(PACKAGES_COLUMN_HOUSEHOLD_ADDRESS,houseHold.getAddress());
+
+            // update
+            i = db.update(TABLE_PACKAGES_NAME, values, PACKAGES_COLUMN_HOUSEHOLD_ID + " = ?",
+                    new String[] { String.valueOf(houseHold.getId()) });
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return i;
+    }
+
+    //removes households- if household was removed, the package also removes.
     void reomoveHouseHold(usersInfo household){
-//        SQLiteDatabase db=this.getWritableDatabase();
+        boolean succeded = false;
+        try {
+
+            // delete folder
+            int rowAffected = db.delete(TABLE_HOUSEHOLDS_NAME, HOUSEHOLDS_COLUMN_ID + " = ?",
+                    new String[] { String.valueOf(household.getId()) });
+            if(rowAffected>0) {
+                succeded = true;
+            }
+
+        } catch (Throwable t) {
+            succeded = false;
+            t.printStackTrace();
+        } finally {
+            if(succeded){
+                reomovePackage(household);
+            }
+        }
+
+
+    }
+    //removes package
+    void reomovePackage(usersInfo household){
+
         try {
 
             // delete items
-             db.delete(TABLE_HOUSEHOLDS_NAME, HOUSEHOLDS_COLUMN_ID + " = ?",
-                    new String[] { String.valueOf(household.getId()) });
+            db.delete(TABLE_PACKAGES_NAME, PACKAGES_COLUMN_ID + " = ?",
+                    new String[] { String.valueOf(household.getNum()) });
         } catch (Throwable t) {
             t.printStackTrace();
         }
 
     }
-
 
     Cursor readAllHouseHolds(){
         String query=" SELECT * FROM " + TABLE_HOUSEHOLDS_NAME;
@@ -701,5 +802,125 @@ public class DataBase extends SQLiteOpenHelper {
 
         return result;
     }
+
+    private usersInfo cursorToHouseHoldPackage(Cursor cursor) {
+        usersInfo result = new usersInfo();
+        try {
+            //result.setId(Integer.parseInt(cursor.getString(0)));
+            result.setNum(cursor.getInt(0));
+            result.setId(cursor.getString(1));
+            result.setName(cursor.getString(2));
+            result.setAddress(cursor.getString(3));
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return result;
+    }
+
+    private HistoryInfo cursorToHistorydPackage(Cursor cursor) {
+        HistoryInfo result = new HistoryInfo();
+        try {
+            //result.setId(Integer.parseInt(cursor.getString(0)));
+            result.setNum(cursor.getInt(0));
+            result.setName(cursor.getString(1));
+            result.setAddress(cursor.getString(2));
+            result.setDate(cursor.getString(3));
+
+
+
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public List<usersInfo>getAllPackages(){
+        List<usersInfo> result = new ArrayList<>();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_PACKAGES_NAME,TABLE_PACKAGES_COLUMNS, null, null,
+                    null, null, null);
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                usersInfo item = cursorToHouseHoldPackage(cursor);
+                result.add(item);
+                cursor.moveToNext();
+            }
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        finally {
+            // make sure to close the cursor
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+
+        return result;
+
+    }
+
+    public List<HistoryInfo>getAllHistoryPackages(){
+        List<HistoryInfo> result = new ArrayList<>();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_HISTORY_NAME,TABLE_HISTORY_COLUMNS, null, null,
+                    null, null, null);
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                HistoryInfo item = cursorToHistorydPackage(cursor);
+                result.add(item);
+                cursor.moveToNext();
+            }
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        finally {
+            // make sure to close the cursor
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+
+        return result;
+
+    }
+
+    public List<usersInfo>getAllActivePackages(){
+        List<usersInfo> result = new ArrayList<>();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_PACKAGES_NAME,TABLE_PACKAGES_COLUMNS, PACKAGES_COLUMN_STATUS+ " = ?", new String[] {"ACTIVE"},null,
+                    null, null, null);
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                usersInfo item = cursorToHouseHold(cursor);
+                result.add(item);
+                cursor.moveToNext();
+            }
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        finally {
+            // make sure to close the cursor
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+
+        return result;
+
+    }
+
 
 }

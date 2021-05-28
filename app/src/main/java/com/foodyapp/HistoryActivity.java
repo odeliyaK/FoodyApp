@@ -2,6 +2,7 @@ package com.foodyapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,6 +14,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foodyapp.model.usersInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +24,9 @@ public class HistoryActivity extends AppCompatActivity {
     String items[] = new String[]{"Choose organization", "Manage Packages", "order food from supplier", "inventory management",
             "Packages history"};
     private ListView list;
-    private HistoryAdapter adapter;
-    public List<HistoryInfo> itemInfos;
+    public static HistoryAdapter adapter;
+    public static List<HistoryInfo> itemInfos;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,17 +47,22 @@ public class HistoryActivity extends AppCompatActivity {
                 showMenu(v);
             }
         });
-
-       itemInfos = new ArrayList<HistoryInfo>();
-        itemInfos.add(new HistoryInfo(1, "Bill Johnson","Haifa, Herzel st 12", "01/05/2021"));
-        itemInfos.add(new HistoryInfo(2, "Amanda Smith","Haifa, Horen st 1", "01/05/2021"));
+        this.context = this;
 
         list = (ListView) findViewById(R.id.HistoryList);
+        MyInfoManager.getInstance().openDataBase(this);
+        List<HistoryInfo> listOfPackages=MyInfoManager.getInstance().getAllHistoryPackages();
+        if (listOfPackages.isEmpty()){
+            Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
+        }else {
+            adapter = new HistoryAdapter(this, listOfPackages);
+            list.setAdapter(adapter);
+        }
 
-        adapter = new HistoryAdapter(this, itemInfos);
-
-
-        list.setAdapter(adapter);
+//        adapter = new HistoryAdapter(this, itemInfos);
+//
+//
+//        list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
