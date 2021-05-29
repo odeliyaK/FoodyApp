@@ -78,10 +78,12 @@ public class DialogFragmentInputAdd extends DialogFragment {
                     Address.requestFocus();
                 }
                 else{
+
                     String name=NameField.getText().toString();
                     String address=Address.getText().toString();
                         usersInfo user=new usersInfo(name,address);
                      MyInfoManager.getInstance().createHouseHold(user);
+
                      HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
                      List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
                      adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);

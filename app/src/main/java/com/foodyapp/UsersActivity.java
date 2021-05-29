@@ -15,12 +15,16 @@ import android.widget.Toast;
 
 import com.foodyapp.model.usersInfo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class UsersActivity extends Activity {
 
-    String items[] = new String[]{"Choose organization", "Manage Packages", "order food from supplier", "inventory management",
+    String items[] = new String[]{ "Manage Packages", "order food from supplier", "inventory management",
             "Packages history"};
     private ListView list;
     static  UsersLIstAdapter adapter;
@@ -60,6 +64,11 @@ public class UsersActivity extends Activity {
         if (listOfPackages.isEmpty()){
             Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
         }else {
+            List<HistoryInfo> listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
+            Date c = Calendar.getInstance().getTime();
+
+
+
             adapter = new UsersLIstAdapter(this, listOfPackages);
             list.setAdapter(adapter);
         }

@@ -109,24 +109,22 @@ public class DialogFragmentInputUpdate extends DialogFragment {
                                 String address = Address.getText().toString();
                                 int selected=HouseHoldListActivity.indexVal;
                                 usersInfo currentuser = HouseHoldListActivity.itemInfos.get(selected);
-                               // usersInfo household =MyInfoManager.getInstance().getSelectedHouseHold();
+                                usersInfo household =MyInfoManager.getInstance().getSelectedHouseHold();
                                 if(currentuser==null){
                                     currentuser = new usersInfo(name, address);
-
+                                        MyInfoManager.getInstance().updateHousehold(currentuser);
+                                MyInfoManager.getInstance().createHouseHold(currentuser);
+                            }
+                                else{
+                                currentuser.setName(name);
+                                currentuser.setAddress(address);
+                                if(Integer.parseInt(currentuser.getId()) == NEW_ITEM_TAG){
                                     MyInfoManager.getInstance().createHouseHold(currentuser);
                                 }
                                 else{
-                                    currentuser.setName(name);
-                                    currentuser.setAddress(address);
-                                    if(Integer.parseInt(currentuser.getId()) == NEW_ITEM_TAG){
-                                        MyInfoManager.getInstance().createHouseHold(currentuser);
-                                    }
-                                    else{
-                                        MyInfoManager.getInstance().updateHousehold(currentuser);
-                                    }
+                                    MyInfoManager.getInstance().updateHousehold(currentuser);
                                 }
-
-
+                            }
 
                             } catch (Throwable e) {
                                 e.printStackTrace();

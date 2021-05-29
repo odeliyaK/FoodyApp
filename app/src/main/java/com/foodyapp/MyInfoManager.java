@@ -167,6 +167,12 @@ public class MyInfoManager {
 		}
 	}
 
+	public void updatePackage(usersInfo household) {
+		if (db != null && household != null) {
+			db.updatePackages(household);
+		}
+	}
+
 	public usersInfo getSelectedHouseHold() {
 		return selectedHousehold;
 	}

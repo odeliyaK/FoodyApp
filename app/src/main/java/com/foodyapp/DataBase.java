@@ -231,6 +231,7 @@ public class DataBase extends SQLiteOpenHelper {
         }
         return flag;
     }
+
     public long newVolunteer(String name, String phone){
 
         try{
@@ -633,6 +634,7 @@ public class DataBase extends SQLiteOpenHelper {
             cv.put(HOUSEHOLDS_COLUMN_ADDRESS, user.getAddress());
             db.insert(TABLE_HOUSEHOLDS_NAME, null, cv);
             //after adding new household, creating new package
+
             addPackage(user);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -641,14 +643,12 @@ public class DataBase extends SQLiteOpenHelper {
 
     //adds packages to the db
     void addPackage(usersInfo user){
-
+        String id= MyInfoManager.getInstance().getAllHouseHolds().get(MyInfoManager.getInstance().getAllHouseHolds().size()-1).getId();
         try {
             ContentValues cv=new ContentValues();
-            String status="ACTIVE";
-            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, user.getId());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, id);
             cv.put(PACKAGES_COLUMN_HOUSEHOLD_NAME, user.getName());
             cv.put(PACKAGES_COLUMN_HOUSEHOLD_ADDRESS, user.getAddress());
-            cv.put(PACKAGES_COLUMN_STATUS, status);
             db.insert(TABLE_PACKAGES_NAME, null, cv);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -681,10 +681,7 @@ public class DataBase extends SQLiteOpenHelper {
             // update
             i = db.update(TABLE_HOUSEHOLDS_NAME, values, HOUSEHOLDS_COLUMN_ID + " = ?",
                     new String[] { String.valueOf(houseHold.getId()) });
-            if (i!=0){
                 updatePackages(houseHold);
-            }
-
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -742,8 +739,8 @@ public class DataBase extends SQLiteOpenHelper {
         try {
 
             // delete items
-            db.delete(TABLE_PACKAGES_NAME, PACKAGES_COLUMN_ID + " = ?",
-                    new String[] { String.valueOf(household.getNum()) });
+            db.delete(TABLE_PACKAGES_NAME, PACKAGES_COLUMN_HOUSEHOLD_ID + " = ?",
+                    new String[] { String.valueOf(household.getId()) });
         } catch (Throwable t) {
             t.printStackTrace();
         }
