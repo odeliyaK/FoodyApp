@@ -23,6 +23,7 @@
     <string name="houseName">Household name</string>
     <string name="houseId">Household ID</string>
     <string name="houseAddress">Household address</string>
+    <string name="volunteerName">Volunteer Name</string>
     <string name="latetOrg">LATET ORGANIZATION</string>
     <string name="addHouse">Add </string>
     <string name="latetlogo">latatlogo</string>

@@ -135,6 +135,7 @@ private void openMain(){
                     openOrderFoodActivity();
                 }
                 else if (item.getItemId()== R.id.inventoryManagement){
+
                     openInventoryActivity();
                 }
                 else if (item.getItemId()== R.id.packageHistory){
