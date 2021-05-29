@@ -58,10 +58,10 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String[] TABLE_DELIVERY_COLUMNS = {DELIVERY_COLUMN_ID, DELIVERY_COLUMN_PACKAGE, DELIVERY_COLUMN_DATE};
 
     //history table
-    private static final String TABLE_HISTORY_NAME = "packages history";
+    private static final String TABLE_HISTORY_NAME = "packagesHistory";
     private static final String HISTORY_COLUMN_PACKAGE_ID = "packageID";
-    private static final String HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME = "household name";
-    private static final String HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS = "household address";
+    private static final String HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME = "householdName";
+    private static final String HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS = "householdAddress";
     private static final String HISTORY_COLUMN_DATE = "date";
     private static final String[] TABLE_HISTORY_COLUMNS = { HISTORY_COLUMN_PACKAGE_ID,HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME,HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS, HISTORY_COLUMN_DATE};
     //products table
@@ -126,13 +126,15 @@ public class DataBase extends SQLiteOpenHelper {
                     + PACKAGES_COLUMN_STATUS + " TEXT)";
             db.execSQL(CREATE_PACKAGES_TABLE);
 
+
+
             // SQL statement to create packages history table
             String CREATE_HISTORY_TABLE = "create table if not exists " + TABLE_HISTORY_NAME +" ( "
                     + HISTORY_COLUMN_PACKAGE_ID +" INTEGER, "
                     + HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME +" TEXT, "
                     + PACKAGES_COLUMN_HOUSEHOLD_ADDRESS +" TEXT, "
                     + HISTORY_COLUMN_DATE + " TEXT)";
-            db.execSQL(CREATE_PACKAGES_TABLE);
+            db.execSQL(CREATE_HISTORY_TABLE);
 
 
             // SQL statement to create order table
