@@ -424,6 +424,23 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    //saving the updates of the inventory after package was sent.
+    public void updateInventory(HashMap<String,Integer> current, String supplier){
+
+        for(String pro : current.keySet()) {
+            try {
+                ContentValues values = new ContentValues();
+                values.put(PRODUCTS_COLUMN_QUANTITY, current.get(pro));
+                //values.put(PRODUCTS_COLUMN_UPDATES, );
+                db.update(TABLE_PRODUCTS_NAME, values, PRODUCTS_COLUMN_NAME + " = ? and " + PRODUCTS_COLUMN_SUPPLIER + " = ?",
+                        new String[]{pro, supplier});
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }
+
+    }
+
     //check if someone updated the inventory today (by product kind - dairy/grocery..)
     public boolean isInventoryUpdated(String supplier){
         Calendar calendar = Calendar.getInstance();
@@ -722,6 +739,21 @@ public class DataBase extends SQLiteOpenHelper {
             t.printStackTrace();
         }
     }
+
+    void addPackageWithId(usersInfo user, String id){
+        // String id= MyInfoManager.getInstance().getAllHouseHolds().get(MyInfoManager.getInstance().getAllHouseHolds().size()-1).getId();
+        try {
+            ContentValues cv=new ContentValues();
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, id);
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_NAME, user.getName());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ADDRESS, user.getAddress());
+            db.insert(TABLE_PACKAGES_NAME, null, cv);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+
     //adds packages to history table in the db
     void addPackageToHistory(HistoryInfo user){
 

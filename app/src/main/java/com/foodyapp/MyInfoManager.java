@@ -68,6 +68,12 @@ public class MyInfoManager {
 		}
 	}
 
+	public void createPackage(usersInfo user, String id) {
+		if (db != null) {
+			db.addPackageWithId(user,id);
+		}
+	}
+
 	public List<usersInfo> getAllHouseHolds() {
 		List<usersInfo> result = new ArrayList<usersInfo>();
 		if (db != null) {
@@ -148,6 +154,12 @@ public class MyInfoManager {
 	public void saveInventory(HashMap<String,Integer> current, String supplier){
 		if(db != null && !current.isEmpty()){
 			db.saveInventory(current, supplier);
+		}
+	}
+
+	public void updateInventory(HashMap<String,Integer> current, String supplier){
+		if(db != null && !current.isEmpty()){
+			db.updateInventory(current, supplier);
 		}
 	}
 

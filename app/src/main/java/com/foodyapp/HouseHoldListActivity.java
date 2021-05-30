@@ -57,14 +57,14 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 usersInfo user=(usersInfo)parent.getItemAtPosition(position);
-                item=itemInfos.get(position).getName()+ " has been selected";
+                item="household named "+itemInfos.get(position).getName()+ " and id "+itemInfos.get(position).getId()+ " has been selected";
                 selectedID = itemInfos.get(position).getId();
                 selecteAddress = itemInfos.get(position).getAddress();
                 selectedName = itemInfos.get(position).getName();
                 upFlag = true;
                 reFlag=true;
                 indexVal=position;
-                Toast.makeText(HouseHoldListActivity.this, user.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(HouseHoldListActivity.this, item, Toast.LENGTH_SHORT).show();
             }
         });
 

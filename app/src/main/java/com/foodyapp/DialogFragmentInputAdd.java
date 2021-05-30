@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.foodyapp.model.usersInfo;
 
@@ -81,15 +82,27 @@ public class DialogFragmentInputAdd extends DialogFragment {
 
                     String name=NameField.getText().toString();
                     String address=Address.getText().toString();
+                    boolean notAdd=false;
+                    //check if the address already exists in DB
+                    for (usersInfo u: MyInfoManager.getInstance().getAllHouseHolds()){
+                        if (u.getAddress().equals(address))
+                            notAdd=true;
+                    }
+                    if (notAdd==false){
                         usersInfo user=new usersInfo(name,address);
-                     MyInfoManager.getInstance().createHouseHold(user);
+                        MyInfoManager.getInstance().createHouseHold(user);
 
-                     HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
-                     List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
-                     adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
+                        HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
+                        List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
+                        adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
 //
-                    HouseHoldListActivity.myList.setAdapter(adapter);
-                    HouseHoldListActivity.adapter.notifyDataSetChanged();
+                        HouseHoldListActivity.myList.setAdapter(adapter);
+                        HouseHoldListActivity.adapter.notifyDataSetChanged();
+
+                    }else {
+                        Toast.makeText(context, "household can't be added- his address already exists",Toast.LENGTH_LONG).show();
+
+                    }
 
 
                     dismiss();

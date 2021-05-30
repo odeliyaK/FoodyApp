@@ -1,3 +1,4 @@
+
 package com.foodyapp;
 
 import android.app.Activity;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.foodyapp.model.usersInfo;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,12 +61,38 @@ public class UsersActivity extends Activity {
         this.context = this;
         list = (ListView) findViewById(R.id.list);
 
-        MyInfoManager.getInstance().openDataBase(this);
+                List<HistoryInfo> listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
+        List<usersInfo> listOfHouseholds = MyInfoManager.getInstance().getAllHouseHolds();
         List<usersInfo> listOfPackages = MyInfoManager.getInstance().getAllPackages();
+        Date today=new Date();
+        Date send = null;
+        for (int i=0; i<listOfHPackages.size(); i++){
+            String sendDay=listOfHPackages.get(i).getDate();
+            SimpleDateFormat sdf=new SimpleDateFormat("dd-MMM-yyyy");
+            try {
+                send=sdf.parse(sendDay);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (daysBetween(today,send)==1){
+                usersInfo newPackage=new usersInfo(listOfHPackages.get(i).getName(),listOfHPackages.get(i).getAddress());
+                for (int j=0; j<listOfHouseholds.size(); j++){
+                    if (newPackage.getName().equals(listOfHouseholds.get(j).getName() )&&newPackage.getAddress().equals(listOfHouseholds.get(j).getAddress())){
+                        MyInfoManager.getInstance().createPackage(newPackage, listOfHouseholds.get(j).getId());
+                        listOfPackages = MyInfoManager.getInstance().getAllPackages();
+                    }
+                }
+
+            }
+
+        }
+     //   List<usersInfo> listOfPackagesNew = MyInfoManager.getInstance().getAllPackages();
+        MyInfoManager.getInstance().openDataBase(this);
+     //    listOfPackages = MyInfoManager.getInstance().getAllPackages();
         if (listOfPackages.isEmpty()){
             Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
         }else {
-            List<HistoryInfo> listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
+            listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
             Date c = Calendar.getInstance().getTime();
 
 
@@ -132,5 +160,12 @@ public class UsersActivity extends Activity {
     protected void onPause() {
         MyInfoManager.getInstance().closeDataBase();
         super.onPause();
+    }
+
+
+    //calculate the diffrence betwwen dates
+    public long daysBetween(Date one, Date two){
+        long diffrence=(one.getTime()-two.getTime())/86400000;
+        return Math.abs(diffrence);
     }
 }

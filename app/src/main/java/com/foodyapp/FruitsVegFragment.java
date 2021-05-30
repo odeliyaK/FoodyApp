@@ -137,12 +137,12 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                         if (Integer.parseInt(num5.getText().toString()) > 0) {
                             current.put("Banana", Integer.parseInt(num5.getText().toString()));
                         }
-                        if (Integer.parseInt(num4.getText().toString()) > 0) {
-                            current.put("Butter", Integer.parseInt(num4.getText().toString()));
-                        }
-                        if (Integer.parseInt(num5.getText().toString()) > 0) {
-                            current.put("Cottage", Integer.parseInt(num5.getText().toString()));
-                        }
+//                        if (Integer.parseInt(num4.getText().toString()) > 0) {
+//                            current.put("Butter", Integer.parseInt(num4.getText().toString()));
+//                        }
+//                        if (Integer.parseInt(num5.getText().toString()) > 0) {
+//                            current.put("Cottage", Integer.parseInt(num5.getText().toString()));
+//                        }
                         if (Integer.parseInt(num6.getText().toString()) > 0) {
                             current.put("Onion", Integer.parseInt(num6.getText().toString()));
                         }

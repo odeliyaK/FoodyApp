@@ -122,7 +122,19 @@ public class DialogFragmentInputUpdate extends DialogFragment {
                                     MyInfoManager.getInstance().createHouseHold(currentuser);
                                 }
                                 else{
-                                    MyInfoManager.getInstance().updateHousehold(currentuser);
+                                    boolean notAdd=false;
+                                    //check if the address already exists in DB
+                                    for (usersInfo u: MyInfoManager.getInstance().getAllHouseHolds()){
+                                        if (u.getAddress().equals(address))
+                                            notAdd=true;
+                                    }
+                                    if (notAdd==false){
+                                        MyInfoManager.getInstance().updateHousehold(currentuser);
+                                    }else {
+                                        Toast.makeText(activity, "household can't be updated- his address already exists",Toast.LENGTH_LONG).show();
+
+                                    }
+
                                 }
                             }
 
