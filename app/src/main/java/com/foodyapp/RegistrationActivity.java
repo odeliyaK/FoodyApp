@@ -112,6 +112,10 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
             email.setError("Email address not valid");
             email.requestFocus();
         }
+        else if(MyInfoManager.getInstance().isVolunteerExist(email.getText().toString())){
+            email.setError("Email address already exists for another volunteer");
+            email.requestFocus();
+        }
         else if (TextUtils.isEmpty(pass.getText())){
             pass.setError("Enter a password");
             pass.requestFocus();
@@ -125,7 +129,7 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
             name.requestFocus();
         }
         else {
-            if(MyInfoManager.getInstance().newVolunteer(name.getText().toString(), phone.getText().toString()) > 0)
+            if(MyInfoManager.getInstance().newVolunteer(email.getText().toString(), name.getText().toString(), phone.getText().toString()) > 0)
                 openVolunteerActivity();
         }
 

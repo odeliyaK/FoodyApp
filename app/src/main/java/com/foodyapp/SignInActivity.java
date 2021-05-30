@@ -40,6 +40,7 @@ public class SignInActivity extends AppCompatActivity {
                 }
                 else if(TextUtils.equals(email.getText(), "latet@gmail.com")){
                     if (TextUtils.equals(password.getText(), "latet")) {
+//                        sendEmail();
                         openOrgActivity();
                     }else {
                         password.setError("Incorrect password");
@@ -67,9 +68,20 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void openOrgActivity(){
-        Intent intent=new Intent(this, HouseHoldListActivity.class);
+        Intent intent=new Intent(this, LatetMenu.class);
         startActivity(intent);
     }
+
+//    private void sendEmail() {
+//        String mEmail = "liadsh8@gmail.com";
+//        String mSubject = "trying";
+//        String mMessage = "holllaaa";
+//
+//
+//        JavaMailAPI javaMailAPI = new JavaMailAPI(this, mEmail, mSubject, mMessage);
+//
+//        javaMailAPI.execute();
+//    }
 
     protected void onPause() {
         MyInfoManager.getInstance().closeDataBase();

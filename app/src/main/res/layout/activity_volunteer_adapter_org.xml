@@ -4,40 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VolunteerAdapterOrg"
-    android:weightSum="100">
+    android:orientation="vertical"
+    android:weightSum="100"
+    tools:context=".VolunteerAdapterOrg">
 
-    <TextView
-        android:id="@+id/cusID"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="30"
-        android:gravity="center"
-        android:padding="10sp"
-        android:text="@string/houseId"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/nameID"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="33.3"
-        android:gravity="center"
-        android:padding="10sp"
-        android:text="@string/houseName"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/cusID"
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:gravity="center"
+            android:padding="10sp"
+            android:text="@string/volID"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/addressID"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="33.3"
-        android:gravity="center"
-        android:padding="10sp"
-        android:text="@string/houseAddress"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/nameID"
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:gravity="center"
+            android:padding="10sp"
+            android:text="@string/volName"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="50"
+            android:gravity="center"
+            android:padding="10sp"
+            android:text="@string/volPhone"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </LinearLayout>

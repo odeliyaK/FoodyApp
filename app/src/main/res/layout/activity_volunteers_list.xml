@@ -1,9 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VolunteersListActivity">
+    <include layout="@layout/toolbar_allscreens"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="80dp"
+        android:layout_weight="30"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/volManage"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:background="@color/white">
+
+        <TableRow android:background="@drawable/border">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4.5"
+                android:gravity="center"
+                android:padding="10sp"
+                android:text="@string/volID"
+                android:background="@drawable/border"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4.5"
+                android:gravity="center"
+                android:padding="10sp"
+                android:text="@string/volName"
+                android:background="@drawable/border"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:padding="10sp"
+                android:text="@string/volPhone"
+                android:background="@drawable/border"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+        </TableRow>
+    </TableLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="385dp"
+        android:layout_marginTop="173dp" />
+
+
+    <Button
+        android:id="@+id/updateBtn"
+        android:layout_width="121dp"
+        android:layout_height="37dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="545dp"
+        android:background="@color/teal_700"
+        android:text="@string/updateHouse"
+        android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/removeBtn"
+            android:layout_width="121dp"
+            android:layout_height="37dp"
+            android:layout_marginLeft="230dp"
+            android:layout_marginTop="545dp"
+            android:background="@color/teal_250"
+            android:textColor="@color/white"
+            android:text="@string/removeHouse" />
+
+
+</RelativeLayout>

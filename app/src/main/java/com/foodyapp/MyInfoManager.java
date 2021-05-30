@@ -76,6 +76,11 @@ public class MyInfoManager {
 		return result;
 	}
 
+	public void removeVolunteer(Volunteers vol){
+		if(db != null)
+			db.removeVolunteer(vol);
+	}
+
 
 	public void deleteHousehold(usersInfo household) {
 		if (db != null) {
@@ -154,9 +159,22 @@ public class MyInfoManager {
 
 	}
 
-	public long newVolunteer(String name, String phone) {
+	public ArrayList<Volunteers> allVolunteers(){
+		if(db != null){
+			return db.allVolunteers();
+		}
+		return null;
+	}
+
+	public boolean isVolunteerExist(String email){
+		if(db != null)
+			return db.isVolunteerExist(email);
+		return false;
+	}
+
+	public long newVolunteer(String email, String name, String phone) {
 		if (db != null) {
-			return db.newVolunteer(name, phone);
+			return db.newVolunteer(email, name, phone);
 		}
 		return -1;
 	}

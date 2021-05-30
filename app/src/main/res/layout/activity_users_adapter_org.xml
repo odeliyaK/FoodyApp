@@ -18,26 +18,26 @@
         android:textColor="@color/black"
         android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/nameID"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="33.3"
-            android:gravity="center"
-            android:padding="10sp"
-            android:text="@string/houseName"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+    <TextView
+        android:id="@+id/nameID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="33.3"
+        android:gravity="center"
+        android:padding="10sp"
+        android:text="@string/houseName"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/addressID"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="33.3"
-            android:gravity="center"
-            android:padding="10sp"
-            android:text="@string/houseAddress"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+    <TextView
+        android:id="@+id/addressID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="33.3"
+        android:gravity="center"
+        android:padding="10sp"
+        android:text="@string/houseAddress"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 
 </LinearLayout>

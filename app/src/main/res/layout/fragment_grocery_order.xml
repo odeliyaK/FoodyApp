@@ -48,6 +48,7 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="@string/DairyCol1"
+                            android:background="@drawable/border"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
                         <TextView
@@ -56,6 +57,7 @@
                             android:layout_weight="5"
                             android:gravity="center"
                             android:padding="10sp"
+                            android:background="@drawable/border"
                             android:text="@string/DairyCol2"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
@@ -68,6 +70,7 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="@string/DairyCol5"
+                            android:background="@drawable/border"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -392,6 +395,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="115dp"
                     android:layout_marginLeft="115dp"
+                    android:backgroundTint="@color/theme_color"
                     android:text="Order from 'OSEM'"/>
             </LinearLayout>
         </ScrollView>

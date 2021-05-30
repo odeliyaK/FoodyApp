@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -27,25 +28,42 @@ public class VolunteerMainActivity extends AppCompatActivity implements organiza
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_main);
 
-        ImageView toolBarArrow=findViewById(R.id.arrow);
-        TextView toolBarTitle=findViewById(R.id.toolbar_title);
-        ImageView rightIcon=findViewById(R.id.menu);
-
-        toolBarArrow.setOnClickListener(new View.OnClickListener() {
+        Button orders = (Button) findViewById(R.id.orders);
+        Button inventory = (Button) findViewById(R.id.inventory);
+        Button parcels = (Button) findViewById(R.id.parcels);
+        Button history = (Button) findViewById(R.id.history);
+        orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMain();
+                Intent intent=new Intent(VolunteerMainActivity.this, OrderActivity.class);
+                startActivity(intent);
             }
         });
 
-        rightIcon.setOnClickListener(new View.OnClickListener() {
+        inventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMenu(v);
+                Intent intent=new Intent(VolunteerMainActivity.this, InventoryActivity.class);
+                startActivity(intent);
             }
         });
 
-//        volList =(ListView)findViewById(R.id.volunteerlistview);
+        parcels.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(VolunteerMainActivity.this, UsersActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(VolunteerMainActivity.this, HistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
 //        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,items);
 //        volList.setAdapter(adapter);
 //        volList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,15 +95,30 @@ public class VolunteerMainActivity extends AppCompatActivity implements organiza
 //        });
 
     }
-private void openMain(){
-    Intent intent=new Intent(this, MainActivity.class);
-    startActivity(intent);
-}
-
-    private void openHistoryActivity() {
-        Intent intent=new Intent(this, HistoryActivity.class);
-        startActivity(intent);
-    }
+//private void openMain(){
+//    Intent intent=new Intent(this, MainActivity.class);
+//    startActivity(intent);
+//}
+//
+//    private void openHistoryActivity() {
+//        Intent intent=new Intent(this, HistoryActivity.class);
+//        startActivity(intent);
+//    }
+//
+//    public void openOrdersActivity(){
+//        Intent intent=new Intent(this, UsersActivity.class);
+//        startActivity(intent);
+//    }
+//
+//    public void openInventoryActivity(){
+//        Intent intent=new Intent(this, InventoryActivity.class);
+//        startActivity(intent);
+//    }
+//
+//    public void openOrderFoodActivity(){
+//        Intent intent=new Intent(this, OrderActivity.class);
+//        startActivity(intent);
+//    }
 
     private void showCustomAlertDialog() {
         OganizationDialogFragment frag = new OganizationDialogFragment();
@@ -107,43 +140,4 @@ private void openMain(){
     }
 
 
-    public void openOrdersActivity(){
-        Intent intent=new Intent(this, UsersActivity.class);
-        startActivity(intent);
-    }
-
-    public void openInventoryActivity(){
-        Intent intent=new Intent(this, InventoryActivity.class);
-        startActivity(intent);
-    }
-
-    public void openOrderFoodActivity(){
-        Intent intent=new Intent(this, OrderActivity.class);
-        startActivity(intent);
-    }
-
-    private void showMenu(View v){
-        PopupMenu popupMenu=new PopupMenu(VolunteerMainActivity.this, v);
-        popupMenu.getMenuInflater().inflate(R.menu.popup_menu_volunteer, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId()== R.id.manage){
-                    openOrdersActivity();
-                }
-                else if (item.getItemId()== R.id.orderFood){
-                    openOrderFoodActivity();
-                }
-                else if (item.getItemId()== R.id.inventoryManagement){
-
-                    openInventoryActivity();
-                }
-                else if (item.getItemId()== R.id.packageHistory){
-                    openHistoryActivity();
-                }
-                return true;
-            }
-        });
-        popupMenu.show();
-    }
 }

@@ -5,26 +5,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VolunteerMainActivity">
-    <include layout="@layout/toolbar_volunteer"/>
+
+    <include layout="@layout/toolbar_allscreens"/>
 
     <TextView
-        android:id="@+id/volunteerTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="60dp"
         android:text="@string/volunteertitle"
-        android:textColor="@color/black"
         android:textSize="25dp"
-        android:textStyle="bold|italic" />
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold|italic"
+        android:layout_gravity="center"/>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom = "true"
+        android:layout_width="match_parent"
+        android:layout_height="298dp"
+        android:layout_alignParentBottom="true"
         android:src="@drawable/parcels" />
 
-    <!--    <ListView-->
+    <Button
+        android:id="@+id/orders"
+        android:layout_width="284dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:layout_marginLeft="65dp"
+        app:backgroundTint="@color/teal_700"
+        android:text="@string/inventory" />
+
+    <Button
+        android:id="@+id/inventory"
+        android:layout_width="284dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="210dp"
+        android:layout_marginLeft="65dp"
+        app:backgroundTint="@color/teal_700"
+        android:text="@string/orders" />
+
+    <Button
+        android:id="@+id/parcels"
+        android:layout_width="284dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="280dp"
+        android:layout_marginLeft="65dp"
+        app:backgroundTint="@color/teal_700"
+        android:text="@string/parcels" />
+
+    <Button
+        android:id="@+id/history"
+        android:layout_width="284dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="65dp"
+        app:backgroundTint="@color/teal_700"
+        android:text="@string/history" />
+
+<!--        <ListView-->
 <!--        android:id="@+id/volunteerlistview"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="396dp"-->

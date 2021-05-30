@@ -49,6 +49,7 @@
                             android:padding="10sp"
                             android:text="@string/DairyCol1"
                             android:textColor="@color/white"
+                            android:background="@drawable/border"
                             android:textSize="18sp" />
 
                         <TextView
@@ -59,6 +60,7 @@
                             android:padding="10sp"
                             android:text="@string/DairyCol2"
                             android:textColor="@color/white"
+                            android:background="@drawable/border"
                             android:textSize="18sp" />
 
 
@@ -69,6 +71,7 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="@string/DairyCol5"
+                            android:background="@drawable/border"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -289,6 +292,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="105dp"
                     android:layout_marginLeft="105dp"
+                    android:backgroundTint="@color/theme_color"
                     android:text="Order from butcher" />
             </LinearLayout>
         </ScrollView>

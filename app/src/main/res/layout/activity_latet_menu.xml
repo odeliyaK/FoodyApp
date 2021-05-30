@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".LatetMenu">
+    <include layout="@layout/toolbar_allscreens"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/latetTitle"
+        android:textSize="25dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold|italic"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/households"
+        android:layout_width="284dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="65dp"
+        app:backgroundTint="@color/teal_700"
+        android:text="@string/ourHouseHolds" />
+
+    <Button
+        android:id="@+id/vols"
+        android:layout_width="284dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="65dp"
+        app:backgroundTint="@color/teal_700"
+        android:text="@string/volManage" />
+
+
+</LinearLayout>

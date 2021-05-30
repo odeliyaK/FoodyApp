@@ -1,17 +1,21 @@
 package com.foodyapp.model;
 
 public class Volunteers {
-    int id;
-    String name;
-    String phone;
     String email;
+    String name;
+    String lastName;
+    String phone;
 
-    public Volunteers(int id, String name, String phone, String email) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
+    public Volunteers() {
     }
+
+    public Volunteers(String email, String name, String phone, String lastName) {
+        this.email = email;
+        this.name = name;
+        this.lastName = lastName;
+        this.phone = phone;
+    }
+
 
     public String getEmail() {
         return email;
@@ -21,12 +25,12 @@ public class Volunteers {
         this.email = email;
     }
 
-    public int getId() {
-        return id;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getName() {

@@ -48,6 +48,7 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="@string/DairyCol1"
+                            android:background="@drawable/border"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -58,6 +59,7 @@
                             android:gravity="center"
                             android:padding="10sp"
                             android:text="@string/DairyCol2"
+                            android:background="@drawable/border"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -250,6 +252,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="120dp"
                     android:layout_marginLeft="120dp"
+                    android:backgroundTint="@color/theme_color"
                     android:text="Save Inventory"/>
             </LinearLayout>
         </ScrollView>

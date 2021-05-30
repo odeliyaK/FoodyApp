@@ -22,6 +22,11 @@
     <string name="phone_02_5912222">phone: 02-5912222</string>
     <string name="houseName">Household name</string>
     <string name="houseId">Household ID</string>
+    <string name="volName">Name</string>
+    <string name="volLastName">Last Name</string>
+    <string name="volPhone">Phone Number</string>
+    <string name="volManage">Our Volunteers</string>
+    <string name="volID">Email</string>
     <string name="houseAddress">Household address</string>
     <string name="volunteerName">Volunteer Name</string>
     <string name="latetOrg">LATET ORGANIZATION</string>
@@ -44,6 +49,8 @@
     <string name="sendBtn">send Parcel </string>
     <string name="signIn_btn">Sign In </string>
     <string name="signIn_title">Sign In </string>
+    <string name="latetTitle">Latet page </string>
+    <string name="ourHouseHolds">Our Households </string>
     <string name="volunteertitle">Volunteers page </string>
     <string name="manageTitle">Inventory Management </string>
     <string name="orderTitle">Orders from suppliers </string>
@@ -72,6 +79,10 @@
     <string name="alert_dialog_two_buttons_title">Are you sure?</string>
     <string name="less0">0 is the minimum number of product</string>
     <string name="dialogTitle">Confirm Saving</string>
+    <string name="inventory">Inventory Management</string>
+    <string name="orders">Orders Management</string>
+    <string name="parcels">Packages Management</string>
+    <string name="history">Packages History</string>
     <string name="ok">OK</string>
     <string name="save">save</string>
     <string name="add">Add</string>

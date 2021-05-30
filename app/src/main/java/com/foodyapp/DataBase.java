@@ -93,10 +93,10 @@ public class DataBase extends SQLiteOpenHelper {
             ORDER_PRODUCT_COLUMN_PRODUCT, ORDER_PRODUCT_COLUMN_QUANTITY};
     //volunteer table
     static final String TABLE_VOLUNTEER_NAME = "volunteers";
-    private static final String VOLUNTEER_COLUMN_ID = "id";
+    private static final String VOLUNTEER_COLUMN_EMAIL = "email";
     private static final String VOLUNTEERS_COLUMN_NAME = "name";
     private static final String VOLUNTEERS_COLUMN_PHONE = "phone";
-    private static final String[] TABLE_VOLUNTEER_COLUMNS = {VOLUNTEER_COLUMN_ID, VOLUNTEERS_COLUMN_NAME, VOLUNTEERS_COLUMN_PHONE};
+    private static final String[] TABLE_VOLUNTEER_COLUMNS = {VOLUNTEER_COLUMN_EMAIL, VOLUNTEERS_COLUMN_NAME, VOLUNTEERS_COLUMN_PHONE};
 
     private SQLiteDatabase db = null;
 
@@ -109,6 +109,40 @@ public class DataBase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
+
+            // SQL statement to create order table
+            String CREATE_ORDERS_TABLE = "create table if not exists " + TABLE_ORDERS_NAME +" ( "
+                    + PACKAGES_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + ORDERS_COLUMN_SUPPLIER +" TEXT, "
+                    + ORDERS_COLUMN_DATE + " TEXT)";
+            db.execSQL(CREATE_ORDERS_TABLE);
+
+            // SQL statement to create suppliers table
+            String CREATE_SUPPLIERS_TABLE = "create table if not exists " + TABLE_SUPPLIERS_NAME +" ( "
+                    + SUPPLIERS_COLUMN_NAME +" TEXT PRIMARY KEY)";
+            db.execSQL(CREATE_SUPPLIERS_TABLE);
+
+            // SQL statement to create products table
+            String CREATE_PRODUCTS_TABLE = "create table if not exists " + TABLE_PRODUCTS_NAME +" ( "
+                    + PRODUCTS_COLUMN_NAME +" TEXT PRIMARY KEY, "
+                    + PRODUCTS_COLUMN_SUPPLIER +" TEXT, "
+                    + PRODUCTS_COLUMN_UPDATES +" TEXT, "
+                    + PRODUCTS_COLUMN_QUANTITY + " INTEGER)";
+            db.execSQL(CREATE_PRODUCTS_TABLE);
+
+            // SQL statement to create volunteer table
+            String CREATE_VOLUNTEER_TABLE = "create table if not exists " + TABLE_VOLUNTEER_NAME +" ( "
+                    + VOLUNTEER_COLUMN_EMAIL +" TEXT PRIMARY KEY, "
+                    + VOLUNTEERS_COLUMN_NAME +" TEXT , "
+                    + VOLUNTEERS_COLUMN_PHONE +" INTEGER)";
+            db.execSQL(CREATE_VOLUNTEER_TABLE);
+
+            // SQL statement to create order_products table
+            String CREATE_ORDER_PRODUCTS_TABLE = "create table if not exists " + TABLE_ORDER_PRODUCT_NAME +" ( "
+                    + ORDER_PRODUCT_COLUMN_ORDER +" INTEGER, "
+                    + ORDER_PRODUCT_COLUMN_PRODUCT +" TEXT , "
+                    + ORDER_PRODUCT_COLUMN_QUANTITY +" INTEGER, PRIMARY KEY ( " + ORDER_PRODUCT_COLUMN_ORDER + "," + ORDER_PRODUCT_COLUMN_PRODUCT+ "))";
+            db.execSQL(CREATE_ORDER_PRODUCTS_TABLE);
 
             // SQL statement to create houseHold table
             String CREATE_HOUSEHOLDS_TABLE = "create table if not exists " + TABLE_HOUSEHOLDS_NAME +" ( "
@@ -135,41 +169,6 @@ public class DataBase extends SQLiteOpenHelper {
                     + PACKAGES_COLUMN_HOUSEHOLD_ADDRESS +" TEXT, "
                     + HISTORY_COLUMN_DATE + " TEXT)";
             db.execSQL(CREATE_HISTORY_TABLE);
-
-
-            // SQL statement to create order table
-            String CREATE_ORDERS_TABLE = "create table if not exists " + TABLE_ORDERS_NAME +" ( "
-                    + PACKAGES_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + ORDERS_COLUMN_SUPPLIER +" TEXT, "
-                    + ORDERS_COLUMN_DATE + " TEXT)";
-            db.execSQL(CREATE_ORDERS_TABLE);
-
-            // SQL statement to create suppliers table
-            String CREATE_SUPPLIERS_TABLE = "create table if not exists " + TABLE_SUPPLIERS_NAME +" ( "
-                    + SUPPLIERS_COLUMN_NAME +" TEXT PRIMARY KEY)";
-            db.execSQL(CREATE_SUPPLIERS_TABLE);
-
-            // SQL statement to create products table
-            String CREATE_PRODUCTS_TABLE = "create table if not exists " + TABLE_PRODUCTS_NAME +" ( "
-                    + PRODUCTS_COLUMN_NAME +" TEXT PRIMARY KEY, "
-                    + PRODUCTS_COLUMN_SUPPLIER +" TEXT, "
-                    + PRODUCTS_COLUMN_UPDATES +" TEXT, "
-                    + PRODUCTS_COLUMN_QUANTITY + " INTEGER)";
-            db.execSQL(CREATE_PRODUCTS_TABLE);
-
-            // SQL statement to create volunteer table
-            String CREATE_VOLUNTEER_TABLE = "create table if not exists " + TABLE_VOLUNTEER_NAME +" ( "
-                    + VOLUNTEER_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + VOLUNTEERS_COLUMN_NAME +" TEXT , "
-                    + VOLUNTEERS_COLUMN_PHONE +" INTEGER)";
-            db.execSQL(CREATE_VOLUNTEER_TABLE);
-
-            // SQL statement to create order_products table
-            String CREATE_ORDER_PRODUCTS_TABLE = "create table if not exists " + TABLE_ORDER_PRODUCT_NAME +" ( "
-                    + ORDER_PRODUCT_COLUMN_ORDER +" INTEGER, "
-                    + ORDER_PRODUCT_COLUMN_PRODUCT +" TEXT , "
-                    + ORDER_PRODUCT_COLUMN_QUANTITY +" INTEGER, PRIMARY KEY ( " + ORDER_PRODUCT_COLUMN_ORDER + "," + ORDER_PRODUCT_COLUMN_PRODUCT+ "))";
-            db.execSQL(CREATE_ORDER_PRODUCTS_TABLE);
 
 
         } catch (Throwable t) {
@@ -232,10 +231,13 @@ public class DataBase extends SQLiteOpenHelper {
         return flag;
     }
 
-    public long newVolunteer(String name, String phone){
+
+
+    public long newVolunteer(String email, String name, String phone){
 
         try{
             ContentValues values = new ContentValues();
+            values.put(VOLUNTEER_COLUMN_EMAIL, email);
             values.put(VOLUNTEERS_COLUMN_NAME, name);
             values.put(VOLUNTEERS_COLUMN_PHONE, phone);
 
@@ -299,6 +301,19 @@ public class DataBase extends SQLiteOpenHelper {
         return -1;
     }
 
+    //create a new volunteer
+    public Volunteers cursorToVol(Cursor cursor) {
+        Volunteers result = new Volunteers();
+        try {
+            result.setEmail(cursor.getString(0));
+            result.setName(cursor.getString(1));
+            result.setPhone(cursor.getString(2));
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        return result;
+    }
+
     //create a new product by cursor (by getting a product from DB)
     public Products cursorToProduct(Cursor cursor) {
         Products result = new Products();
@@ -311,6 +326,59 @@ public class DataBase extends SQLiteOpenHelper {
             t.printStackTrace();
         }
         return result;
+    }
+
+    //check volunteer by email
+    public Boolean isVolunteerExist(String email){
+        ArrayList<Volunteers> volunteers = new ArrayList<>();
+        Cursor cursor = null;
+        boolean flag = false;
+        try {
+            cursor = db.query(TABLE_VOLUNTEER_NAME, TABLE_VOLUNTEER_COLUMNS, VOLUNTEER_COLUMN_EMAIL + " = ?", new String[] {email},
+                    null, null, null);
+            if(cursor.getCount()>0)
+                flag = true;
+            cursor.moveToFirst();
+//            while (!cursor.isAfterLast()) {
+//                Volunteers vol = cursorToProduct(cursor);
+//                volunteers.add(vol);
+//                cursor.moveToNext();
+//            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        finally {
+            // make sure to close the cursor
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+        return flag;
+    }
+
+    //get all volunteers from DB.
+    public ArrayList<Volunteers> allVolunteers(){
+        ArrayList<Volunteers> volunteers = new ArrayList<>();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_VOLUNTEER_NAME, TABLE_VOLUNTEER_COLUMNS, null, null,
+                    null, null, null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Volunteers vol = cursorToVol(cursor);
+                volunteers.add(vol);
+                cursor.moveToNext();
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        finally {
+            // make sure to close the cursor
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
+        return volunteers;
     }
 
     //get all products from DB.
@@ -731,6 +799,19 @@ public class DataBase extends SQLiteOpenHelper {
             }
         }
 
+
+    }
+
+    void removeVolunteer(Volunteers vol){
+
+        try {
+
+            // delete items
+            db.delete(TABLE_VOLUNTEER_NAME, VOLUNTEER_COLUMN_EMAIL + " = ?",
+                    new String[] { String.valueOf(vol.getEmail()) });
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
 
     }
     //removes package

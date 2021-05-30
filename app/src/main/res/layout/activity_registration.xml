@@ -64,7 +64,7 @@
         android:layout_margin="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Name" />
+        android:hint="Full name" />
 
     <EditText
         android:id="@+id/phone"

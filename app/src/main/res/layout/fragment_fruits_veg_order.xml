@@ -49,6 +49,7 @@
                             android:padding="10sp"
                             android:text="@string/DairyCol1"
                             android:textColor="@color/white"
+                            android:background="@drawable/border"
                             android:textSize="18sp" />
                         <TextView
                             android:layout_width="0dp"
@@ -58,6 +59,7 @@
                             android:padding="10sp"
                             android:text="@string/DairyCol2"
                             android:textColor="@color/white"
+                            android:background="@drawable/border"
                             android:textSize="18sp" />
 
                         <TextView
@@ -68,6 +70,7 @@
                             android:padding="10sp"
                             android:text="@string/DairyCol5"
                             android:textColor="@color/white"
+                            android:background="@drawable/border"
                             android:textSize="18sp" />
 
                     </TableRow>
@@ -499,7 +502,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="80dp"
                     android:layout_marginLeft="80dp"
-                    android:text="Order from 'Meshek Mor'"/>
+                    android:backgroundTint="@color/theme_color"
+                    android:text="Order from 'Meshek Mor'" />
             </LinearLayout>
         </ScrollView>
 
