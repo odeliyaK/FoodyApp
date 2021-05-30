@@ -9,10 +9,9 @@ public class Volunteers {
     public Volunteers() {
     }
 
-    public Volunteers(String email, String name, String phone, String lastName) {
+    public Volunteers(String email, String name, String phone) {
         this.email = email;
         this.name = name;
-        this.lastName = lastName;
         this.phone = phone;
     }
 

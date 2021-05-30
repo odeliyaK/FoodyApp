@@ -193,7 +193,15 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
     public void onDialogNegativeClick(DialogFragmentInputUpdate dialog) {
     }
 
+    @Override
+    public void onDialogPositiveClick(DialogFragmentUpdateVolunteer dialog) {
 
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragmentUpdateVolunteer dialog) {
+
+    }
 
 
 }

@@ -17,7 +17,7 @@ import com.foodyapp.model.usersInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VolunteersListActivity extends Activity implements AddInputDialogFragment, UpdateInputDialogFragment {
+public class VolunteersListActivity extends Activity implements UpdateInputDialogFragment {
     static List<Volunteers> itemInfos;
     static VolunteerAdapterOrg adapter;
     static Integer indexVal;
@@ -69,9 +69,10 @@ public class VolunteersListActivity extends Activity implements AddInputDialogFr
             public void onClick(View v) {
                 if(upFlag){
                     Bundle bundle = new Bundle();
+                    bundle.putString("email", selectedID);
                     bundle.putString("name", selectedName);
                     bundle.putString("phone", selectePhone);
-                    DialogFragmentInputUpdate frag = new DialogFragmentInputUpdate();
+                    DialogFragmentUpdateVolunteer frag = new DialogFragmentUpdateVolunteer();
                     bundle.putInt("title", R.string.alert_dialog_two_buttons_title);
                     frag.setArguments(bundle);
                     frag.show(getFragmentManager(), "dialog");
@@ -155,23 +156,26 @@ public class VolunteersListActivity extends Activity implements AddInputDialogFr
         MyInfoManager.getInstance().closeDataBase();
         super.onPause();
     }
-    @Override
-    public void onDialogPositiveClick(DialogFragmentInputAdd dialog) {
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragmentInputAdd dialog) {
-    }
 
     @Override
     public void onDialogPositiveClick(DialogFragmentInputUpdate dialog) {
+
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragmentInputUpdate dialog) {
+
     }
 
+    @Override
+    public void onDialogPositiveClick(DialogFragmentUpdateVolunteer dialog) {
 
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragmentUpdateVolunteer dialog) {
+
+    }
 
 
 }

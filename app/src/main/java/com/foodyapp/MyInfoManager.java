@@ -185,6 +185,13 @@ public class MyInfoManager {
 		}
 	}
 
+	public int updateVolunteer(Volunteers vol) {
+		if (db != null && vol != null) {
+			db.updateVolunteer(vol);
+		}
+		return 1;
+	}
+
 	public void updatePackage(usersInfo household) {
 		if (db != null && household != null) {
 			db.updatePackages(household);

@@ -31,7 +31,7 @@ public class VolunteerAdapterOrg extends ArrayAdapter<Volunteers> {
         String lastName = getItem(position).getLastName();
         String phone = getItem(position).getPhone();
 
-        Volunteers vol = new Volunteers(email,name,lastName,phone);
+        Volunteers vol = new Volunteers(email,name,phone);
 
         LayoutInflater inflater= LayoutInflater.from(mContext);
         view = inflater.inflate(mResource,parent,false);

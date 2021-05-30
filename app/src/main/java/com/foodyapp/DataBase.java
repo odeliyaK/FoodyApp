@@ -738,6 +738,24 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     //updates households
+    public int updateVolunteer(Volunteers vol) {
+        int i = 0;
+        try {
+
+            // make values to be inserted
+            ContentValues values = new ContentValues();
+            values.put(VOLUNTEERS_COLUMN_NAME, vol.getName());
+            values.put(VOLUNTEERS_COLUMN_PHONE, vol.getPhone());
+            // update
+            i = db.update(TABLE_VOLUNTEER_NAME, values, VOLUNTEER_COLUMN_EMAIL + " = ?",
+                    new String[] { String.valueOf(vol.getEmail()) });
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return i;
+    }
+    //updates households
     public int updateHousehold(usersInfo houseHold) {
         int i = 0;
         try {
