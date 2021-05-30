@@ -60,13 +60,14 @@ public class UsersActivity extends Activity {
 
         this.context = this;
         list = (ListView) findViewById(R.id.list);
-
+        MyInfoManager.getInstance().openDataBase(this);
                 List<HistoryInfo> listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
         List<usersInfo> listOfHouseholds = MyInfoManager.getInstance().getAllHouseHolds();
         List<usersInfo> listOfPackages = MyInfoManager.getInstance().getAllPackages();
         Date today=new Date();
         Date send = null;
         for (int i=0; i<listOfHPackages.size(); i++){
+
             String sendDay=listOfHPackages.get(i).getDate();
             SimpleDateFormat sdf=new SimpleDateFormat("dd-MMM-yyyy");
             try {
@@ -75,11 +76,18 @@ public class UsersActivity extends Activity {
                 e.printStackTrace();
             }
             if (daysBetween(today,send)==1){
+
                 usersInfo newPackage=new usersInfo(listOfHPackages.get(i).getName(),listOfHPackages.get(i).getAddress());
+                Toast.makeText(context, newPackage.getName()+newPackage.getAddress()+ sendDay+today, Toast.LENGTH_SHORT).show();
+
+
                 for (int j=0; j<listOfHouseholds.size(); j++){
                     if (newPackage.getName().equals(listOfHouseholds.get(j).getName() )&&newPackage.getAddress().equals(listOfHouseholds.get(j).getAddress())){
                         MyInfoManager.getInstance().createPackage(newPackage, listOfHouseholds.get(j).getId());
                         listOfPackages = MyInfoManager.getInstance().getAllPackages();
+                    }else {
+                       Toast.makeText(context, "There are no relevant packages in history", Toast.LENGTH_SHORT).show();
+
                     }
                 }
 
@@ -87,12 +95,12 @@ public class UsersActivity extends Activity {
 
         }
      //   List<usersInfo> listOfPackagesNew = MyInfoManager.getInstance().getAllPackages();
-        MyInfoManager.getInstance().openDataBase(this);
+
      //    listOfPackages = MyInfoManager.getInstance().getAllPackages();
         if (listOfPackages.isEmpty()){
             Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
         }else {
-            listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
+            listOfPackages = MyInfoManager.getInstance().getAllPackages();
             Date c = Calendar.getInstance().getTime();
 
 
