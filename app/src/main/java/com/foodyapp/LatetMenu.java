@@ -15,7 +15,7 @@ public class LatetMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ImageView rightIcon=findViewById(R.id.menu);
 
         setContentView(R.layout.activity_latet_menu);
 
@@ -38,12 +38,10 @@ public class LatetMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
     }
-
-
-
+    private void openMainActivity(){
+        Intent intent=new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
 }

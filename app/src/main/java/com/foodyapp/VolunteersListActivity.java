@@ -4,15 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.foodyapp.model.Volunteers;
@@ -40,13 +36,7 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
         setContentView(R.layout.activity_volunteers_list);
         myList = (ListView) findViewById(R.id.listView);
         this.context = this;
-        ImageView rightIcon=findViewById(R.id.menu);
-        rightIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMenu(v);
-            }
-        });
+
         MyInfoManager.getInstance().openDataBase(this);
         itemInfos=MyInfoManager.getInstance().allVolunteers();
         List<Volunteers> list = MyInfoManager.getInstance().allVolunteers();
@@ -186,23 +176,6 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
     public void onDialogNegativeClick(DialogFragmentUpdateVolunteer dialog) {
 
     }
-    private void showMenu(View v){
-        PopupMenu popupMenu=new PopupMenu(VolunteersListActivity.this, v);
-        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId()== R.id.logOut){
-                    openMainActivity();
-                }
-                return true;
-            }
-        });
-        popupMenu.show();
-    }
-    private void openMainActivity(){
-        Intent intent=new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
+
 
 }
