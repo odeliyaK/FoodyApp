@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".LatetMenu">
-    <include layout="@layout/toolbar_logout"/>
+    <include layout="@layout/toolbar_allscreens"/>
 
     <TextView
         android:layout_width="match_parent"
