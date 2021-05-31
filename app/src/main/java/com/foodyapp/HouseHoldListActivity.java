@@ -140,7 +140,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                 if (reFlag) {
 
                     AlertDialog.Builder removeApprovalDialog = new AlertDialog.Builder(context);
-                    removeApprovalDialog.setMessage("Are you sure you want to remove " + itemInfos.get(indexVal).getName());
+                    removeApprovalDialog.setMessage("Are you sure you want to remove " + itemInfos.get(indexVal).getName() + " id: " + itemInfos.get(indexVal).getId());
                     removeApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -150,13 +150,16 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 //                            HouseHoldListActivity.itemInfos.remove(u);
 //                            adapter.notifyDataSetChanged();
                             MyInfoManager.getInstance().deleteHousehold(currentuser);
-                         //   HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
 
                             adapter.remove(currentuser);
+                            if(!adapter.isEmpty())
+                                adapter.clear();
+                            HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
+                            adapter = new UsersAdapterOrg(HouseHoldListActivity.this, R.layout.activity_users_adapter_org, HouseHoldListActivity.itemInfos);
                             myList.setAdapter(adapter);
-                            //adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
 
-                            Toast.makeText(HouseHoldListActivity.this, currentuser.getName()+" was deleted",Toast.LENGTH_LONG);
+                            Toast.makeText(HouseHoldListActivity.this, currentuser.getId()+" was deleted",Toast.LENGTH_LONG);
                         }
                     });
                     removeApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

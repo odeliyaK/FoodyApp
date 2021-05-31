@@ -143,7 +143,7 @@ public class MeatPoultryOrderFragment extends Fragment implements View.OnClickLi
                                 }
                             }
                         }
-                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                        Intent intent = new Intent(getActivity(), OrderActivity.class);
                         startActivity(intent);
                     }
                 });

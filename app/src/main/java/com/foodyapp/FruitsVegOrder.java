@@ -179,7 +179,7 @@ public class FruitsVegOrder extends Fragment implements View.OnClickListener{
                                 }
                             }
                         }
-                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                        Intent intent = new Intent(getActivity(), OrderActivity.class);
                         startActivity(intent);
                     }
                 });

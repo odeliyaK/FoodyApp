@@ -158,7 +158,7 @@ public class GroceryOrderFragment extends Fragment implements View.OnClickListen
                                 }
                             }
                         }
-                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                        Intent intent = new Intent(getActivity(), OrderActivity.class);
                         startActivity(intent);
                     }
                 });
