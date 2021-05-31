@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Our Households"
+        android:id="@+id/house"/>
+    <item
+        android:title="Our Volunteers"
+        android:id="@+id/vols"/>
+    <item
+        android:title="Log out"
+        android:id="@+id/logOut"
+        android:menuCategory="secondary"/>
+
+</menu>

@@ -26,7 +26,7 @@
         android:text="Packages history"
         android:textColor="@color/black"
         android:textSize="25dp"
-        android:textStyle="bold|italic"
+        android:fontFamily="sans-serif-smallcaps"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -42,7 +42,7 @@
         android:background="@color/white">
 
         <!--        table head-->
-        <TableRow android:background="@color/purple_200">
+        <TableRow android:background="@drawable/border">
 
             <TextView
                 android:layout_width="0dp"
@@ -52,6 +52,7 @@
                 android:padding="10sp"
                 android:text="Num of package"
                 android:textColor="@color/white"
+                android:background="@drawable/border"
                 android:textSize="14sp" />
 
             <TextView
@@ -62,6 +63,7 @@
                 android:padding="10sp"
                 android:text="Customer Name"
                 android:textColor="@color/white"
+                android:background="@drawable/border"
                 android:textSize="14sp" />
 
             <TextView
@@ -71,6 +73,7 @@
                 android:gravity="center"
                 android:padding="10sp"
                 android:text="Customer address"
+                android:background="@drawable/border"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 

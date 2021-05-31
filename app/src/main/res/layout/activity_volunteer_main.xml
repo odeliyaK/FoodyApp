@@ -16,7 +16,7 @@
         android:layout_marginTop="80dp"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textStyle="bold|italic"
+        android:fontFamily="sans-serif-smallcaps"
         android:layout_gravity="center"/>
 
     <ImageView
@@ -26,7 +26,7 @@
         android:src="@drawable/parcels" />
 
     <Button
-        android:id="@+id/orders"
+        android:id="@+id/inventory"
         android:layout_width="284dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
@@ -35,7 +35,7 @@
         android:text="@string/inventory" />
 
     <Button
-        android:id="@+id/inventory"
+        android:id="@+id/orders"
         android:layout_width="284dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="210dp"

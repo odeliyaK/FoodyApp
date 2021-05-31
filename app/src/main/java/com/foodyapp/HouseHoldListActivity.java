@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.foodyapp.model.usersInfo;
@@ -39,6 +43,21 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_hold_list);
+        ImageView toolBarArrow=findViewById(R.id.arrow);
+        ImageView rightIcon=findViewById(R.id.menu);
+        toolBarArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLatetActivity();
+            }
+        });
+
+        rightIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu(v);
+            }
+        });
         myList = (ListView) findViewById(R.id.listView);
         this.context = this;
 
@@ -165,6 +184,45 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 
     }
 
+    private void openLatetActivity(){
+        Intent intent=new Intent(this, LatetMenu.class);
+        startActivity(intent);
+    }
+
+    private void openMainActivity(){
+        Intent intent=new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void openHouseActivity(){
+        Intent intent=new Intent(this, HouseHoldListActivity.class);
+        startActivity(intent);
+    }
+    public void openVolsActivity(){
+        Intent intent=new Intent(this, VolunteersListActivity.class);
+        startActivity(intent);
+    }
+
+    private void showMenu(View v){
+        PopupMenu popupMenu=new PopupMenu(HouseHoldListActivity.this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.latet_toolbar_allscreens, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId()== R.id.vols){
+                    openVolsActivity();
+                }
+                else if (item.getItemId()== R.id.house){
+                    openHouseActivity();
+                }
+                else if (item.getItemId()== R.id.logOut){
+                    openMainActivity();
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
+    }
     @Override
     protected void onResume() {
         MyInfoManager.getInstance().openDataBase(this);

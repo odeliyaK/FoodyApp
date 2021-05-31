@@ -15,11 +15,15 @@ public class LatetMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_latet_menu);
         ImageView rightIcon=findViewById(R.id.menu);
 
-        setContentView(R.layout.activity_latet_menu);
-
-
+        rightIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu(v);
+            }
+        });
 
         Button households = (Button) findViewById(R.id.households);
         households.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +46,21 @@ public class LatetMenu extends AppCompatActivity {
     private void openMainActivity(){
         Intent intent=new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    private void showMenu(View v){
+        PopupMenu popupMenu=new PopupMenu(LatetMenu.this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId()== R.id.logOut){
+                    openMainActivity();
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
     }
 
 }

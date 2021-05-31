@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VolunteersListActivity">
-    <include layout="@layout/toolbar_allscreens"/>
+    <include layout="@layout/latet_popupmenu"/>
 
     <TextView
 
@@ -66,7 +66,7 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="385dp"
+        android:layout_height="366dp"
         android:layout_marginTop="173dp" />
 
 
