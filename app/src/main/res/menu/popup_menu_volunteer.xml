@@ -14,5 +14,9 @@
     <item
         android:title="Package history"
         android:id="@+id/packageHistory"/>
+    <item
+        android:title="Log out"
+        android:id="@+id/logOut"
+        android:menuCategory="secondary"/>
 
 </menu>

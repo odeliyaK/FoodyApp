@@ -201,6 +201,10 @@ public class InventoryActivity extends AppCompatActivity {
         Intent intent=new Intent(this, OrderActivity.class);
         startActivity(intent);
     }
+    private void openMainActivity(){
+        Intent intent=new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
     private void openHistoryActivity() {
         Intent intent=new Intent(this, HistoryActivity.class);
         startActivity(intent);
@@ -222,6 +226,9 @@ public class InventoryActivity extends AppCompatActivity {
                 }
                 else if (item.getItemId()== R.id.packageHistory){
                     openHistoryActivity();
+                }
+                else if (item.getItemId()== R.id.logOut){
+                    openMainActivity();
                 }
                 return true;
             }

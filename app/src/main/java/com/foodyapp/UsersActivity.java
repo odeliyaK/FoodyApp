@@ -61,7 +61,7 @@ public class UsersActivity extends Activity {
         this.context = this;
         list = (ListView) findViewById(R.id.list);
         MyInfoManager.getInstance().openDataBase(this);
-                List<HistoryInfo> listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
+        List<HistoryInfo> listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
         List<usersInfo> listOfHouseholds = MyInfoManager.getInstance().getAllHouseHolds();
         List<usersInfo> listOfPackages = MyInfoManager.getInstance().getAllPackages();
         Date today=new Date();
@@ -75,7 +75,8 @@ public class UsersActivity extends Activity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if (daysBetween(today,send)==1){
+            //if 1 week was pass and the household is still in the DB- a new package for him will be created.
+            if (daysBetween(today,send)==7){
 
                 usersInfo newPackage=new usersInfo(listOfHPackages.get(i).getName(),listOfHPackages.get(i).getAddress());
                 Toast.makeText(context, newPackage.getName()+newPackage.getAddress()+ sendDay+today, Toast.LENGTH_SHORT).show();
@@ -85,10 +86,11 @@ public class UsersActivity extends Activity {
                     if (newPackage.getName().equals(listOfHouseholds.get(j).getName() )&&newPackage.getAddress().equals(listOfHouseholds.get(j).getAddress())){
                         MyInfoManager.getInstance().createPackage(newPackage, listOfHouseholds.get(j).getId());
                         listOfPackages = MyInfoManager.getInstance().getAllPackages();
-                    }else {
-                       Toast.makeText(context, "There are no relevant packages in history", Toast.LENGTH_SHORT).show();
-
                     }
+//                    else {
+//                       Toast.makeText(context, "There are no relevant packages in history", Toast.LENGTH_SHORT).show();
+//
+//                    }
                 }
 
             }
@@ -134,6 +136,10 @@ public class UsersActivity extends Activity {
         Intent intent=new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
+    private void openMainActivity(){
+        Intent intent=new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
     private void showMenu(View v){
         PopupMenu popupMenu=new PopupMenu(UsersActivity.this, v);
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu_volunteer, popupMenu.getMenu());
@@ -151,6 +157,9 @@ public class UsersActivity extends Activity {
                 }
                 else if (item.getItemId()== R.id.packageHistory){
                     openHistoryActivity();
+                }
+                else if (item.getItemId()== R.id.logOut){
+                    openMainActivity();
                 }
                 return true;
             }

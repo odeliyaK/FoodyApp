@@ -99,6 +99,11 @@ public class HistoryActivity extends AppCompatActivity {
         Intent intent=new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
+
+    private void openMainActivity(){
+        Intent intent=new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
     private void showMenu(View v){
         PopupMenu popupMenu=new PopupMenu(HistoryActivity.this, v);
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu_volunteer, popupMenu.getMenu());
@@ -116,6 +121,9 @@ public class HistoryActivity extends AppCompatActivity {
                 }
                 else if (item.getItemId()== R.id.packageHistory){
                     openHistoryActivity();
+                }
+                else if (item.getItemId()== R.id.logOut){
+                    openMainActivity();
                 }
                 return true;
             }

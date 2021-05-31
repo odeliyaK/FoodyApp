@@ -19,15 +19,14 @@ import java.util.ArrayList;
 
 public class VolunteerMainActivity extends AppCompatActivity implements organizationsAlertDialogFragmentListener {
 
-    String items[] = new String[]{"Choose organization", "Manage Packages", "order food from supplier", "inventory management",
-            "Packages history"};
+
     ListView volList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_main);
-
+        ImageView rightIcon=findViewById(R.id.menu);
         Button orders = (Button) findViewById(R.id.orders);
         Button inventory = (Button) findViewById(R.id.inventory);
         Button parcels = (Button) findViewById(R.id.parcels);
@@ -39,7 +38,12 @@ public class VolunteerMainActivity extends AppCompatActivity implements organiza
                 startActivity(intent);
             }
         });
-
+        rightIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu(v);
+            }
+        });
         inventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,61 +68,10 @@ public class VolunteerMainActivity extends AppCompatActivity implements organiza
             }
         });
 
-//        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,items);
-//        volList.setAdapter(adapter);
-//        volList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                //if "choose organization" was clicked
-//                if (position==0){
-//                    showCustomAlertDialog();
-//                }
-//                //if "Manage Orders" was clicked
-//                else if(position==1){
-//                    openOrdersActivity();
-//                }
-//                //if "order food from suppliers" was clicked
-//                else if(position==2){
-//                    openOrderFoodActivity();
-//                }
-//                //if "inventory management" was clicked
-//                else if(position==3){
-//                    openInventoryActivity();
-//                }
-//                ////if "Parcels history" was clicked
-//                else if (position==4){
-//                    openHistoryActivity();
-//                }
-//            }
-//        });
+
 
     }
-//private void openMain(){
-//    Intent intent=new Intent(this, MainActivity.class);
-//    startActivity(intent);
-//}
-//
-//    private void openHistoryActivity() {
-//        Intent intent=new Intent(this, HistoryActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    public void openOrdersActivity(){
-//        Intent intent=new Intent(this, UsersActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    public void openInventoryActivity(){
-//        Intent intent=new Intent(this, InventoryActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    public void openOrderFoodActivity(){
-//        Intent intent=new Intent(this, OrderActivity.class);
-//        startActivity(intent);
-//    }
+
 
     private void showCustomAlertDialog() {
         OganizationDialogFragment frag = new OganizationDialogFragment();
@@ -138,6 +91,24 @@ public class VolunteerMainActivity extends AppCompatActivity implements organiza
     public void onDialogNegativeClick(OganizationDialogFragment dialog) {
         Toast.makeText(this, "onDialogNegativeClick " ,Toast.LENGTH_SHORT).show();
     }
+    private void openMainActivity(){
+        Intent intent=new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
+    private void showMenu(View v){
+        PopupMenu popupMenu=new PopupMenu(VolunteerMainActivity.this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+               if (item.getItemId()== R.id.logOut){
+                    openMainActivity();
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
+    }
 
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".VolunteerMainActivity">
 
-    <include layout="@layout/toolbar_allscreens"/>
+    <include layout="@layout/toolbar_logout"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -61,14 +61,5 @@
         app:backgroundTint="@color/teal_700"
         android:text="@string/history" />
 
-<!--        <ListView-->
-<!--        android:id="@+id/volunteerlistview"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="396dp"-->
-<!--        android:layout_marginStart="50dp"-->
-<!--        android:layout_marginLeft="50dp"-->
-<!--        android:layout_marginTop="50dp"-->
-<!--        android:layout_marginEnd="50dp"-->
-<!--        android:layout_marginRight="50dp"-->
-<!--        android:layout_marginBottom="50dp" />-->
+
 </RelativeLayout>

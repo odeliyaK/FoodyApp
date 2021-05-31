@@ -185,7 +185,10 @@ public class OrderActivity extends AppCompatActivity {
         MyInfoManager.getInstance().closeDataBase();
         super.onPause();
     }
-
+    private void openMainActivity(){
+        Intent intent=new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
     private void openVolunteerActivity(){
         Intent intent=new Intent(this, VolunteerMainActivity.class);
         startActivity(intent);
@@ -225,6 +228,9 @@ public class OrderActivity extends AppCompatActivity {
                 }
                 else if (item.getItemId()== R.id.packageHistory){
                     openHistoryActivity();
+                }
+                else if (item.getItemId()== R.id.logOut){
+                    openMainActivity();
                 }
                 return true;
             }
