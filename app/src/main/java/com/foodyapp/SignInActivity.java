@@ -21,7 +21,6 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         MyInfoManager.getInstance().openDataBase(this);
-        MyInfoManager.getInstance().products();
 
         email=(EditText)findViewById(R.id.emailsignIn);
         password=(EditText)findViewById(R.id.passwordSignIn);

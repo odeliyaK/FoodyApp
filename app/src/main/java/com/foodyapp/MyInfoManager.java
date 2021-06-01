@@ -40,9 +40,8 @@ public class MyInfoManager {
 
 		public Context getContext() {
 			return context;
-			
-		}
 
+		}
 	public void openDataBase(Context context) {
 		this.context = context;
 		if (context != null) {
@@ -212,6 +211,11 @@ public class MyInfoManager {
 
 	public usersInfo getSelectedHouseHold() {
 		return selectedHousehold;
+	}
+
+	public void checksInserts(){
+		if(db != null)
+			db.checksInserts();
 	}
 
 

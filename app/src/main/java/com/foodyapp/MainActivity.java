@@ -16,13 +16,16 @@ public class MainActivity extends AppCompatActivity {
 private  Button sign_btn;
 
 
-
  //commit try liad to origin
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MyInfoManager.getInstance().openDataBase(this);
+        MyInfoManager.getInstance().checksInserts();
+        MyInfoManager.getInstance().products();
 
 
         reg_btn=(Button) findViewById(R.id.btn_register);
@@ -52,6 +55,18 @@ private  Button sign_btn;
     public void openSignInActivity(){
         Intent intent=new Intent(this, SignInActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        MyInfoManager.getInstance().openDataBase(this);
+        super.onResume();
+
+    }
+
+    protected void onPause() {
+        MyInfoManager.getInstance().closeDataBase();
+        super.onPause();
     }
 
 }

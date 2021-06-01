@@ -1052,5 +1052,58 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
 
+    //inserts for checks:
+    public void checksInserts(){
+
+        ArrayList<Products> currentProducts = allProducts();
+
+        if(currentProducts.isEmpty()) {
+            //inserting volunteer
+            try {
+                ContentValues values = new ContentValues();
+                values.put(VOLUNTEERS_COLUMN_NAME, "Moshe Sason");
+                values.put(VOLUNTEERS_COLUMN_PHONE, "1234567");
+                values.put(VOLUNTEER_COLUMN_EMAIL, "moshe@gmail.com");
+                db.insert(TABLE_VOLUNTEER_NAME, null, values);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            try {
+                ContentValues values = new ContentValues();
+                values.put(VOLUNTEERS_COLUMN_NAME, "Eden Levi");
+                values.put(VOLUNTEERS_COLUMN_PHONE, "987654");
+                values.put(VOLUNTEER_COLUMN_EMAIL, "eden@gmail.com");
+                db.insert(TABLE_VOLUNTEER_NAME, null, values);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+
+            //inserting households
+            try {
+                long id;
+                ContentValues values = new ContentValues();
+                values.put(HOUSEHOLDS_COLUMN_NAME, "Liav Dagan");
+                values.put(HOUSEHOLDS_COLUMN_ADDRESS, "Haifa, Hanesharim 4");
+                id = db.insert(TABLE_HOUSEHOLDS_NAME, null, values);
+                usersInfo household = new usersInfo("Liav Dagan", "Haifa, Hanesharim 4");
+                addPackage(household);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            try {
+                long id;
+                ContentValues values = new ContentValues();
+                values.put(HOUSEHOLDS_COLUMN_NAME, "Shiran Markovitz");
+                values.put(HOUSEHOLDS_COLUMN_ADDRESS, "Haifa, Haagana 21");
+                id = db.insert(TABLE_HOUSEHOLDS_NAME, null, values);
+                usersInfo household = new usersInfo("Shiran Markovitz", "Haifa, Haagana 21");
+                addPackage(household);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }
+
+    }
+
 
 }

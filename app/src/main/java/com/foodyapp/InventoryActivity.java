@@ -58,7 +58,7 @@ public class InventoryActivity extends AppCompatActivity {
         dairytBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!MyInfoManager.getInstance().isInventoryUpdated("Tenuva")) {
+//                if(!MyInfoManager.getInstance().isInventoryUpdated("Tenuva")) {
                     dairytBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
                     groceryBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
                     mpBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
@@ -69,17 +69,17 @@ public class InventoryActivity extends AppCompatActivity {
                     t.replace(R.id.root_layout, fragment);
                     t.addToBackStack(null);
                     t.commit();
-                }
-                else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
-                    builder.setMessage(R.string.inventoryMadeToday);
-                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
+//                }
+//                else {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
+//                    builder.setMessage(R.string.inventoryMadeToday);
+//                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                        }
+//                    });
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                }
 
             }
         });
@@ -87,7 +87,7 @@ public class InventoryActivity extends AppCompatActivity {
         groceryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!MyInfoManager.getInstance().isInventoryUpdated("Osem")) {
+//                if(!MyInfoManager.getInstance().isInventoryUpdated("Osem")) {
                     groceryBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
                     dairytBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
                     mpBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
@@ -98,24 +98,24 @@ public class InventoryActivity extends AppCompatActivity {
                     t.replace(R.id.root_layout, fragment);
                     t.addToBackStack(null);
                     t.commit();
-                }
-                else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
-                    builder.setMessage(R.string.inventoryMadeToday);
-                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
+//                }
+//                else {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
+//                    builder.setMessage(R.string.inventoryMadeToday);
+//                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                        }
+//                    });
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                }
             }
         });
 
         mpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!MyInfoManager.getInstance().isInventoryUpdated("Butcher")) {
+//                if(!MyInfoManager.getInstance().isInventoryUpdated("Butcher")) {
                     mpBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
                     dairytBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
                     groceryBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
@@ -126,17 +126,17 @@ public class InventoryActivity extends AppCompatActivity {
                     t.replace(R.id.root_layout, fragment);
                     t.addToBackStack(null);
                     t.commit();
-                }
-                else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
-                    builder.setMessage(R.string.inventoryMadeToday);
-                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
+//                }
+//                else {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
+//                    builder.setMessage(R.string.inventoryMadeToday);
+//                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                        }
+//                    });
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                }
 
             }
         });
@@ -144,7 +144,7 @@ public class InventoryActivity extends AppCompatActivity {
         fvBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!MyInfoManager.getInstance().isInventoryUpdated("Meshek")) {
+//                if(!MyInfoManager.getInstance().isInventoryUpdated("Meshek")) {
                     fvBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
                     dairytBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
                     groceryBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
@@ -155,17 +155,17 @@ public class InventoryActivity extends AppCompatActivity {
                     t.replace(R.id.root_layout, fragment);
                     t.addToBackStack(null);
                     t.commit();
-                }
-                else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
-                    builder.setMessage(R.string.inventoryMadeToday);
-                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
+//                }
+//                else {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
+//                    builder.setMessage(R.string.inventoryMadeToday);
+//                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                        }
+//                    });
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                }
 
             }
         });

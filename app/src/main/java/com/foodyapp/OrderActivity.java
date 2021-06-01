@@ -55,25 +55,41 @@ public class OrderActivity extends AppCompatActivity {
         Button mpBtn = findViewById(R.id.meatBtn);
         Button fvBtn = findViewById(R.id.fvBtn);
         Button dairytBtn = findViewById(R.id.dairyBtn);
+
+        //check if inventory check was made today and an order was'nt for all kinds of products.
+
         dairytBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(!MyInfoManager.getInstance().checkIfOrderHappen("Tenuva")){
-                    dairytBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
-                    groceryBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    mpBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    fvBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    FragmentManager fm = getFragmentManager();
-                    DairyActivityOrder fragment = new DairyActivityOrder();
-                    FragmentTransaction t = fm.beginTransaction();
-                    t.replace(R.id.root_layout, fragment);
-                    t.addToBackStack(null);
-                    t.commit();
+                if(MyInfoManager.getInstance().isInventoryUpdated("Tenuva"))
+                {
+                    if(!MyInfoManager.getInstance().checkIfOrderHappen("Tenuva")){
+                        dairytBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
+                        groceryBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        mpBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        fvBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        FragmentManager fm = getFragmentManager();
+                        DairyActivityOrder fragment = new DairyActivityOrder();
+                        FragmentTransaction t = fm.beginTransaction();
+                        t.replace(R.id.root_layout, fragment);
+                        t.addToBackStack(null);
+                        t.commit();
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                        builder.setMessage(R.string.orderMadeToday);
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
-                    builder.setMessage(R.string.orderMadeToday);
+                    builder.setMessage(R.string.inventoryCheck);
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }
@@ -82,26 +98,41 @@ public class OrderActivity extends AppCompatActivity {
                     dialog.show();
                 }
 
+
             }
         });
+
         groceryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!MyInfoManager.getInstance().checkIfOrderHappen("Osem")) {
-                    groceryBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
-                    dairytBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    mpBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    fvBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    FragmentManager fm = getFragmentManager();
-                    GroceryOrderFragment fragment = new GroceryOrderFragment();
-                    FragmentTransaction t = fm.beginTransaction();
-                    t.replace(R.id.root_layout, fragment);
-                    t.addToBackStack(null);
-                    t.commit();
+                if(MyInfoManager.getInstance().isInventoryUpdated("Osem"))
+                {
+                    if(!MyInfoManager.getInstance().checkIfOrderHappen("Osem")){
+                        groceryBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
+                        dairytBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        mpBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        fvBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        FragmentManager fm = getFragmentManager();
+                        GroceryOrderFragment fragment = new GroceryOrderFragment();
+                        FragmentTransaction t = fm.beginTransaction();
+                        t.replace(R.id.root_layout, fragment);
+                        t.addToBackStack(null);
+                        t.commit();
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                        builder.setMessage(R.string.orderMadeToday);
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
-                    builder.setMessage(R.string.orderMadeToday);
+                    builder.setMessage(R.string.inventoryCheck);
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }
@@ -117,21 +148,34 @@ public class OrderActivity extends AppCompatActivity {
         mpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!MyInfoManager.getInstance().checkIfOrderHappen("Butcher")) {
-                    mpBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
-                    dairytBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    groceryBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    fvBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    FragmentManager fm = getFragmentManager();
-                    MeatPoultryOrderFragment fragment = new MeatPoultryOrderFragment();
-                    FragmentTransaction t = fm.beginTransaction();
-                    t.replace(R.id.root_layout, fragment);
-                    t.addToBackStack(null);
-                    t.commit();
+                if(MyInfoManager.getInstance().isInventoryUpdated("Butcher"))
+                {
+                    if(!MyInfoManager.getInstance().checkIfOrderHappen("Butcher")){
+                        mpBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
+                        groceryBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        dairytBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        fvBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        FragmentManager fm = getFragmentManager();
+                        MeatPoultryOrderFragment fragment = new MeatPoultryOrderFragment();
+                        FragmentTransaction t = fm.beginTransaction();
+                        t.replace(R.id.root_layout, fragment);
+                        t.addToBackStack(null);
+                        t.commit();
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                        builder.setMessage(R.string.orderMadeToday);
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
-                    builder.setMessage(R.string.orderMadeToday);
+                    builder.setMessage(R.string.inventoryCheck);
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }
@@ -147,27 +191,42 @@ public class OrderActivity extends AppCompatActivity {
         fvBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!MyInfoManager.getInstance().checkIfOrderHappen("Meshek")) {
-                    fvBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
-                    dairytBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    groceryBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    mpBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
-                    FragmentManager fm = getFragmentManager();
-                    FruitsVegOrder fragment = new FruitsVegOrder();
-                    FragmentTransaction t = fm.beginTransaction();
-                    t.replace(R.id.root_layout, fragment);
-                    t.addToBackStack(null);
-                    t.commit();
+                if(MyInfoManager.getInstance().isInventoryUpdated("Meshek"))
+                {
+                    if(!MyInfoManager.getInstance().checkIfOrderHappen("Meshek")){
+                        fvBtn.setBackgroundColor(getResources().getColor(R.color.table_color));
+                        groceryBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        mpBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        dairytBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+                        FragmentManager fm = getFragmentManager();
+                        FruitsVegOrder fragment = new FruitsVegOrder();
+                        FragmentTransaction t = fm.beginTransaction();
+                        t.replace(R.id.root_layout, fragment);
+                        t.addToBackStack(null);
+                        t.commit();
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                        builder.setMessage(R.string.orderMadeToday);
+                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
-                    builder.setMessage(R.string.orderMadeToday);
+                    builder.setMessage(R.string.inventoryCheck);
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
+                    Intent intent = new Intent(OrderActivity.this, InventoryActivity.class);
+                    startActivity(intent);
                 }
 
             }

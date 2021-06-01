@@ -57,6 +57,9 @@ public class GroceryFragment extends Fragment implements View.OnClickListener{
         be4 = num4.getText().toString();
         be5 = num5.getText().toString();
 
+        save = view.findViewById(R.id.saveBtn);
+        save.setOnClickListener(this);
+
         EditText[] textQ = {num1, num2, num3, num4, num5};
 
         ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
@@ -76,8 +79,36 @@ public class GroceryFragment extends Fragment implements View.OnClickListener{
             buttons[i].setOnClickListener(this);
         }
 
-        save = view.findViewById(R.id.saveBtn);
-        save.setOnClickListener(this);
+        if(MyInfoManager.getInstance().isInventoryUpdated("Osem")){
+            for(int i=0; i<idArray.length; i++) {
+                buttons[i].setVisibility(View.INVISIBLE);
+            }
+            save.setVisibility(View.INVISIBLE);
+            num1.setClickable(false);
+            num1.setFocusable(false);
+            num1.setFocusableInTouchMode(false);
+            num2.setClickable(false);
+            num2.setFocusable(false);
+            num2.setFocusableInTouchMode(false);
+            num3.setClickable(false);
+            num3.setFocusable(false);
+            num3.setFocusableInTouchMode(false);
+            num4.setClickable(false);
+            num4.setFocusable(false);
+            num5.setFocusableInTouchMode(false);
+            num5.setClickable(false);
+            num5.setFocusable(false);
+            num5.setFocusableInTouchMode(false);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+            builder.setMessage(R.string.inventoryMadeToday);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+
 
         return view;
     }

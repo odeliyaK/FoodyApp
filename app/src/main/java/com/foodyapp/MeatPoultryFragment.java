@@ -53,6 +53,9 @@ public class MeatPoultryFragment extends Fragment implements View.OnClickListene
         be2 = num2.getText().toString();
         be3 = num3.getText().toString();
 
+        save = view.findViewById(R.id.saveBtn);
+        save.setOnClickListener(this);
+
         EditText[] textQ = {num1, num2, num3};
 
         ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
@@ -72,8 +75,30 @@ public class MeatPoultryFragment extends Fragment implements View.OnClickListene
             buttons[i].setOnClickListener(this);
         }
 
-        save = view.findViewById(R.id.saveBtn);
-        save.setOnClickListener(this);
+        if(MyInfoManager.getInstance().isInventoryUpdated("Butcher")){
+            num1.setClickable(false);
+            num1.setFocusable(false);
+            num1.setFocusableInTouchMode(false);
+            num2.setClickable(false);
+            num2.setFocusable(false);
+            num2.setFocusableInTouchMode(false);
+            num3.setClickable(false);
+            num3.setFocusable(false);
+            save.setVisibility(View.INVISIBLE);
+            for(int i=0; i<idArray.length; i++) {
+                buttons[i].setVisibility(View.INVISIBLE);
+
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+            builder.setMessage(R.string.inventoryMadeToday);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+
 
         return view;
     }
