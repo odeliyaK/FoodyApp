@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:layout_centerInParent="true"
-                tools:text="60%" />
+                android:text="60%" />
         </RelativeLayout>
     </RelativeLayout>
 

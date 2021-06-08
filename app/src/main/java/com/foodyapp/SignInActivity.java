@@ -61,19 +61,24 @@ public class SignInActivity extends AppCompatActivity {
         }
         showProgressBar();
 
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        boolean flag = true;
                         if (task.isSuccessful()) {
+
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            if(email.equals("latet@gmail.com")){
+                                flag = false;
+                            }
+                            updateUI(user, flag);
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(SignInActivity.this, task.getException().toString(),
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            updateUI(null, flag);
                         }
 
                         // [START_EXCLUDE]
@@ -94,13 +99,17 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(FirebaseUser user, boolean flag) {
         hideProgressBar();
         if (user != null){
-            //Intent intent = new Intent(this, CitiesActivity.class);
-            Intent intent = new Intent(this, VolunteerMainActivity.class);
+            if(flag){
+                Intent intent = new Intent(this, VolunteerMainActivity.class);
 
-            startActivity(intent);
+                startActivity(intent);
+            }
+            //Intent intent = new Intent(this, CitiesActivity.class);
+            else
+                openOrgActivity();
 
         } else {
 
@@ -142,7 +151,7 @@ public class SignInActivity extends AppCompatActivity {
         //FirebaseApp.initializeApp(this);
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        updateUI(currentUser, true);
     }
 
     public void showProgressBar() {
