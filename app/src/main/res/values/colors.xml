@@ -10,5 +10,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="theme_color">#2D83BD</color>
     <color name="table_color">#6DBDF3</color>
-    <color name="red">#e4261b</color>
+    <color name="Accent">#03DAC5</color>
+    <color name="primary">#6200EE</color>
 </resources>

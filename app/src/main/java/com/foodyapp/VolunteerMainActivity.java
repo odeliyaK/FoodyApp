@@ -9,16 +9,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 
 public class VolunteerMainActivity extends AppCompatActivity implements organizationsAlertDialogFragmentListener {
 
+    private FirebaseAuth mAuth;
 
     ListView volList;
 
@@ -26,11 +30,25 @@ public class VolunteerMainActivity extends AppCompatActivity implements organiza
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_main);
+        mAuth = FirebaseAuth.getInstance();
         ImageView rightIcon=findViewById(R.id.menu);
         Button orders = (Button) findViewById(R.id.orders);
         Button inventory = (Button) findViewById(R.id.inventory);
         Button parcels = (Button) findViewById(R.id.parcels);
         Button history = (Button) findViewById(R.id.history);
+        ImageButton logOut = (ImageButton)  findViewById(R.id.logOut1);
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent intent=new Intent(VolunteerMainActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,12 +56,7 @@ public class VolunteerMainActivity extends AppCompatActivity implements organiza
                 startActivity(intent);
             }
         });
-        rightIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMenu(v);
-            }
-        });
+
         inventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

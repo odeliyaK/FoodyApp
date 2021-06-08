@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
  private Button reg_btn;
 private  Button sign_btn;
@@ -67,6 +70,25 @@ private  Button sign_btn;
     protected void onPause() {
         MyInfoManager.getInstance().closeDataBase();
         super.onPause();
+    }
+
+    protected void onStart() {
+        super.onStart();
+        //FirebaseApp.initializeApp(this);
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        updateUI(currentUser);
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+
+            Intent intent = new Intent(this, VolunteerMainActivity.class);
+
+            startActivity(intent);
+
+        }
+
     }
 
 }
