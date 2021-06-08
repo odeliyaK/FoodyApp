@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class SignInActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     ProgressBar prog;
     TextView percent;
+    RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,9 @@ public class SignInActivity extends AppCompatActivity {
         email=(EditText)findViewById(R.id.emailsignIn);
         password=(EditText)findViewById(R.id.passwordSignIn);
         prog = findViewById(R.id.progress_bar);
+        percent = (TextView)findViewById(R.id.percent);
+        relativeLayout = findViewById(R.id.relative);
+        hideProgressBar();
 
         signIn_btn=(Button)findViewById(R.id.sign_btn);
         signIn_btn.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +59,7 @@ public class SignInActivity extends AppCompatActivity {
         if (!validateForm()) {
             return;
         }
+        showProgressBar();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -71,6 +77,7 @@ public class SignInActivity extends AppCompatActivity {
                         }
 
                         // [START_EXCLUDE]
+                        hideProgressBar();
                         // [END_EXCLUDE]
                     }
                 });
@@ -88,6 +95,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
+        hideProgressBar();
         if (user != null){
             //Intent intent = new Intent(this, CitiesActivity.class);
             Intent intent = new Intent(this, VolunteerMainActivity.class);
@@ -135,5 +143,21 @@ public class SignInActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+    }
+
+    public void showProgressBar() {
+        if (prog != null) {
+            prog.setVisibility(View.VISIBLE);
+            percent.setVisibility(View.VISIBLE);
+            relativeLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideProgressBar() {
+        if (prog != null) {
+            prog.setVisibility(View.GONE);
+            percent.setVisibility(View.GONE);
+            relativeLayout.setVisibility(View.GONE);
+        }
     }
 }

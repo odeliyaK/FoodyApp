@@ -35,6 +35,7 @@
         android:layout_gravity="center"/>
 
     <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="150dp">
@@ -45,7 +46,7 @@
             android:layout_height="match_parent"
             android:indeterminateOnly="false"
             style="@style/CircularDeterminateProgressBar"
-            android:progress="100" />
+            android:progress="60" />
 
         <RelativeLayout
             android:layout_width="match_parent"
