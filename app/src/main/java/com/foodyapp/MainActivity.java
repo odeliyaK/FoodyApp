@@ -77,15 +77,25 @@ private  Button sign_btn;
         //FirebaseApp.initializeApp(this);
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        updateUI(currentUser);
+        if(currentUser == null)
+            updateUI(null, false);
+        else if(currentUser.getEmail().equals("latet@gmail.com"))
+            updateUI(currentUser, false);
+        else
+            updateUI(currentUser, true);
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(FirebaseUser user, boolean flag) {
         if (user != null) {
-
-            Intent intent = new Intent(this, VolunteerMainActivity.class);
-
+            Intent intent;
+            if (flag) {
+                intent = new Intent(this, VolunteerMainActivity.class);
+            }
+            else{
+                intent = new Intent(this, LatetMenu.class);
+            }
             startActivity(intent);
+
 
         }
 

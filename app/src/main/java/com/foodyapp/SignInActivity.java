@@ -150,8 +150,13 @@ public class SignInActivity extends AppCompatActivity {
         super.onStart();
         //FirebaseApp.initializeApp(this);
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser, true);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null){
+            if(currentUser.getEmail().equals("latet@gmail.com"))
+                updateUI(currentUser, false);
+            else
+                updateUI(currentUser, true);
+        }
     }
 
     public void showProgressBar() {

@@ -7,23 +7,40 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class LatetMenu extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_latet_menu);
-        ImageView rightIcon=findViewById(R.id.menu);
 
-        rightIcon.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_latet_menu);
+        mAuth = FirebaseAuth.getInstance();
+        ImageView rightIcon=findViewById(R.id.menu);
+        ImageButton logOut = (ImageButton)  findViewById(R.id.logOut1);
+
+        logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMenu(v);
+                mAuth.signOut();
+                Intent intent=new Intent(LatetMenu.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
+
+//        rightIcon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showMenu(v);
+//            }
+//        });
 
         Button households = (Button) findViewById(R.id.households);
         households.setOnClickListener(new View.OnClickListener() {
