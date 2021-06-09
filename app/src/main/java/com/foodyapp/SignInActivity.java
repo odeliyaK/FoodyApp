@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,8 @@ public class SignInActivity extends AppCompatActivity {
     ProgressBar prog;
     TextView percent;
     RelativeLayout relativeLayout;
+    private Handler handler = new Handler();
+    int progress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class SignInActivity extends AppCompatActivity {
 
         email=(EditText)findViewById(R.id.emailsignIn);
         password=(EditText)findViewById(R.id.passwordSignIn);
-        prog = findViewById(R.id.progress_bar);
+        prog = (ProgressBar)findViewById(R.id.progress_bar);
         percent = (TextView)findViewById(R.id.percent);
         relativeLayout = findViewById(R.id.relative);
         hideProgressBar();
@@ -48,6 +51,7 @@ public class SignInActivity extends AppCompatActivity {
         signIn_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 signIn(email.getText().toString(), password.getText().toString());
 
             }
@@ -60,19 +64,18 @@ public class SignInActivity extends AppCompatActivity {
             return;
         }
         showProgressBar();
-
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         boolean flag = true;
                         if (task.isSuccessful()) {
-
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             if(email.equals("latet@gmail.com")){
                                 flag = false;
                             }
+
                             updateUI(user, flag);
                         } else {
                             // If sign in fails, display a message to the user.

@@ -16,9 +16,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class OrderActivity extends AppCompatActivity {
     private Context context;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
         ImageView toolBarArrow=findViewById(R.id.arrow);
         ImageView rightIcon=findViewById(R.id.menu);
+        mAuth = FirebaseAuth.getInstance();
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -289,7 +293,10 @@ public class OrderActivity extends AppCompatActivity {
                     openHistoryActivity();
                 }
                 else if (item.getItemId()== R.id.logOut){
-                    openMainActivity();
+                    mAuth.signOut();
+                    Intent intent=new Intent(OrderActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 return true;
             }

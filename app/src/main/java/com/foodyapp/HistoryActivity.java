@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.foodyapp.model.usersInfo;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class HistoryActivity extends AppCompatActivity {
     private ListView list;
     public static HistoryAdapter adapter;
     public static List<HistoryInfo> itemInfos;
+    private FirebaseAuth mAuth;
     Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class HistoryActivity extends AppCompatActivity {
         ImageView toolBarArrow=findViewById(R.id.arrow);
         TextView toolBarTitle=findViewById(R.id.toolbar_title);
         ImageView rightIcon=findViewById(R.id.menu);
+        mAuth = FirebaseAuth.getInstance();
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +126,10 @@ public class HistoryActivity extends AppCompatActivity {
                     openHistoryActivity();
                 }
                 else if (item.getItemId()== R.id.logOut){
-                    openMainActivity();
+                    mAuth.signOut();
+                    Intent intent=new Intent(HistoryActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 return true;
             }

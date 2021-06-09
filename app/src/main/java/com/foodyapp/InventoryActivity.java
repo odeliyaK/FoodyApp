@@ -15,15 +15,19 @@ import android.widget.PopupMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class InventoryActivity extends AppCompatActivity {
     private Context context;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
         ImageView toolBarArrow=findViewById(R.id.arrow);
         ImageView rightIcon=findViewById(R.id.menu);
+        mAuth = FirebaseAuth.getInstance();
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -228,7 +232,10 @@ public class InventoryActivity extends AppCompatActivity {
                     openHistoryActivity();
                 }
                 else if (item.getItemId()== R.id.logOut){
-                    openMainActivity();
+                    mAuth.signOut();
+                    Intent intent=new Intent(InventoryActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 return true;
             }

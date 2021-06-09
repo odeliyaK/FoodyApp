@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
     String selectedName;
     String selectePhone;
     Context context;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
         setContentView(R.layout.activity_volunteers_list);
         ImageView toolBarArrow=findViewById(R.id.arrow);
         ImageView rightIcon=findViewById(R.id.menu);
+        mAuth = FirebaseAuth.getInstance();
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,7 +198,10 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
                     openHouseActivity();
                 }
                 else if (item.getItemId()== R.id.logOut){
-                    openMainActivity();
+                    mAuth.signOut();
+                    Intent intent=new Intent(VolunteersListActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 return true;
             }

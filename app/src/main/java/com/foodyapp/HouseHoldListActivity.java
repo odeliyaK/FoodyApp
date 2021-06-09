@@ -16,6 +16,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.foodyapp.model.usersInfo;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
     String selectedName;
     String selecteAddress;
     Context context;
+    private FirebaseAuth mAuth;
 
 
 
@@ -44,6 +46,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_hold_list);
         ImageView toolBarArrow=findViewById(R.id.arrow);
+        mAuth = FirebaseAuth.getInstance();
         ImageView rightIcon=findViewById(R.id.menu);
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,7 +222,10 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                     openHouseActivity();
                 }
                 else if (item.getItemId()== R.id.logOut){
-                    openMainActivity();
+                    mAuth.signOut();
+                    Intent intent=new Intent(HouseHoldListActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 return true;
             }

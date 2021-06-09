@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.foodyapp.model.usersInfo;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,6 +36,7 @@ public class UsersActivity extends Activity {
     String item;
     DataBase myDB;
     Context context;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class UsersActivity extends Activity {
         ImageView toolBarArrow=findViewById(R.id.arrow);
         TextView toolBarTitle=findViewById(R.id.toolbar_title);
         ImageView rightIcon=findViewById(R.id.menu);
-
+        mAuth = FirebaseAuth.getInstance();
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,7 +161,10 @@ public class UsersActivity extends Activity {
                     openHistoryActivity();
                 }
                 else if (item.getItemId()== R.id.logOut){
-                    openMainActivity();
+                    mAuth.signOut();
+                    Intent intent=new Intent(UsersActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 return true;
             }
