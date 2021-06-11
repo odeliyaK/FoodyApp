@@ -1,4 +1,4 @@
-package com.foodyapp;
+package com.foodyapp.order;
 
 import android.app.AlertDialog;
 import android.app.FragmentManager;
@@ -12,10 +12,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.foodyapp.HistoryActivity;
+import com.foodyapp.InventoryActivity;
+import com.foodyapp.MainActivity;
+import com.foodyapp.MyInfoManager;
+import com.foodyapp.R;
+import com.foodyapp.UsersActivity;
+import com.foodyapp.VolunteerMainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 

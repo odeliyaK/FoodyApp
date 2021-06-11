@@ -4,7 +4,6 @@ package com.foodyapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,15 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.foodyapp.model.usersInfo;
+import com.foodyapp.order.OrderActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class UsersActivity extends Activity {
 

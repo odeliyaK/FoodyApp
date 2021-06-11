@@ -1,11 +1,9 @@
-package com.foodyapp;
+package com.foodyapp.order;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -20,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foodyapp.MyInfoManager;
+import com.foodyapp.R;
 import com.foodyapp.model.Products;
 
 import java.util.ArrayList;

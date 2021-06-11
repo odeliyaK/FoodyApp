@@ -1,18 +1,13 @@
-package com.foodyapp;
+package com.foodyapp.order;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +18,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foodyapp.MyInfoManager;
+import com.foodyapp.R;
 import com.foodyapp.model.Products;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DairyActivityOrder extends Fragment implements View.OnClickListener{
+public class GroceryOrderFragment extends Fragment implements View.OnClickListener{
     private static final int[] idArray = {R.id.plus1,R.id.plus2,R.id.plus3,R.id.plus4,R.id.plus5,R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4,R.id.minus5};
     //  private static final int[] idArrayMinus = {R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4};
     private ImageButton[] buttons = new ImageButton[idArray.length];
@@ -38,15 +35,14 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
     Button save;
     HashMap<String, Integer> current = new HashMap<>();
     HashMap<String, Integer> myOrder = new HashMap<>();
-    boolean flag = false;
 
-    public DairyActivityOrder() {
+    public GroceryOrderFragment() {
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.activity_dairy_order, container, false);
+        View view =  inflater.inflate(R.layout.fragment_grocery_order, container, false);
 
         num1 = (EditText) view.findViewById(R.id.num1);
         num2 = (EditText) view.findViewById(R.id.num2);
@@ -65,13 +61,12 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
         be5 = num5.getText().toString();
 
         TextView[] textQ = {a1,a2,a3,a4,a5};
-        int[] quantity = {Integer.parseInt(num1.getText().toString()), Integer.parseInt(num2.getText().toString()), Integer.parseInt(num3.getText().toString()), Integer.parseInt(num4.getText().toString()), Integer.parseInt(num5.getText().toString()) };
 
         ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
         if(!products.isEmpty()){
             int i=0;
             for(Products p : products){
-                if(p.getSupplier().equals("Tenuva")){
+                if(p.getSupplier().equals("Osem")){
                     textQ[i].setText(String.valueOf(p.getQuantity()));
                     i++;
                 }
@@ -95,7 +90,6 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
         int num = 0;
         switch (v.getId()){
             case R.id.saveBtn:
-
                 // 1. Instantiate an AlertDialog.Builder with its constructor
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -120,46 +114,43 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                 builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(getContext(), "Order from 'Tenuva' succeeded",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Order from 'OSEM' succeeded",Toast.LENGTH_LONG).show();
 
-                        if(current != null)
-                            current.clear();
                         if(myOrder != null)
                             myOrder.clear();
 
                         if(Integer.parseInt(num1.getText().toString()) > 0){
-                            current.put("Milk", Integer.parseInt(num1.getText().toString()) + Integer.parseInt(a1.getText().toString()));
-                            myOrder.put("Milk", Integer.parseInt(num1.getText().toString()));
+                            current.put("Bread", Integer.parseInt(num1.getText().toString()) + Integer.parseInt(a1.getText().toString()));
+                            myOrder.put("Bread", Integer.parseInt(num1.getText().toString()));
                         }
                         if(Integer.parseInt(num2.getText().toString()) > 0){
-                            current.put("Cheese", Integer.parseInt(num2.getText().toString()) + Integer.parseInt(a2.getText().toString()));
-                            myOrder.put("Cheese", Integer.parseInt(num2.getText().toString()));
+                            current.put("Pasta", Integer.parseInt(num2.getText().toString()) + Integer.parseInt(a2.getText().toString()));
+                            myOrder.put("Pasta", Integer.parseInt(num2.getText().toString()));
                         }
                         if(Integer.parseInt(num3.getText().toString()) > 0){
-                            current.put("Eggs", Integer.parseInt(num3.getText().toString()) + Integer.parseInt(a3.getText().toString()));
-                            myOrder.put("Eggs", Integer.parseInt(num3.getText().toString()));
+                            current.put("Oil", Integer.parseInt(num3.getText().toString()) + Integer.parseInt(a3.getText().toString()));
+                            myOrder.put("Oil", Integer.parseInt(num3.getText().toString()));
                         }
                         if(Integer.parseInt(num4.getText().toString()) > 0){
-                            current.put("Butter", Integer.parseInt(num4.getText().toString()) + Integer.parseInt(a4.getText().toString()));
-                            myOrder.put("Butter", Integer.parseInt(num4.getText().toString()));
+                            current.put("Rice", Integer.parseInt(num4.getText().toString()) + Integer.parseInt(a4.getText().toString()));
+                            myOrder.put("Rice", Integer.parseInt(num4.getText().toString()));
                         }
                         if(Integer.parseInt(num5.getText().toString()) > 0){
-                            current.put("Cottage", Integer.parseInt(num5.getText().toString()) + Integer.parseInt(a5.getText().toString()));
-                            myOrder.put("Cottage", Integer.parseInt(num5.getText().toString()));
+                            current.put("Coffee", Integer.parseInt(num5.getText().toString()) + Integer.parseInt(a5.getText().toString()));
+                            myOrder.put("Coffee", Integer.parseInt(num5.getText().toString()));
                         }
-                        MyInfoManager.getInstance().makeOrder(myOrder,current, "Tenuva");
+                        MyInfoManager.getInstance().makeOrder(myOrder, current,"Osem");
                         num1.setText(be1);
                         num2.setText(be2);
                         num3.setText(be3);
                         num4.setText(be4);
                         num5.setText(be5);
-
                         TextView[] textQ = {a1,a2,a3,a4,a5};
                         ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
                         if(!products.isEmpty()){
                             int i=0;
                             for(Products p : products){
-                                if(p.getSupplier().equals("Tenuva") && textQ.length>i){
+                                if(p.getSupplier().equals("Osem") && textQ.length>i){
                                     textQ[i].setText(String.valueOf(p.getQuantity()));
                                     i++;
                                 }
@@ -174,7 +165,6 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                 AlertDialog dialog = builder.create();
 
                 dialog.show();
-
                 break;
             case R.id.plus1:
                 num = 0;
@@ -260,4 +250,40 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                 break;
         }
     }
+
+//    @RequiresApi(api = Build.VERSION_CODES.M)
+//    public void dialogIfLessThan0(){
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//
+//        // 2. Chain together various setter methods to set the dialog characteristics
+//        builder.setMessage(R.string.confirm);
+//        builder.setTitle(R.string.dialogTitle);
+//
+//        // Add the buttons
+//        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) {
+//
+//                Toast.makeText(getContext(), "Saving inventory is cancelled",Toast.LENGTH_LONG).show();
+//                num1.setText(be1);
+//                num2.setText(be2);
+//                num3.setText(be3);
+//                num4.setText(be4);
+//                num5.setText(be5);
+//                num6.setText(be6);
+//                getActivity().closeContextMenu();
+//
+//            }
+//        });
+//        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) {
+//
+//                Toast.makeText(getContext(), "Saving inventory succeeded",Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//        // 3. Get the AlertDialog from create()
+//        AlertDialog dialog = builder.create();
+//
+//        dialog.show();
+//    }
 }

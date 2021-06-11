@@ -14,7 +14,7 @@
         <activity android:name=".VolunteersListActivity" />
         <activity android:name=".HouseHoldListActivity" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".OrderActivity" />
+        <activity android:name=".order.OrderActivity" />
         <activity android:name=".UsersActivity" />
         <activity android:name=".InventoryActivity" />
         <activity android:name=".VolunteerMainActivity" />
