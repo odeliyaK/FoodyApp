@@ -28,7 +28,6 @@ public class VolunteerAdapterOrg extends ArrayAdapter<Volunteers> {
     public View getView(int position, View view, ViewGroup parent) {
         String email = getItem(position).getEmail();
         String name = getItem(position).getName();
-        String lastName = getItem(position).getLastName();
         String phone = getItem(position).getPhone();
 
         Volunteers vol = new Volunteers(email,name,phone);

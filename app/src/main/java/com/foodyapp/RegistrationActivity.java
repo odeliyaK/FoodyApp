@@ -20,10 +20,13 @@ import android.widget.Toast;
 
 import com.foodyapp.model.Volunteers;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
@@ -35,7 +38,6 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
     EditText name;
     Button reg_btn;
     EditText phone;
-    int whoIsChecked;
     private FirebaseAuth mAuth;
 
     @Override
@@ -47,13 +49,6 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
 
         setContentView(R.layout.activity_registration);
 
-//        organization_btn=(Button)findViewById(R.id.present_organizations);
-//        organization_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openOrganizationsActivity();
-//            }
-//        });
 
         email=(EditText)findViewById(R.id.emailAddress);
         pass=(EditText)findViewById(R.id.password);
@@ -70,25 +65,6 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
             }
         });
     }
-
-//    public void openOrganizationsActivity(){
-//        if (TextUtils.isEmpty(email.getText())){
-//            email.setError("Enter an email");
-//            email.requestFocus();
-//        } else if (TextUtils.isEmpty(pass.getText())){
-//            pass.setError("Enter an password");
-//            pass.requestFocus();
-//        }else if (!TextUtils.equals(pass.getText(), confirm_pass.getText())){
-//            pass.setError("password not equal");
-//            pass.requestFocus();
-//            confirm_pass.setError("password not equal");
-//            confirm_pass.requestFocus();
-//        }
-//        else {
-//            showCustomAlertDialog();
-//        }
-//
-//    }
 
     private void showCustomAlertDialog() {
         OganizationDialogFragment frag = new OganizationDialogFragment();
@@ -145,49 +121,14 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
             name.requestFocus();
             valid = false;
         }
-//        else {
-//            if(!email.getText().toString().equals("latet@gmail.com")){
-//                if(MyInfoManager.getInstance().newVolunteer(email.getText().toString(), name.getText().toString(), phone.getText().toString()) > 0)
-//                    register(email.getText().toString(),  pass.getText().toString());
-//                    //openVolunteerActivity();
-//            }
-//        }\
+        else if (TextUtils.isEmpty(phone.getText())){
+            phone.setError("Enter your phone number");
+            phone.requestFocus();
+            valid = false;
+        }
         return valid;
 
     }
-
-//    public void onRadioButtonClicked(View view) {
-//        // Is the button now checked?
-//        boolean checked = ((RadioButton) view).isChecked();
-//
-//        // Check which radio button was clicked
-//        switch(view.getId()) {
-//            case R.id.orgBtn:
-//                if (checked){
-//                    organization_btn.setVisibility(View.GONE);
-//                    whoIsChecked = 1;
-//                    reg_btn.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            valid();
-//                        }
-//                    });
-//                }
-//                    break;
-//            case R.id.volBtn:
-//                if (checked){
-//                    organization_btn.setVisibility(View.VISIBLE);
-//                    whoIsChecked = 2;
-//                    reg_btn.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            valid();
-//                        }
-//                    });
-//                }
-//                    break;
-//        }
-//    }
 
     public void openVolunteerActivity(){
         Intent intent=new Intent(this, VolunteerMainActivity.class);
@@ -210,26 +151,6 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
         super.onPause();
     }
 
-    public boolean validateForm(){
-        boolean valid = true;
-        String email1 = email.getText().toString();
-        if (TextUtils.isEmpty(email1)) {
-            email.setError("Required.");
-            valid = false;
-        } else {
-            email.setError(null);
-        }
-
-        String password1 = pass.getText().toString();
-        if (TextUtils.isEmpty(password1)) {
-            pass.setError("Required.");
-            valid = false;
-        } else {
-            pass.setError(null);
-        }
-
-        return valid;
-    }
 
     public void onStop() {
         super.onStop();
@@ -253,8 +174,24 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             if(!email.equals("latet@gmail.com")){
-                                if(MyInfoManager.getInstance().newVolunteer(email, name, phone) > 0)
-                                    openVolunteerActivity();
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                Volunteers vol = new Volunteers(email,name,phone);
+                                db.collection("Volunteers")
+                                        .document(email)
+                                        .set(vol)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                if(MyInfoManager.getInstance().newVolunteer(email, name, phone) > 0)
+                                                    //openVolunteerActivity();
+                                                    System.out.println("hello");
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        System.out.println(e);
+                                    }
+                                });
             }
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
@@ -275,9 +212,9 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
 
     private void updateUI(FirebaseUser user) {
         if (user != null){
+            MyInfoManager.getInstance().newVolunteer(email.getText().toString(), name.getText().toString(), phone.getText().toString());
             //Intent intent = new Intent(this, CitiesActivity.class);
             Intent intent = new Intent(this, VolunteerMainActivity.class);
-
             startActivity(intent);
 
         } else {

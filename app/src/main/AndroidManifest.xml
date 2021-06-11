@@ -16,7 +16,7 @@
         <activity android:name=".HistoryActivity" />
         <activity android:name=".order.OrderActivity" />
         <activity android:name=".UsersActivity" />
-        <activity android:name=".InventoryActivity" />
+        <activity android:name=".inventory.InventoryActivity" />
         <activity android:name=".VolunteerMainActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".RegistrationActivity" />

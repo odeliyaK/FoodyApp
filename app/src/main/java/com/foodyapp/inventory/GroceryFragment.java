@@ -1,17 +1,13 @@
-package com.foodyapp;
+package com.foodyapp.inventory;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,53 +17,54 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.foodyapp.MyInfoManager;
+import com.foodyapp.R;
 import com.foodyapp.model.Products;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FruitsVegFragment extends Fragment implements View.OnClickListener{
-    private static final int[] idArray = {R.id.plus1,R.id.plus2,R.id.plus3,R.id.plus4,R.id.plus5,R.id.plus6,R.id.plus7,R.id.plus6,R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4,R.id.minus5,R.id.minus6,R.id.minus7};
+public class GroceryFragment extends Fragment implements View.OnClickListener{
+    private static final int[] idArray = {R.id.plus1,R.id.plus2,R.id.plus3,R.id.plus4,R.id.plus5,R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4,R.id.minus5};
     //  private static final int[] idArrayMinus = {R.id.minus1,R.id.minus2,R.id.minus3,R.id.minus4};
     private ImageButton[] buttons = new ImageButton[idArray.length];
     //    private ImageButton[] minusButtons = new ImageButton[idArrayMinus.length];
     ImageButton p1,p2,p3,p4,m1,m2,m3,m4;
-    EditText num1,num2,num3,num4,num5,num6,num7;
-    String be1,be2,be3,be4,be5,be6,be7;
+    EditText num1,num2,num3,num4,num5;
+    String be1,be2,be3,be4,be5;
     Button save;
     HashMap<String, Integer> current = new HashMap<>();
-    int[] quantity = new int[7];
+    int[] quantity = new int[5];
 
-    public FruitsVegFragment() {
+    public GroceryFragment() {
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.activity_fruits_veg_fragment, container, false);
+        View view =  inflater.inflate(R.layout.fragment_grocery, container, false);
 
         num1 = (EditText) view.findViewById(R.id.num1);
         num2 = (EditText) view.findViewById(R.id.num2);
         num3 = (EditText) view.findViewById(R.id.num3);
         num4 = (EditText) view.findViewById(R.id.num4);
         num5 = (EditText) view.findViewById(R.id.num5);
-        num6 = (EditText) view.findViewById(R.id.num6);
-        num7 = (EditText) view.findViewById(R.id.num7);
         be1 = num1.getText().toString();
         be2 = num2.getText().toString();
         be3 = num3.getText().toString();
         be4 = num4.getText().toString();
         be5 = num5.getText().toString();
-        be6 = num6.getText().toString();
-        be7 = num7.getText().toString();
 
-        EditText[] textQ = {num1, num2, num3, num4, num5, num6, num7};
+        save = view.findViewById(R.id.saveBtn);
+        save.setOnClickListener(this);
+
+        EditText[] textQ = {num1, num2, num3, num4, num5};
 
         ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
         if(!products.isEmpty()){
             int i=0;
             for(Products p : products){
-                if(p.getSupplier().equals("Meshek")){
+                if(p.getSupplier().equals("Osem")){
                     textQ[i].setText(String.valueOf(p.getQuantity()));
                     quantity[i] = p.getQuantity();
                     i++;
@@ -75,15 +72,15 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
             }
         }
 
-        save = view.findViewById(R.id.saveBtn);
-        save.setOnClickListener(this);
-
         for(int i=0; i<idArray.length; i++) {
             buttons[i] = (ImageButton) view.findViewById(idArray[i]);
             buttons[i].setOnClickListener(this);
         }
 
-        if(MyInfoManager.getInstance().isInventoryUpdated("Meshek")){
+        if(MyInfoManager.getInstance().isInventoryUpdated("Osem")){
+            for(int i=0; i<idArray.length; i++) {
+                buttons[i].setVisibility(View.INVISIBLE);
+            }
             save.setVisibility(View.INVISIBLE);
             num1.setClickable(false);
             num1.setFocusable(false);
@@ -100,15 +97,6 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
             num5.setClickable(false);
             num5.setFocusable(false);
             num5.setFocusableInTouchMode(false);
-            num6.setClickable(false);
-            num6.setFocusable(false);
-            num6.setFocusableInTouchMode(false);
-            num7.setClickable(false);
-            num7.setFocusable(false);
-            num7.setFocusableInTouchMode(false);
-            for(int i=0; i<idArray.length; i++) {
-                buttons[i].setVisibility(View.INVISIBLE);
-            }
             AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
             builder.setMessage(R.string.inventoryMadeToday);
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -118,6 +106,7 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+
 
         return view;
     }
@@ -145,8 +134,6 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                         num3.setText(quantity[2]);
                         num4.setText(quantity[3]);
                         num5.setText(quantity[4]);
-                        num6.setText(quantity[5]);
-                        num7.setText(quantity[6]);
                         getActivity().closeContextMenu();
 
                     }
@@ -154,40 +141,28 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                 builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(getContext(), "Saving inventory succeeded", Toast.LENGTH_LONG).show();
-                        if (current != null)
+                        Toast.makeText(getContext(), "Saving inventory succeeded",Toast.LENGTH_LONG).show();
+                        if(current != null)
                             current.clear();
-
-                        if (Integer.parseInt(num1.getText().toString()) > 0) {
-                            current.put("Cucumber", Integer.parseInt(num1.getText().toString()));
+                        if(Integer.parseInt(num1.getText().toString()) > 0){
+                            current.put("Bread", Integer.parseInt(num1.getText().toString()));
                         }
-                        if (Integer.parseInt(num2.getText().toString()) > 0) {
-                            current.put("Tomato", Integer.parseInt(num2.getText().toString()));
+                        if(Integer.parseInt(num2.getText().toString()) > 0){
+                            current.put("Pasta", Integer.parseInt(num2.getText().toString()));
                         }
-                        if (Integer.parseInt(num3.getText().toString()) > 0) {
-                            current.put("Potato", Integer.parseInt(num3.getText().toString()));
+                        if(Integer.parseInt(num3.getText().toString()) > 0){
+                            current.put("Oil", Integer.parseInt(num3.getText().toString()));
                         }
-                        if (Integer.parseInt(num4.getText().toString()) > 0) {
-                            current.put("Apple", Integer.parseInt(num4.getText().toString()));
+                        if(Integer.parseInt(num4.getText().toString()) > 0){
+                            current.put("Rice", Integer.parseInt(num4.getText().toString()));
                         }
-                        if (Integer.parseInt(num5.getText().toString()) > 0) {
-                            current.put("Banana", Integer.parseInt(num5.getText().toString()));
+                        if(Integer.parseInt(num5.getText().toString()) > 0){
+                            current.put("Coffee", Integer.parseInt(num5.getText().toString()));
                         }
-//                        if (Integer.parseInt(num4.getText().toString()) > 0) {
-//                            current.put("Butter", Integer.parseInt(num4.getText().toString()));
-//                        }
-//                        if (Integer.parseInt(num5.getText().toString()) > 0) {
-//                            current.put("Cottage", Integer.parseInt(num5.getText().toString()));
-//                        }
-                        if (Integer.parseInt(num6.getText().toString()) > 0) {
-                            current.put("Onion", Integer.parseInt(num6.getText().toString()));
-                        }
-                        if (Integer.parseInt(num7.getText().toString()) > 0) {
-                            current.put("Carrot", Integer.parseInt(num7.getText().toString()));
-                        }
-                        MyInfoManager.getInstance().saveInventory(current, "Meshek");
+                        MyInfoManager.getInstance().saveInventory(current, "Osem");
                         Intent intent = new Intent(getActivity(), InventoryActivity.class);
                         startActivity(intent);
+
                     }
                 });
 
@@ -225,18 +200,6 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                 num = Integer.parseInt(num5.getText().toString());
                 num++;
                 num5.setText(String.valueOf(num));
-                break;
-            case R.id.plus6:
-                num = 0;
-                num = Integer.parseInt(num6.getText().toString());
-                num++;
-                num6.setText(String.valueOf(num));
-                break;
-            case R.id.plus7:
-                num = 0;
-                num = Integer.parseInt(num7.getText().toString());
-                num++;
-                num7.setText(String.valueOf(num));
                 break;
             case R.id.minus1:
                 num = 0;
@@ -290,25 +253,6 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                     num5.setText(String.valueOf(num));
                 }
                 break;
-            case R.id.minus6:
-                num = 0;
-                num = Integer.parseInt(num6.getText().toString());
-                if(num <= 0)
-                    break;
-                else{
-                    num--;
-                    num6.setText(String.valueOf(num));
-                }
-                break;
-            case R.id.minus7:
-                num = 0;
-                if(num <= 0) {
-                    num = Integer.parseInt(num7.getText().toString());
-                }
-                else {
-                    num--;
-                    num7.setText(String.valueOf(num));
-                }
         }
     }
 }

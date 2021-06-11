@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.foodyapp.inventory.InventoryActivity;
 import com.foodyapp.order.OrderActivity;
 import com.google.firebase.auth.FirebaseAuth;
 

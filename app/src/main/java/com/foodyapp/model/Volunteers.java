@@ -3,7 +3,6 @@ package com.foodyapp.model;
 public class Volunteers {
     String email;
     String name;
-    String lastName;
     String phone;
 
     public Volunteers() {
@@ -22,14 +21,6 @@ public class Volunteers {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getName() {

@@ -1,4 +1,4 @@
-package com.foodyapp;
+package com.foodyapp.inventory;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -13,6 +13,12 @@ import android.widget.PopupMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.foodyapp.HistoryActivity;
+import com.foodyapp.MainActivity;
+import com.foodyapp.MyInfoManager;
+import com.foodyapp.R;
+import com.foodyapp.UsersActivity;
+import com.foodyapp.VolunteerMainActivity;
 import com.foodyapp.order.OrderActivity;
 import com.google.firebase.auth.FirebaseAuth;
 

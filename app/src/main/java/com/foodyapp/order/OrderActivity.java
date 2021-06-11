@@ -16,7 +16,7 @@ import android.widget.PopupMenu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.foodyapp.HistoryActivity;
-import com.foodyapp.InventoryActivity;
+import com.foodyapp.inventory.InventoryActivity;
 import com.foodyapp.MainActivity;
 import com.foodyapp.MyInfoManager;
 import com.foodyapp.R;
