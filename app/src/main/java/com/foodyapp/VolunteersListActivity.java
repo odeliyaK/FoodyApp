@@ -15,9 +15,17 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +51,41 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
         ImageView toolBarArrow=findViewById(R.id.arrow);
         ImageView rightIcon=findViewById(R.id.menu);
         mAuth = FirebaseAuth.getInstance();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("Volunteers");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    Toast.makeText(context, "Current data: " + snapshot.getDocuments(),
+                            Toast.LENGTH_LONG).show();
+
+                    MyInfoManager.getInstance().deleteAllVols();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        Volunteers vol = document.toObject(Volunteers.class);
+                        MyInfoManager.getInstance().newVolunteer(vol.getEmail(), vol.getName(), vol.getPhone());
+
+                    }
+
+                    List<Volunteers> volList= MyInfoManager.getInstance().allVolunteers();
+                    adapter = new VolunteerAdapterOrg(context,R.layout.activity_volunteer_adapter_org,volList);
+
+                    VolunteersListActivity.myList.setAdapter(adapter);
+                } else {
+                    Toast.makeText(context, "Current data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,8 +178,12 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
                             //   HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
 
                             adapter.remove(currentuser);
+                            if(!adapter.isEmpty())
+                                adapter.clear();
+                            VolunteersListActivity.itemInfos = MyInfoManager.getInstance().allVolunteers();
+                            adapter = new VolunteerAdapterOrg(VolunteersListActivity.this, R.layout.activity_volunteer_adapter_org,VolunteersListActivity.itemInfos);
                             myList.setAdapter(adapter);
-                            //adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
 
                             Toast.makeText(VolunteersListActivity.this, currentuser.getEmail()+" was deleted",Toast.LENGTH_LONG);
                         }
@@ -164,6 +211,15 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
         } );
 
 
+    }
+
+    public void newVolunteerInList(Volunteers vol){
+        if(!adapter.isEmpty())
+            adapter.clear();
+        VolunteersListActivity.itemInfos = MyInfoManager.getInstance().allVolunteers();
+        adapter = new VolunteerAdapterOrg(VolunteersListActivity.this, R.layout.activity_volunteer_adapter_org,VolunteersListActivity.itemInfos);
+        myList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     private void openLatetActivity(){

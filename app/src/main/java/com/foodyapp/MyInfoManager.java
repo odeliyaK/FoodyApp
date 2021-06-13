@@ -196,6 +196,11 @@ public class MyInfoManager {
 		}
 	}
 
+	public void deleteAllVols(){
+		if(db != null)
+			db.deleteAllVols();
+	}
+
 	public int updateVolunteer(Volunteers vol) {
 		if (db != null && vol != null) {
 			db.updateVolunteer(vol);

@@ -248,6 +248,16 @@ public class DataBase extends SQLiteOpenHelper {
         }
         return -1;
     }
+
+    public void deleteAllVols() {
+        try {
+
+            // delete all
+            db.delete(TABLE_VOLUNTEER_NAME, null, null);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
     //make an order from Tenuva/Meshek/Osem/Butcher.
     public void makeOrder(HashMap<String,Integer> products, HashMap<String,Integer> current, String supplier){
         Calendar calendar = Calendar.getInstance();

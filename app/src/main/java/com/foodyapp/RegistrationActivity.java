@@ -1,8 +1,10 @@
 package com.foodyapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -26,9 +28,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
+
+import java.util.List;
 
 public class RegistrationActivity extends AppCompatActivity  implements  organizationsAlertDialogFragmentListener {
       Button organization_btn;
@@ -38,7 +47,9 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
     EditText name;
     Button reg_btn;
     EditText phone;
+    private Context context;
     private FirebaseAuth mAuth;
+    VolunteerAdapterOrg volAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,11 +219,14 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
                         // [END_EXCLUDE]
                     }
                 });
+
     }
 
     private void updateUI(FirebaseUser user) {
         if (user != null){
             MyInfoManager.getInstance().newVolunteer(email.getText().toString(), name.getText().toString(), phone.getText().toString());
+            VolunteersListActivity v = new VolunteersListActivity();
+            v.newVolunteerInList(new Volunteers(email.getText().toString(), name.getText().toString(), phone.getText().toString()));
             //Intent intent = new Intent(this, CitiesActivity.class);
             Intent intent = new Intent(this, VolunteerMainActivity.class);
             startActivity(intent);
