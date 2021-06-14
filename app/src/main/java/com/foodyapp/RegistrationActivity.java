@@ -193,7 +193,7 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                if(MyInfoManager.getInstance().newVolunteer(email, name, phone) > 0)
+                                                MyInfoManager.getInstance().newVolunteer(email, name, phone);
                                                     //openVolunteerActivity();
                                                     System.out.println("hello");
                                             }
@@ -224,10 +224,8 @@ public class RegistrationActivity extends AppCompatActivity  implements  organiz
 
     private void updateUI(FirebaseUser user) {
         if (user != null){
-            MyInfoManager.getInstance().newVolunteer(email.getText().toString(), name.getText().toString(), phone.getText().toString());
-            VolunteersListActivity v = new VolunteersListActivity();
-            v.newVolunteerInList(new Volunteers(email.getText().toString(), name.getText().toString(), phone.getText().toString()));
-            //Intent intent = new Intent(this, CitiesActivity.class);
+
+//            MyInfoManager.getInstance().newVolunteer(email.getText().toString(), name.getText().toString(), phone.getText().toString());
             Intent intent = new Intent(this, VolunteerMainActivity.class);
             startActivity(intent);
 

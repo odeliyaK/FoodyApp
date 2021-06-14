@@ -12,6 +12,12 @@ public class Products {
     public Products() {
     }
 
+    public Products(String name, int quantity, String supplier) {
+        this.name = name;
+        this.quantity = quantity;
+        this.supplier = supplier;
+    }
+
     public String getName() {
         return name;
     }

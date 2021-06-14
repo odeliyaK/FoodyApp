@@ -15,11 +15,15 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -52,6 +56,14 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
         ImageView rightIcon=findViewById(R.id.menu);
         mAuth = FirebaseAuth.getInstance();
 
+        myList = (ListView) findViewById(R.id.listView);
+        this.context = this;
+
+        MyInfoManager.getInstance().openDataBase(this);
+        itemInfos=MyInfoManager.getInstance().allVolunteers();
+        adapter = new VolunteerAdapterOrg(this, R.layout.activity_volunteer_adapter_org, itemInfos);
+        myList.setAdapter(adapter);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collRef = db.collection("Volunteers");
 
@@ -60,8 +72,8 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
             public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
 
                 if (e != null) {
-                    Toast.makeText(context, "Listen failed."+ e,
-                            Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Listen failed."+ e,
+                                Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -76,10 +88,12 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
 
                     }
 
-                    List<Volunteers> volList= MyInfoManager.getInstance().allVolunteers();
-                    adapter = new VolunteerAdapterOrg(context,R.layout.activity_volunteer_adapter_org,volList);
+                    itemInfos = MyInfoManager.getInstance().allVolunteers();
+                    adapter = new VolunteerAdapterOrg(context,R.layout.activity_volunteer_adapter_org,itemInfos);
+                    myList.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
-                    VolunteersListActivity.myList.setAdapter(adapter);
+
                 } else {
                     Toast.makeText(context, "Current data: null",
                             Toast.LENGTH_LONG).show();
@@ -99,14 +113,6 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
                 showMenu(v);
             }
         });
-        myList = (ListView) findViewById(R.id.listView);
-        this.context = this;
-
-        MyInfoManager.getInstance().openDataBase(this);
-        itemInfos=MyInfoManager.getInstance().allVolunteers();
-        List<Volunteers> list = MyInfoManager.getInstance().allVolunteers();
-        adapter = new VolunteerAdapterOrg(this, R.layout.activity_volunteer_adapter_org, itemInfos);
-        myList.setAdapter(adapter);
 
         Button updateBtn=findViewById(R.id.updateBtn);
         Button removeBtn=findViewById(R.id.removeBtn);
@@ -169,23 +175,32 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
                     removeApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //                 DataBase db = new DataBase(HouseHoldListActivity.this);
-//                            db.reomoveHouseHold(itemInfos.get(indexVal).getId());
+
                             Volunteers currentuser = itemInfos.get(indexVal);
-//                            HouseHoldListActivity.itemInfos.remove(u);
-//                            adapter.notifyDataSetChanged();
-                            MyInfoManager.getInstance().removeVolunteer(currentuser);
-                            //   HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("Volunteers")
+                                    .document(currentuser.getEmail()).delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            MyInfoManager.getInstance().removeVolunteer(currentuser);
+                                            adapter.remove(currentuser);
+                                            if(!adapter.isEmpty())
+                                                adapter.clear();
+                                            VolunteersListActivity.itemInfos = MyInfoManager.getInstance().allVolunteers();
+                                            adapter = new VolunteerAdapterOrg(VolunteersListActivity.this, R.layout.activity_volunteer_adapter_org,VolunteersListActivity.itemInfos);
+                                            myList.setAdapter(adapter);
+                                            adapter.notifyDataSetChanged();
 
-                            adapter.remove(currentuser);
-                            if(!adapter.isEmpty())
-                                adapter.clear();
-                            VolunteersListActivity.itemInfos = MyInfoManager.getInstance().allVolunteers();
-                            adapter = new VolunteerAdapterOrg(VolunteersListActivity.this, R.layout.activity_volunteer_adapter_org,VolunteersListActivity.itemInfos);
-                            myList.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
+                                            Toast.makeText(VolunteersListActivity.this, currentuser.getEmail()+" was deleted",Toast.LENGTH_LONG);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    System.out.println(e);
+                                }
+                            });
 
-                            Toast.makeText(VolunteersListActivity.this, currentuser.getEmail()+" was deleted",Toast.LENGTH_LONG);
                         }
                     });
                     removeApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -214,10 +229,10 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
     }
 
     public void newVolunteerInList(Volunteers vol){
-        if(!adapter.isEmpty())
-            adapter.clear();
-        VolunteersListActivity.itemInfos = MyInfoManager.getInstance().allVolunteers();
-        adapter = new VolunteerAdapterOrg(VolunteersListActivity.this, R.layout.activity_volunteer_adapter_org,VolunteersListActivity.itemInfos);
+//        if(adapter != null)
+//            adapter.clear();
+        itemInfos = MyInfoManager.getInstance().allVolunteers();
+        adapter = new VolunteerAdapterOrg(VolunteersListActivity.this, R.layout.activity_volunteer_adapter_org, itemInfos);
         myList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

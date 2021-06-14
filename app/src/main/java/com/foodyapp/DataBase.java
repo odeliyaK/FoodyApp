@@ -865,7 +865,6 @@ public class DataBase extends SQLiteOpenHelper {
     void removeVolunteer(Volunteers vol){
 
         try {
-
             // delete items
             db.delete(TABLE_VOLUNTEER_NAME, VOLUNTEER_COLUMN_EMAIL + " = ?",
                     new String[] { String.valueOf(vol.getEmail()) });

@@ -17,10 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class DialogFragmentUpdateVolunteer extends DialogFragment {
@@ -100,25 +104,28 @@ public class DialogFragmentUpdateVolunteer extends DialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             try {
-//                                String id= idField.getText().toString();
                                 String name=NameField.getText().toString();
                                 String phones = phone.getText().toString();
                                 int selected=VolunteersListActivity.indexVal;
-                                Volunteers currentuser = VolunteersListActivity.itemInfos.get(selected);
-                                if(currentuser==null){
-                                    currentuser = new Volunteers(myID, name, phones);
-                                    MyInfoManager.getInstance().updateVolunteer(currentuser);
-//                                    MyInfoManager.getInstance().createHouseHold(currentuser);
-                                }
-                                else{
-                                    currentuser.setName(name);
-                                    currentuser.setPhone(phones);
-//                                    if(Integer.parseInt(currentuser.getId()) == NEW_ITEM_TAG){
-//                                        MyInfoManager.getInstance().createHouseHold(currentuser);
-//                                    }
-                                        MyInfoManager.getInstance().updateVolunteer(currentuser);
-                                }
+                                Volunteers currentUser = VolunteersListActivity.itemInfos.get(selected);
 
+                                if(currentUser != null){
+                                    Volunteers vol = new Volunteers(currentUser.getEmail(), name, phones);
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                    db.collection("Volunteers")
+                                            .document(currentUser.getEmail()).set(vol)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    MyInfoManager.getInstance().updateVolunteer(vol);
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            System.out.println(e);
+                                        }
+                                    });
+                                }
                             } catch (Throwable e) {
                                 e.printStackTrace();
                             }

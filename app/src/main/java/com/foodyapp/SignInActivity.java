@@ -3,6 +3,7 @@ package com.foodyapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,11 +16,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foodyapp.model.Volunteers;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -31,6 +36,7 @@ public class SignInActivity extends AppCompatActivity {
     TextView percent;
     RelativeLayout relativeLayout;
     private Handler handler = new Handler();
+    Context context;
     int progress = 0;
 
     @Override
@@ -106,9 +112,30 @@ public class SignInActivity extends AppCompatActivity {
         hideProgressBar();
         if (user != null){
             if(flag){
-                Intent intent = new Intent(this, VolunteerMainActivity.class);
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference docRef = db.collection("Volunteers").document(email.getText().toString());
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if(document.exists()){
+                                Intent intent = new Intent(SignInActivity.this, VolunteerMainActivity.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                user.delete();
+                                Toast.makeText(SignInActivity.this, "Your account has been deleted", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        //means the organization removed this user.
+                        else{
+                            user.delete();
+                            Toast.makeText(SignInActivity.this, "Your account has been deleted", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
-                startActivity(intent);
             }
             //Intent intent = new Intent(this, CitiesActivity.class);
             else

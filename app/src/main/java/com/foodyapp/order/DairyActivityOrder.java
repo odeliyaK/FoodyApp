@@ -1,5 +1,6 @@
 package com.foodyapp.order;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 
@@ -8,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,14 @@ import android.widget.Toast;
 
 import com.foodyapp.MyInfoManager;
 import com.foodyapp.R;
+import com.foodyapp.VolunteerAdapterOrg;
+import com.foodyapp.VolunteersListActivity;
 import com.foodyapp.model.Products;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,7 +153,24 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                             current.put("Cottage", Integer.parseInt(num5.getText().toString()) + Integer.parseInt(a5.getText().toString()));
                             myOrder.put("Cottage", Integer.parseInt(num5.getText().toString()));
                         }
-                        MyInfoManager.getInstance().makeOrder(myOrder,current, "Tenuva");
+
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+                        for(String p : current.keySet()){
+                            Products product = new Products(p, current.get(p), "Tenuva");
+                            DocumentReference dr = db.collection("Products").document(p);
+                            batch.set(dr, product);
+                        }
+                        batch.commit().addOnCompleteListener(task -> {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getContext(), "firestore success",Toast.LENGTH_LONG).show();
+                                MyInfoManager.getInstance().makeOrder(myOrder,current, "Tenuva");
+                            }
+                            else{
+                                Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+
                         num1.setText(be1);
                         num2.setText(be2);
                         num3.setText(be3);
