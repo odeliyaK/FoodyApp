@@ -1,5 +1,6 @@
 package com.foodyapp.inventory;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 
@@ -20,8 +21,19 @@ import android.widget.Toast;
 import com.foodyapp.MyInfoManager;
 import com.foodyapp.R;
 import com.foodyapp.model.Products;
+import com.foodyapp.order.OrderActivity;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class FruitsVegFragment extends Fragment implements View.OnClickListener{
@@ -73,6 +85,38 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
             }
         }
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("Products");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(FruitsVegFragment.this.getContext(), "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+//                    Toast.makeText(FruitsVegFragment.this.getContext(), "Current data: " + snapshot.getDocuments(),
+//                            Toast.LENGTH_LONG).show();
+                    int i = 0;
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        Products product = document.toObject(Products.class);
+                        if(product.getSupplier().equals("Meshek")){
+                            MyInfoManager.getInstance().updateProducts(product);
+                            textQ[i].setText(String.valueOf(product.getQuantity()));
+                        }
+
+                    }
+                } else {
+                    Toast.makeText(FruitsVegFragment.this.getContext(), "Current data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         save = view.findViewById(R.id.saveBtn);
         save.setOnClickListener(this);
 
@@ -171,21 +215,37 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                         if (Integer.parseInt(num5.getText().toString()) > 0) {
                             current.put("Banana", Integer.parseInt(num5.getText().toString()));
                         }
-//                        if (Integer.parseInt(num4.getText().toString()) > 0) {
-//                            current.put("Butter", Integer.parseInt(num4.getText().toString()));
-//                        }
-//                        if (Integer.parseInt(num5.getText().toString()) > 0) {
-//                            current.put("Cottage", Integer.parseInt(num5.getText().toString()));
-//                        }
                         if (Integer.parseInt(num6.getText().toString()) > 0) {
                             current.put("Onion", Integer.parseInt(num6.getText().toString()));
                         }
                         if (Integer.parseInt(num7.getText().toString()) > 0) {
                             current.put("Carrot", Integer.parseInt(num7.getText().toString()));
                         }
-                        MyInfoManager.getInstance().saveInventory(current, "Meshek");
-                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
-                        startActivity(intent);
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+                        Calendar calendar = Calendar.getInstance();
+                        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+
+                        for(String p : current.keySet()){
+                            Products product = new Products(p, current.get(p), currentDate, "Meshek");
+                            DocumentReference dr = db.collection("Products").document(p);
+                            batch.set(dr, product);
+                        }
+                        batch.commit().addOnCompleteListener(task -> {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getContext(), "Meshek inventory firestore success",Toast.LENGTH_LONG).show();
+                                MyInfoManager.getInstance().saveInventory(current, "Meshek");
+                                Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+//                        MyInfoManager.getInstance().saveInventory(current, "Meshek");
+//                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
+//                        startActivity(intent);
                     }
                 });
 

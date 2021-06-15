@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.foodyapp.model.Order;
 import com.foodyapp.model.Products;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,10 +22,13 @@ import java.util.HashMap;
 
 import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class DataBase extends SQLiteOpenHelper {
     private Context context;
@@ -269,6 +273,9 @@ public class DataBase extends SQLiteOpenHelper {
             orderID = createOrderSQL(supplier);
             //it means we succeeded to create an order.
             if(orderID >= 0){
+                FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
+                Order order = new Order(String.valueOf(orderID), supplier, currentDate);
+                dbOrder.collection("Orders").document(String.valueOf(orderID)).set(order);
                 for(String pro : products.keySet()){
                     try{
                         ContentValues values = new ContentValues();
@@ -290,6 +297,16 @@ public class DataBase extends SQLiteOpenHelper {
 
                 }
             }
+        }
+    }
+
+    public void deleteAllOrders() {
+        try {
+
+            // delete all
+            db.delete(TABLE_ORDERS_NAME, null, null);
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
@@ -416,6 +433,18 @@ public class DataBase extends SQLiteOpenHelper {
         return products;
     }
 
+
+    public void updateProducts(Products product){
+        try {
+            ContentValues values = new ContentValues();
+            values.put(PRODUCTS_COLUMN_QUANTITY, product.getQuantity());
+            values.put(PRODUCTS_COLUMN_UPDATES, product.getUpdate());
+            db.update(TABLE_PRODUCTS_NAME, values, PRODUCTS_COLUMN_NAME + " = ? and " + PRODUCTS_COLUMN_SUPPLIER + " = ?",
+                    new String[]{product.getName(), product.getSupplier()});
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
     //saving the updates of the inventory.
     public void saveInventory(HashMap<String,Integer> current, String supplier){
         Calendar calendar = Calendar.getInstance();

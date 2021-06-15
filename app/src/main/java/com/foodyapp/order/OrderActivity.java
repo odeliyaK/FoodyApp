@@ -6,23 +6,40 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.foodyapp.HistoryActivity;
+import com.foodyapp.inventory.DairyActivity;
 import com.foodyapp.inventory.InventoryActivity;
 import com.foodyapp.MainActivity;
 import com.foodyapp.MyInfoManager;
 import com.foodyapp.R;
 import com.foodyapp.UsersActivity;
 import com.foodyapp.VolunteerMainActivity;
+import com.foodyapp.model.OrderProduct;
+import com.foodyapp.model.Products;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
+
+import java.util.ArrayList;
 
 
 public class OrderActivity extends AppCompatActivity {
@@ -36,6 +53,7 @@ public class OrderActivity extends AppCompatActivity {
         ImageView toolBarArrow=findViewById(R.id.arrow);
         ImageView rightIcon=findViewById(R.id.menu);
         mAuth = FirebaseAuth.getInstance();
+
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +69,30 @@ public class OrderActivity extends AppCompatActivity {
         });
         this.context = this;
         MyInfoManager.getInstance().openDataBase(this);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("Products");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Toast.makeText(OrderActivity.this, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        Products product = document.toObject(Products.class);
+                        MyInfoManager.getInstance().updateProducts(product);
+                    }
+                } else {
+                    Toast.makeText(OrderActivity.this, "Current data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         Button back = (Button) findViewById(R.id.backBtn);
         back.setOnClickListener(new View.OnClickListener() {

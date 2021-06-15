@@ -73,6 +73,11 @@ public class MyInfoManager {
 		}
 	}
 
+	public void deleteAllOrders(){
+		if(db != null)
+			db.deleteAllOrders();
+	}
+
 	public List<usersInfo> getAllHouseHolds() {
 		List<usersInfo> result = new ArrayList<usersInfo>();
 		if (db != null) {
@@ -150,6 +155,11 @@ public class MyInfoManager {
 		}
 	}
 
+	public void createOrderSQL(String supplier){
+		if(db != null)
+			db.createOrderSQL(supplier);
+	}
+
 	public void saveInventory(HashMap<String,Integer> current, String supplier){
 		if(db != null && !current.isEmpty()){
 			db.saveInventory(current, supplier);
@@ -168,6 +178,12 @@ public class MyInfoManager {
 			return db.isInventoryUpdated(supplier);
 		return false;
 
+	}
+
+	public void updateProducts(Products pruduct){
+		if(db != null){
+			db.updateProducts(pruduct);
+		}
 	}
 
 	public ArrayList<Volunteers> allVolunteers(){

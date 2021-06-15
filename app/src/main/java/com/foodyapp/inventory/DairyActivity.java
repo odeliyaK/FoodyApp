@@ -1,5 +1,6 @@
 package com.foodyapp.inventory;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 
@@ -20,9 +21,21 @@ import android.widget.Toast;
 
 import com.foodyapp.MyInfoManager;
 import com.foodyapp.R;
+import com.foodyapp.VolunteerAdapterOrg;
 import com.foodyapp.model.Products;
+import com.foodyapp.model.Volunteers;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class DairyActivity extends Fragment implements View.OnClickListener{
@@ -35,6 +48,7 @@ public class DairyActivity extends Fragment implements View.OnClickListener{
     String be1,be2,be3,be4,be5;
     TextView a1,a2,a3,a4,a5;
     Button save;
+    EditText[] textQ;
     HashMap<String, Integer> current = new HashMap<>();
     int[] quantity = new int[5];
 
@@ -65,7 +79,7 @@ public class DairyActivity extends Fragment implements View.OnClickListener{
         save = view.findViewById(R.id.saveBtn);
         save.setOnClickListener(this);
 
-        EditText[] textQ = {num1, num2, num3, num4, num5};
+        textQ = new EditText[] {num1, num2, num3, num4, num5};
 
         ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
         if(!products.isEmpty()){
@@ -78,6 +92,37 @@ public class DairyActivity extends Fragment implements View.OnClickListener{
                 }
             }
         }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("Products");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(DairyActivity.this.getContext(), "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    int i = 0;
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        Products product = document.toObject(Products.class);
+                        if(product.getSupplier().equals("Tenuva")){
+                            MyInfoManager.getInstance().updateProducts(product);
+                            textQ[i].setText(String.valueOf(product.getQuantity()));
+                        }
+
+                    }
+                } else {
+                    Toast.makeText(DairyActivity.this.getContext(), "Current data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         for(int i=0; i<idArray.length; i++) {
             buttons[i] = (ImageButton) view.findViewById(idArray[i]);
@@ -169,10 +214,31 @@ public class DairyActivity extends Fragment implements View.OnClickListener{
                         if(Integer.parseInt(num5.getText().toString()) > 0){
                             current.put("Cottage", Integer.parseInt(num5.getText().toString()));
                         }
-                        MyInfoManager.getInstance().saveInventory(current, "Tenuva");
 
-                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
-                        startActivity(intent);
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+                        Calendar calendar = Calendar.getInstance();
+                        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                        for(String p : current.keySet()){
+                            Products product = new Products(p, current.get(p), currentDate,"Tenuva");
+                            DocumentReference dr = db.collection("Products").document(p);
+                            batch.set(dr, product);
+                        }
+                        batch.commit().addOnCompleteListener(task -> {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getContext(), "dairy inventory firestore success",Toast.LENGTH_LONG).show();
+                                MyInfoManager.getInstance().saveInventory(current, "Tenuva");
+                                Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+//                        Intent intent = new Intent(getActivity(), InventoryActivity.class);
+//                        startActivity(intent);
                     }
                 });
 

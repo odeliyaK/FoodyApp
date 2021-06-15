@@ -14,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foodyapp.model.Products;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
  private Button reg_btn;
@@ -39,6 +43,21 @@ Context context;
         MyInfoManager.getInstance().checksInserts();
         MyInfoManager.getInstance().products();
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+        ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
+        for(Products p : products){
+            DocumentReference dr = db.collection("Products").document(p.getName());
+            batch.set(dr, p);
+        }
+        batch.commit().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Toast.makeText(MainActivity.this, "we did it",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(MainActivity.this, task.getException().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
 
         reg_btn=(Button) findViewById(R.id.btn_register);
         reg_btn.setOnClickListener(new View.OnClickListener() {

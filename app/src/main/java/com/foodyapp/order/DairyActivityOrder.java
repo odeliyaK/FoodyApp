@@ -1,6 +1,7 @@
 package com.foodyapp.order;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 
@@ -24,14 +25,23 @@ import com.foodyapp.MyInfoManager;
 import com.foodyapp.R;
 import com.foodyapp.VolunteerAdapterOrg;
 import com.foodyapp.VolunteersListActivity;
+import com.foodyapp.inventory.DairyActivity;
+import com.foodyapp.model.Order;
 import com.foodyapp.model.Products;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class DairyActivityOrder extends Fragment implements View.OnClickListener{
@@ -70,6 +80,8 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
         be4 = num4.getText().toString();
         be5 = num5.getText().toString();
 
+
+
         TextView[] textQ = {a1,a2,a3,a4,a5};
         int[] quantity = {Integer.parseInt(num1.getText().toString()), Integer.parseInt(num2.getText().toString()), Integer.parseInt(num3.getText().toString()), Integer.parseInt(num4.getText().toString()), Integer.parseInt(num5.getText().toString()) };
 
@@ -83,6 +95,48 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                 }
             }
         }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("Orders");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(DairyActivityOrder.this.getContext(), "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    int i = 0;
+                    Calendar calendar = Calendar.getInstance();
+                    String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                    MyInfoManager.getInstance().deleteAllOrders();
+                    boolean flag = false;
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        Order order = document.toObject(Order.class);
+                        MyInfoManager.getInstance().createOrderSQL(order.getSupplier());
+                        if(order.getSupplier().equals("Tenuva") && order.getDate().equals(currentDate)){
+                            Toast.makeText(DairyActivityOrder.this.getContext(), "An order from 'Tenuva' was made today",
+                                    Toast.LENGTH_LONG).show();
+                            flag = true;
+                        }
+
+                    }
+                    if(flag){
+                        Intent intent = new Intent(getActivity(), OrderActivity.class);
+                        startActivity(intent);
+                    }
+
+                } else {
+                    Toast.makeText(DairyActivityOrder.this.getContext(), "Current data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         for(int i=0; i<idArray.length; i++) {
             buttons[i] = (ImageButton) view.findViewById(idArray[i]);

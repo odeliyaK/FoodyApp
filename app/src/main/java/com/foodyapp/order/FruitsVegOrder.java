@@ -1,5 +1,6 @@
 package com.foodyapp.order;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 
@@ -20,9 +21,21 @@ import android.widget.Toast;
 
 import com.foodyapp.MyInfoManager;
 import com.foodyapp.R;
+import com.foodyapp.inventory.FruitsVegFragment;
+import com.foodyapp.model.Order;
 import com.foodyapp.model.Products;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class FruitsVegOrder extends Fragment implements View.OnClickListener{
@@ -80,6 +93,48 @@ public class FruitsVegOrder extends Fragment implements View.OnClickListener{
                 }
             }
         }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("Orders");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(FruitsVegOrder.this.getContext(), "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    int i = 0;
+                    Calendar calendar = Calendar.getInstance();
+                    String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                    MyInfoManager.getInstance().deleteAllOrders();
+                    boolean flag = false;
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        Order order = document.toObject(Order.class);
+                        MyInfoManager.getInstance().createOrderSQL(order.getSupplier());
+                        if(order.getSupplier().equals("Meshsek") && order.getDate().equals(currentDate)){
+                            Toast.makeText(FruitsVegOrder.this.getContext(), "An order from 'Meshsek' was made today",
+                                    Toast.LENGTH_LONG).show();
+                            flag = true;
+                        }
+
+                    }
+                    if(flag){
+                        Intent intent = new Intent(getActivity(), OrderActivity.class);
+                        startActivity(intent);
+                    }
+
+                } else {
+                    Toast.makeText(FruitsVegOrder.this.getContext(), "Current data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         for(int i=0; i<idArray.length; i++) {
             buttons[i] = (ImageButton) view.findViewById(idArray[i]);
@@ -158,7 +213,23 @@ public class FruitsVegOrder extends Fragment implements View.OnClickListener{
                             current.put("Carrot", Integer.parseInt(num7.getText().toString()) + Integer.parseInt(a7.getText().toString()));
                             myOrder.put("Carrot", Integer.parseInt(num7.getText().toString()));
                         }
-                        MyInfoManager.getInstance().makeOrder(myOrder, current,"Meshek");
+
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+                        for(String p : current.keySet()){
+                            Products product = new Products(p, current.get(p), "Meshek");
+                            DocumentReference dr = db.collection("Products").document(p);
+                            batch.set(dr, product);
+                        }
+                        batch.commit().addOnCompleteListener(task -> {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getContext(), "success making fruits and veg order",Toast.LENGTH_LONG).show();
+                                MyInfoManager.getInstance().makeOrder(myOrder,current, "Meshek");
+                            }
+                            else{
+                                Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_LONG).show();
+                            }
+                        });
 
                         num1.setText(be1);
                         num2.setText(be2);

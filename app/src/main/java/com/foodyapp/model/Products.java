@@ -18,6 +18,13 @@ public class Products {
         this.supplier = supplier;
     }
 
+    public Products(String name, int quantity, String update, String supplier) {
+        this.name = name;
+        this.quantity = quantity;
+        this.update = update;
+        this.supplier = supplier;
+    }
+
     public String getName() {
         return name;
     }
@@ -50,10 +57,4 @@ public class Products {
         this.supplier = supplier;
     }
 
-    public Products(String name, int quantity, String update, String supplier) {
-        this.name = name;
-        this.quantity = quantity;
-        this.update = update;
-        this.supplier = supplier;
-    }
 }
