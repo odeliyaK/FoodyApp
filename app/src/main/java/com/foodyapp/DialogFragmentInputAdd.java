@@ -18,9 +18,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.foodyapp.model.usersInfo;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -59,6 +63,7 @@ public class DialogFragmentInputAdd extends DialogFragment {
 
         View v = inflater.inflate(R.layout.activity_dialog_fragment_input_add, null);
          context=v.getContext();
+//        MyInfoManager.getInstance().openDataBase(context);
         idField = (EditText) v .findViewById(R.id.idfield);
         NameField = (EditText)v .findViewById(R.id.firstnamefieldAdd);
         Address =  (EditText)v.findViewById(R.id.AddressAdd);
@@ -93,18 +98,24 @@ public class DialogFragmentInputAdd extends DialogFragment {
                         }
                     }
                     if (notAdd==false){
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        List<usersInfo> households = MyInfoManager.getInstance().getAllHouseHolds();
+                        for(usersInfo u : households){
+                            if(HouseHoldListActivity.id <= Integer.parseInt(u.getId())){
+                                HouseHoldListActivity.id = Integer.parseInt(u.getId()) + 1;
+                            }
+                        }
                         usersInfo user=new usersInfo(name,address,String.valueOf(HouseHoldListActivity.id));
                         String myID = String.valueOf(HouseHoldListActivity.id);
                         HouseHoldListActivity.id++;
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
                         db.collection("Households")
                                 .document(myID).set(user)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        System.out.println("hello");
                                         MyInfoManager.getInstance().createHouseHold(user);
-                                        HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
+                                        HouseHoldListActivity.itemInfos = MyInfoManager.getInstance().getAllHouseHolds();
                                         adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
                                         HouseHoldListActivity.myList.setAdapter(adapter);
                                         HouseHoldListActivity.adapter.notifyDataSetChanged();
@@ -116,17 +127,10 @@ public class DialogFragmentInputAdd extends DialogFragment {
                             }
                         });
 
-//                        HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
-//                        adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
-//                        HouseHoldListActivity.myList.setAdapter(adapter);
-//                        HouseHoldListActivity.adapter.notifyDataSetChanged();
-
                     }else {
                         Toast.makeText(context, "household can't be added- his address already exists",Toast.LENGTH_LONG).show();
 
                     }
-
-
                     dismiss();
                 }
             }

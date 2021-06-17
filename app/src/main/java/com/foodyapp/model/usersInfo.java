@@ -3,7 +3,7 @@ package com.foodyapp.model;
 public class usersInfo {
 
 
-    private int packageNum;
+    private String packageNum;
     private String name;
     private String address;
     private String id;
@@ -12,28 +12,32 @@ public class usersInfo {
     public usersInfo(){
     }
 
+    public usersInfo(String name, String address, String id) {
+        this.name = name;
+        this.address = address;
+        this.id = id;
+    }
     public usersInfo(String name, String address){
         this.name = name;
         this.address = address;
     }
 
-
-
-
-    public usersInfo(int packageNum,String name, String address, int image) {
+    public usersInfo(String packageNum, String name, String address, String id) {
         this.packageNum = packageNum;
         this.name = name;
         this.address = address;
-        this.image = image;
-
-    }
-    public usersInfo(String name, String address, String id) {
-        this.name = name;
-        this.address = address;
         this.id = id;
-
     }
-    public int getNum() {
+
+    //    public usersInfo(String packageNum,String name, String address, int image) {
+//        this.packageNum = packageNum;
+//        this.name = name;
+//        this.address = address;
+//        this.image = image;
+//
+//    }
+
+    public String getNum() {
         return packageNum;
     }
 
@@ -54,7 +58,7 @@ public class usersInfo {
     }
 
 
-    public void setNum(int num) {
+    public void setNum(String num) {
         this.packageNum = num;
     }
 

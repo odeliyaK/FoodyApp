@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.foodyapp.model.PackagesInfo;
 import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -211,7 +212,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            MyInfoManager.getInstance().deletePackage(currentuser);
+                                                            MyInfoManager.getInstance().deletePackage(new PackagesInfo(currentuser.getId(), currentuser.getId(), currentuser.getName(), currentuser.getAddress()));
                                                         }
                                                     }).addOnFailureListener(new OnFailureListener() {
                                                 @Override

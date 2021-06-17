@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:paddingLeft="20dp">
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="442dp"
-        android:layout_height="132dp"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
         android:layout_alignParentTop="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,43 +19,40 @@
 
             <TextView
                 android:id="@+id/HNum"
-                android:layout_width="82dp"
-                android:layout_height="wrap_content"
+                android:layout_width="99dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="left"
+                android:gravity="center"
                 android:text="package number"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold|italic" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/HistoryInfo"
-                android:layout_width="87dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
+                android:layout_width="74dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="Name"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold|italic" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/historyaddress"
-                android:layout_width="84dp"
-                android:layout_height="wrap_content"
+                android:layout_width="114dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="Address"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:paddingLeft="30dp"
-                android:textStyle="bold|italic" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="147dp"
-                android:layout_height="wrap_content"
-             android:paddingLeft="50dp"
-                android:text="  Date"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Date"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold|italic" />
+                android:textSize="18sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

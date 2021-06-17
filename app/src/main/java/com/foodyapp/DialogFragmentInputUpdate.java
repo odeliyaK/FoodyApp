@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -36,6 +37,7 @@ public class DialogFragmentInputUpdate extends DialogFragment {
     private Button cancelBtn;
     private Activity activity;
     String myID, myName, myAddress;
+    Context context;
     protected static final int NEW_ITEM_TAG = -111;
     // Use this instance of the interface to deliver action events
     UpdateInputDialogFragment mListener;
@@ -58,6 +60,8 @@ public class DialogFragmentInputUpdate extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.activity_dialog_fragment_input_update, null);
+        context = v.getContext();
+        MyInfoManager.getInstance().openDataBase(context);
         idField = (EditText) v .findViewById(R.id.idfield);
         NameField = (EditText)v .findViewById(R.id.firstnamefield);
         Address =  (EditText)v.findViewById(R.id.lastnamefield);

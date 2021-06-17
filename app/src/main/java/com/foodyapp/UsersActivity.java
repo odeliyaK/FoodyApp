@@ -13,16 +13,28 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import com.foodyapp.inventory.InventoryActivity;
+import com.foodyapp.model.HistoryInfo;
+import com.foodyapp.model.PackagesInfo;
+import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
 import com.foodyapp.order.OrderActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class UsersActivity extends Activity {
 
@@ -36,14 +48,24 @@ public class UsersActivity extends Activity {
     DataBase myDB;
     Context context;
     FirebaseAuth mAuth;
+    List<HistoryInfo> listOfHPackages;
+    List<usersInfo> listOfHouseholds;
+    List<PackagesInfo> listOfPackages;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
+        MyInfoManager.getInstance().openDataBase(this);
+        this.context = this;
+        list = (ListView) findViewById(R.id.list);
+        MyInfoManager.getInstance().openDataBase(this);
         ImageView toolBarArrow=findViewById(R.id.arrow);
         TextView toolBarTitle=findViewById(R.id.toolbar_title);
         ImageView rightIcon=findViewById(R.id.menu);
         mAuth = FirebaseAuth.getInstance();
+        listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
+        listOfHouseholds = MyInfoManager.getInstance().getAllHouseHolds();
+        listOfPackages = MyInfoManager.getInstance().getAllPackages();
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,17 +80,65 @@ public class UsersActivity extends Activity {
             }
         });
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("History");
 
-        this.context = this;
-        list = (ListView) findViewById(R.id.list);
-        MyInfoManager.getInstance().openDataBase(this);
-        List<HistoryInfo> listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
-        List<usersInfo> listOfHouseholds = MyInfoManager.getInstance().getAllHouseHolds();
-        List<usersInfo> listOfPackages = MyInfoManager.getInstance().getAllPackages();
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    MyInfoManager.getInstance().deleteAllHistory();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        HistoryInfo history = document.toObject(HistoryInfo.class);
+                        MyInfoManager.getInstance().createHistoryPackage(new HistoryInfo(UUID.randomUUID().toString(),
+                                history.getPackageNum(), history.getName(), history.getAddress(), history.getDate()));
+
+                    }
+                    listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
+                } else {
+                    Toast.makeText(context, "history data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        CollectionReference collRefHouse = db.collection("Households");
+        collRefHouse.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+
+                    MyInfoManager.getInstance().deleteAllHouseholds();
+                    MyInfoManager.getInstance().deleteAllPackages();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        usersInfo house = document.toObject(usersInfo.class);
+                        MyInfoManager.getInstance().createHouseHold(new usersInfo(house.getName(), house.getAddress(), house.getId()));
+                    }
+                    listOfHouseholds = MyInfoManager.getInstance().getAllHouseHolds();
+                    listOfPackages = MyInfoManager.getInstance().getAllPackages();
+                } else {
+                    Toast.makeText(context, "house & packages data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         Date today=new Date();
         Date send = null;
         for (int i=0; i<listOfHPackages.size(); i++){
-
             String sendDay=listOfHPackages.get(i).getDate();
             SimpleDateFormat sdf=new SimpleDateFormat("dd-MMM-yyyy");
             try {
@@ -77,14 +147,12 @@ public class UsersActivity extends Activity {
                 e.printStackTrace();
             }
             //if 1 week was pass and the household is still in the DB- a new package for him will be created.
-            if (daysBetween(today,send)==7){
-
-                usersInfo newPackage=new usersInfo(listOfHPackages.get(i).getName(),listOfHPackages.get(i).getAddress());
+            if (daysBetween(today,send) == 1){
+                usersInfo newPackage = new usersInfo(listOfHPackages.get(i).getName() ,listOfHPackages.get(i).getAddress());
                 Toast.makeText(context, newPackage.getName()+newPackage.getAddress()+ sendDay+today, Toast.LENGTH_SHORT).show();
 
-
                 for (int j=0; j<listOfHouseholds.size(); j++){
-                    if (newPackage.getName().equals(listOfHouseholds.get(j).getName() )&&newPackage.getAddress().equals(listOfHouseholds.get(j).getAddress())){
+                    if (newPackage.getName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getAddress().equals(listOfHouseholds.get(j).getAddress())){
                         MyInfoManager.getInstance().createPackage(newPackage, listOfHouseholds.get(j).getId());
                         listOfPackages = MyInfoManager.getInstance().getAllPackages();
                     }
@@ -97,19 +165,15 @@ public class UsersActivity extends Activity {
             }
 
         }
-     //   List<usersInfo> listOfPackagesNew = MyInfoManager.getInstance().getAllPackages();
 
-     //    listOfPackages = MyInfoManager.getInstance().getAllPackages();
         if (listOfPackages.isEmpty()){
             Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
-        }else {
-            listOfPackages = MyInfoManager.getInstance().getAllPackages();
-            Date c = Calendar.getInstance().getTime();
-
-
-
-            adapter = new UsersLIstAdapter(this, listOfPackages);
-            list.setAdapter(adapter);
+        }
+        else {
+                listOfPackages = MyInfoManager.getInstance().getAllPackages();
+                Date c = Calendar.getInstance().getTime();
+                adapter = new UsersLIstAdapter(this, listOfPackages);
+                list.setAdapter(adapter);
         }
 
 

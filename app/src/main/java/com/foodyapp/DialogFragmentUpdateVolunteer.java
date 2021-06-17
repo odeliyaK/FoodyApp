@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -40,6 +41,7 @@ public class DialogFragmentUpdateVolunteer extends DialogFragment {
     protected static final int NEW_ITEM_TAG = -111;
     // Use this instance of the interface to deliver action events
     UpdateInputDialogFragment mListener;
+    Context context;
 
     // Override the Fragment.onAttach() method to instantiate the MyAlertDialogFragmentListener
     @Override
@@ -62,6 +64,8 @@ public class DialogFragmentUpdateVolunteer extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.dialog_update_vols, null);
+        context=v.getContext();
+        MyInfoManager.getInstance().openDataBase(context);
         NameField = (EditText)v .findViewById(R.id.name);
         phone =  (EditText)v.findViewById(R.id.phone);
         saveBtn = (Button) v.findViewById(R.id.updateAddBtn);

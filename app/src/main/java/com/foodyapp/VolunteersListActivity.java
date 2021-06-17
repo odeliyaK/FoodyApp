@@ -78,8 +78,6 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
                 }
 
                 if (snapshot != null && !snapshot.isEmpty()) {
-                    Toast.makeText(context, "Current data: " + snapshot.getDocuments(),
-                            Toast.LENGTH_LONG).show();
 
                     MyInfoManager.getInstance().deleteAllVols();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
@@ -92,7 +90,6 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
                     adapter = new VolunteerAdapterOrg(context,R.layout.activity_volunteer_adapter_org,itemInfos);
                     myList.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
 
                 } else {
                     Toast.makeText(context, "Current data: null",

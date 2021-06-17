@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.foodyapp.inventory.InventoryActivity;
+import com.foodyapp.model.HistoryInfo;
 import com.foodyapp.order.OrderActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -62,10 +63,6 @@ public class HistoryActivity extends AppCompatActivity {
             list.setAdapter(adapter);
         }
 
-//        adapter = new HistoryAdapter(this, itemInfos);
-//
-//
-//        list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -73,9 +70,6 @@ public class HistoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                HistoryInfo selecteditem = adapter.getItem(position);
-//                Toast.makeText(getApplicationContext(), selecteditem.getName(),
-//                        Toast.LENGTH_SHORT).show();
-                //adapter.remove(selecteditem);
             }
         });
     }

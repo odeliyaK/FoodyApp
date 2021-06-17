@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.foodyapp.model.HistoryInfo;
+
 import java.util.List;
 
 public class HistoryAdapter extends ArrayAdapter<HistoryInfo> {
@@ -38,7 +40,7 @@ public class HistoryAdapter extends ArrayAdapter<HistoryInfo> {
         TextView address = (TextView) rowView.findViewById(R.id.historyaddress);
         TextView date = (TextView) rowView.findViewById(R.id.date);
         final HistoryInfo itemInfo = dataList.get(position);
-        pNum.setText( String.valueOf(itemInfo.getNum()));
+        pNum.setText( itemInfo.getPackageNum());
         name.setText(itemInfo.getName());
         address.setText(itemInfo.getAddress());
         date.setText(itemInfo.getDate());

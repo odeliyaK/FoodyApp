@@ -3,18 +3,37 @@ package com.foodyapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
+import com.foodyapp.model.HistoryInfo;
+import com.foodyapp.model.Order;
+import com.foodyapp.model.PackagesInfo;
 import com.foodyapp.model.Products;
 import com.foodyapp.model.usersInfo;
+import com.foodyapp.order.DairyActivityOrder;
+import com.foodyapp.order.OrderActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,14 +41,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
-public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
-    private List<usersInfo> dataList = null;
+public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
+    private List<PackagesInfo> dataList = null;
     private Context context = null;
     private HistoryAdapter adapter;
     int pos;
-    public UsersLIstAdapter(Context context, List<usersInfo> dataList) {
-        super( context, R.layout.users_list, dataList);
+    public UsersLIstAdapter(Context context, List<PackagesInfo> dataList) {
+        super(context, R.layout.users_list, dataList);
         this.dataList = dataList;
         this.context = context;
     }
@@ -40,22 +60,107 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
     }
 
     @Override
-    public usersInfo getItem(int position) {
+    public PackagesInfo getItem(int position) {
         return dataList.get(position);
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        LayoutInflater inflater= LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View rowView=inflater.inflate(R.layout.users_list, null,false);
+        MyInfoManager.getInstance().openDataBase(context);
         TextView pNum = (TextView) rowView.findViewById(R.id.pNum);
         TextView name = (TextView) rowView.findViewById(R.id.userInfo);
         TextView address = (TextView) rowView.findViewById(R.id.useraddress);
         ImageButton sendBtn= (ImageButton)rowView.findViewById(R.id.image);
-        final usersInfo itemInfo = dataList.get(position);
-        pNum.setText(String.valueOf(itemInfo.getNum()));
-        name.setText(itemInfo.getName());
-        address.setText(itemInfo.getAddress());
+        final PackagesInfo itemInfo = dataList.get(position);
+        pNum.setText(itemInfo.getHouseholdID());
+        name.setText(itemInfo.getHouseName());
+        address.setText(itemInfo.getHouseAddress());
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("History");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+
+                    MyInfoManager.getInstance().deleteAllHistory();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        HistoryInfo history = document.toObject(HistoryInfo.class);
+                        MyInfoManager.getInstance().createHistoryPackage(new HistoryInfo(UUID.randomUUID().toString(), history.getPackageNum(), history.getName(), history.getAddress(), history.getDate()));
+
+                    }
+
+
+                } else {
+                    Toast.makeText(context, "history data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        CollectionReference collRefProducts = db.collection("Products");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(UsersLIstAdapter.this.getContext(), "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    boolean flag = false;
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        Products product = document.toObject(Products.class);
+                        MyInfoManager.getInstance().updateProducts(product);
+                    }
+
+                } else {
+                    Toast.makeText(UsersLIstAdapter.this.getContext(), "Current data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        CollectionReference collRefHouse = db.collection("Households");
+        collRefHouse.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+
+                    MyInfoManager.getInstance().deleteAllHouseholds();
+                    MyInfoManager.getInstance().deleteAllPackages();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        usersInfo house = document.toObject(usersInfo.class);
+                        MyInfoManager.getInstance().createHouseHold(new usersInfo(house.getName(), house.getAddress(), house.getId()));
+                    }
+                } else {
+                    Toast.makeText(context, "house & packages data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
 
 
         //sends the package and delete from current page
@@ -65,24 +170,24 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
 
             //alert dialog to approve the sending
             AlertDialog.Builder sendingApprovalDialog=new AlertDialog.Builder(getContext());
-            sendingApprovalDialog.setMessage("Are you sure you want to send the package of  "+itemInfo.getName()+" "+ " ?");
+            sendingApprovalDialog.setMessage("Are you sure you want to send the package of  "+itemInfo.getHouseName() +" "+ " ?");
             sendingApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     ArrayList<Products> products = MyInfoManager.getInstance().allProducts();
                     boolean notSend=false;
-                    for(Products p : products){
+                        for(Products p : products){
 
-                        if(p.getName().equals("Milk")){
-                            if (p.getQuantity()<0){
-                                notSend=true;
-                            }
-                        }else if (p.getName().equals("Cheese")){
-                            if (p.getQuantity()<0){
-                                notSend=true;
-                            }
-                        }else if (p.getName().equals("Eggs")){
+                            if(p.getName().equals("Milk")){
+                                if (p.getQuantity()<0){
+                                    notSend=true;
+                                }
+                            }else if (p.getName().equals("Cheese")){
+                                if (p.getQuantity()<0){
+                                    notSend=true;
+                                }
+                            }else if (p.getName().equals("Eggs")){
                             if (p.getQuantity()<0){
                                 notSend=true;
                             }
@@ -160,19 +265,31 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
                         Date c = Calendar.getInstance().getTime();
                         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
                         String currentDate = df.format(c);
-                        HistoryInfo send=new HistoryInfo(itemInfo.getNum(), itemInfo.getName(), itemInfo.getAddress(),currentDate);
-                        MyInfoManager.getInstance().createHistoryPackage(send);
+                        HistoryInfo send = new HistoryInfo(UUID.randomUUID().toString(), itemInfo.getHouseholdID(), itemInfo.getHouseName(), itemInfo.getHouseAddress(),currentDate);
+                        db.collection("History")
+                                .document(send.getId()).set(send)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        MyInfoManager.getInstance().createHistoryPackage(send);
+                                        List<HistoryInfo> list = MyInfoManager.getInstance().getAllHistoryPackages();
+                                        HistoryActivity.itemInfos=list;
+                                        HistoryActivity.adapter=new HistoryAdapter(context, list);
+                                        HistoryActivity.adapter.notifyDataSetChanged();
 
-                        List<HistoryInfo> list = MyInfoManager.getInstance().getAllHistoryPackages();
-                        HistoryActivity.itemInfos=list;
-                        HistoryActivity.adapter=new HistoryAdapter(context, list);
-                        HistoryActivity.adapter.notifyDataSetChanged();
+                                        MyInfoManager.getInstance().deletePackage(itemInfo);
+                                        UsersLIstAdapter.this.remove(itemInfo);
+                                        UsersLIstAdapter.this.notifyDataSetChanged();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println(e);
+                            }
+                        });
 
-                        MyInfoManager.getInstance().deletePackage(itemInfo);
-                        UsersLIstAdapter.this.remove(itemInfo);
-                        UsersLIstAdapter.this.notifyDataSetChanged();
 
-                        Toast.makeText(context,  itemInfo.getName()+"'s package was sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,  itemInfo.getHouseName()+"'s package was sent", Toast.LENGTH_SHORT).show();
 
                         //update inventory
                         //String= name of product
@@ -282,7 +399,7 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
             sendingApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(context,  itemInfo.getName()+"'s package didn't sent", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,  itemInfo.getHouseName()+"'s package didn't sent", Toast.LENGTH_SHORT).show();
                 }
             });
             sendingApprovalDialog.show();
@@ -294,7 +411,6 @@ public class UsersLIstAdapter extends ArrayAdapter<usersInfo> {
 
         return rowView;
 
-    };
-
+    }
 
 }

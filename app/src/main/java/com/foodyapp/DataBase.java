@@ -5,10 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.foodyapp.model.HistoryInfo;
 import com.foodyapp.model.Order;
 import com.foodyapp.model.PackagesInfo;
 import com.foodyapp.model.Products;
@@ -60,11 +60,12 @@ public class DataBase extends SQLiteOpenHelper {
 
     //history table
     private static final String TABLE_HISTORY_NAME = "packagesHistory";
+    private static final String HISTORY_COLUMN_ID = "ID";
     private static final String HISTORY_COLUMN_PACKAGE_ID = "packageID";
     private static final String HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME = "householdName";
     private static final String HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS = "householdAddress";
     private static final String HISTORY_COLUMN_DATE = "date";
-    private static final String[] TABLE_HISTORY_COLUMNS = { HISTORY_COLUMN_PACKAGE_ID,HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME,HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS, HISTORY_COLUMN_DATE};
+    private static final String[] TABLE_HISTORY_COLUMNS = {HISTORY_COLUMN_ID, HISTORY_COLUMN_PACKAGE_ID,HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME,HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS, HISTORY_COLUMN_DATE};
     //products table
     private static final String TABLE_PRODUCTS_NAME = "products";
     private static final String PRODUCTS_COLUMN_NAME = "name";
@@ -165,7 +166,8 @@ public class DataBase extends SQLiteOpenHelper {
 
             // SQL statement to create packages history table
             String CREATE_HISTORY_TABLE = "create table if not exists " + TABLE_HISTORY_NAME +" ( "
-                    + HISTORY_COLUMN_PACKAGE_ID +" INTEGER, "
+                    + HISTORY_COLUMN_ID + " TEXT PRIMARY KEY, "
+                    + HISTORY_COLUMN_PACKAGE_ID +" TEXT ,"
                     + HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME +" TEXT, "
                     + PACKAGES_COLUMN_HOUSEHOLD_ADDRESS +" TEXT, "
                     + HISTORY_COLUMN_DATE + " TEXT)";
@@ -255,6 +257,16 @@ public class DataBase extends SQLiteOpenHelper {
 
             // delete all
             db.delete(TABLE_VOLUNTEER_NAME, null, null);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+    public void deleteAllHistory() {
+        try {
+
+            // delete all
+            db.delete(TABLE_HISTORY_NAME, null, null);
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -809,6 +821,18 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+    public void createNewPack(PackagesInfo pack){
+        try {
+            ContentValues cv=new ContentValues();
+            cv.put(PACKAGES_COLUMN_ID, pack.getPackageID());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, pack.getHouseholdID());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_NAME, pack.getHouseName());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ADDRESS, pack.getHouseAddress());
+            db.insert(TABLE_PACKAGES_NAME, null, cv);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
     void addPackageWithId(usersInfo user, String id){
         // String id= MyInfoManager.getInstance().getAllHouseHolds().get(MyInfoManager.getInstance().getAllHouseHolds().size()-1).getId();
         try {
@@ -828,7 +852,8 @@ public class DataBase extends SQLiteOpenHelper {
 
         try {
             ContentValues cv=new ContentValues();
-            cv.put(HISTORY_COLUMN_PACKAGE_ID, user.getNum());
+            cv.put(HISTORY_COLUMN_PACKAGE_ID, user.getPackageNum());
+            cv.put(HISTORY_COLUMN_ID, user.getId());
             cv.put(HISTORY_COLUMN_PACKAGE_HOUSEHOLD_NAME, user.getName());
             cv.put(HISTORY_COLUMN_PACKAGE_HOUSEHOLD_ADDRESS, user.getAddress());
             cv.put(HISTORY_COLUMN_DATE,user.getDate());
@@ -924,9 +949,9 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
     //removes package
-    void removePackage(usersInfo household){
+    void removePackage(PackagesInfo household){
         FirebaseFirestore dbFire = FirebaseFirestore.getInstance();
-        dbFire.collection("Packages").document(household.getId()).delete()
+        dbFire.collection("Packages").document(household.getPackageID()).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -942,7 +967,7 @@ public class DataBase extends SQLiteOpenHelper {
 
             // delete items
             db.delete(TABLE_PACKAGES_NAME, PACKAGES_COLUMN_HOUSEHOLD_ID + " = ?",
-                    new String[] { String.valueOf(household.getId()) });
+                    new String[] { String.valueOf(household.getPackageID()) });
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -1008,10 +1033,26 @@ public class DataBase extends SQLiteOpenHelper {
         usersInfo result = new usersInfo();
         try {
             //result.setId(Integer.parseInt(cursor.getString(0)));
-            result.setNum(cursor.getInt(0));
+            result.setNum(cursor.getString(0));
             result.setId(cursor.getString(1));
             result.setName(cursor.getString(2));
             result.setAddress(cursor.getString(3));
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return result;
+    }
+
+    private PackagesInfo cursorToPackage(Cursor cursor) {
+        PackagesInfo result = new PackagesInfo();
+        try {
+            //result.setId(Integer.parseInt(cursor.getString(0)));
+            result.setPackageID(cursor.getString(0));
+            result.setHouseholdID(cursor.getString(1));
+            result.setHouseName(cursor.getString(2));
+            result.setHouseAddress(cursor.getString(3));
 
         } catch (Throwable t) {
             t.printStackTrace();
@@ -1040,10 +1081,11 @@ public class DataBase extends SQLiteOpenHelper {
         HistoryInfo result = new HistoryInfo();
         try {
             //result.setId(Integer.parseInt(cursor.getString(0)));
-            result.setNum(cursor.getInt(0));
-            result.setName(cursor.getString(1));
-            result.setAddress(cursor.getString(2));
-            result.setDate(cursor.getString(3));
+            result.setId(cursor.getString(0));
+            result.setPackageNum(cursor.getString(1));
+            result.setName(cursor.getString(2));
+            result.setAddress(cursor.getString(3));
+            result.setDate(cursor.getString(4));
 
 
 
@@ -1085,8 +1127,8 @@ public class DataBase extends SQLiteOpenHelper {
 //    }
 
 
-    public List<usersInfo>getAllPackages(){
-        List<usersInfo> result = new ArrayList<>();
+    public List<PackagesInfo>getAllPackages(){
+        List<PackagesInfo> result = new ArrayList<>();
         Cursor cursor = null;
         try {
             cursor = db.query(TABLE_PACKAGES_NAME,TABLE_PACKAGES_COLUMNS, null, null,
@@ -1094,7 +1136,7 @@ public class DataBase extends SQLiteOpenHelper {
 
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                usersInfo item = cursorToHouseHoldPackage(cursor);
+                PackagesInfo item = cursorToPackage(cursor);
                 result.add(item);
                 cursor.moveToNext();
             }
@@ -1170,57 +1212,57 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     //inserts for checks:
-    public void checksInserts(){
-
-        ArrayList<Products> currentProducts = allProducts();
-
-        if(currentProducts.isEmpty()) {
-            //inserting volunteer
-            try {
-                ContentValues values = new ContentValues();
-                values.put(VOLUNTEERS_COLUMN_NAME, "Moshe Sason");
-                values.put(VOLUNTEERS_COLUMN_PHONE, "1234567");
-                values.put(VOLUNTEER_COLUMN_EMAIL, "moshe@gmail.com");
-                db.insert(TABLE_VOLUNTEER_NAME, null, values);
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-            try {
-                ContentValues values = new ContentValues();
-                values.put(VOLUNTEERS_COLUMN_NAME, "Eden Levi");
-                values.put(VOLUNTEERS_COLUMN_PHONE, "987654");
-                values.put(VOLUNTEER_COLUMN_EMAIL, "eden@gmail.com");
-                db.insert(TABLE_VOLUNTEER_NAME, null, values);
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-
-            //inserting households
-            try {
-                long id;
-                ContentValues values = new ContentValues();
-                values.put(HOUSEHOLDS_COLUMN_NAME, "Liav Dagan");
-                values.put(HOUSEHOLDS_COLUMN_ADDRESS, "Haifa, Hanesharim 4");
-                id = db.insert(TABLE_HOUSEHOLDS_NAME, null, values);
-                usersInfo household = new usersInfo("Liav Dagan", "Haifa, Hanesharim 4");
-                addPackage(household);
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-            try {
-                long id;
-                ContentValues values = new ContentValues();
-                values.put(HOUSEHOLDS_COLUMN_NAME, "Shiran Markovitz");
-                values.put(HOUSEHOLDS_COLUMN_ADDRESS, "Haifa, Haagana 21");
-                id = db.insert(TABLE_HOUSEHOLDS_NAME, null, values);
-                usersInfo household = new usersInfo("Shiran Markovitz", "Haifa, Haagana 21");
-                addPackage(household);
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-        }
-
-    }
+//    public void checksInserts(){
+//
+//        ArrayList<Products> currentProducts = allProducts();
+//
+//        if(currentProducts.isEmpty()) {
+//            //inserting volunteer
+//            try {
+//                ContentValues values = new ContentValues();
+//                values.put(VOLUNTEERS_COLUMN_NAME, "Moshe Sason");
+//                values.put(VOLUNTEERS_COLUMN_PHONE, "1234567");
+//                values.put(VOLUNTEER_COLUMN_EMAIL, "moshe@gmail.com");
+//                db.insert(TABLE_VOLUNTEER_NAME, null, values);
+//            } catch (Throwable t) {
+//                t.printStackTrace();
+//            }
+//            try {
+//                ContentValues values = new ContentValues();
+//                values.put(VOLUNTEERS_COLUMN_NAME, "Eden Levi");
+//                values.put(VOLUNTEERS_COLUMN_PHONE, "987654");
+//                values.put(VOLUNTEER_COLUMN_EMAIL, "eden@gmail.com");
+//                db.insert(TABLE_VOLUNTEER_NAME, null, values);
+//            } catch (Throwable t) {
+//                t.printStackTrace();
+//            }
+//
+//            //inserting households
+//            try {
+//                long id;
+//                ContentValues values = new ContentValues();
+//                values.put(HOUSEHOLDS_COLUMN_NAME, "Liav Dagan");
+//                values.put(HOUSEHOLDS_COLUMN_ADDRESS, "Haifa, Hanesharim 4");
+//                id = db.insert(TABLE_HOUSEHOLDS_NAME, null, values);
+//                usersInfo household = new usersInfo("Liav Dagan", "Haifa, Hanesharim 4");
+//                addPackage(household);
+//            } catch (Throwable t) {
+//                t.printStackTrace();
+//            }
+//            try {
+//                long id;
+//                ContentValues values = new ContentValues();
+//                values.put(HOUSEHOLDS_COLUMN_NAME, "Shiran Markovitz");
+//                values.put(HOUSEHOLDS_COLUMN_ADDRESS, "Haifa, Haagana 21");
+//                id = db.insert(TABLE_HOUSEHOLDS_NAME, null, values);
+//                usersInfo household = new usersInfo("Shiran Markovitz", "Haifa, Haagana 21");
+//                addPackage(household);
+//            } catch (Throwable t) {
+//                t.printStackTrace();
+//            }
+//        }
+//
+//    }
 
 
 }

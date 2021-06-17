@@ -2,6 +2,8 @@ package com.foodyapp;
 
 import android.content.Context;
 
+import com.foodyapp.model.HistoryInfo;
+import com.foodyapp.model.PackagesInfo;
 import com.foodyapp.model.Products;
 import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
@@ -73,6 +75,11 @@ public class MyInfoManager {
 		}
 	}
 
+	public void createNewPack(PackagesInfo pack){
+		if(db != null)
+			db.createNewPack(pack);
+	}
+
 	public void deleteAllOrders(){
 		if(db != null)
 			db.deleteAllOrders();
@@ -107,14 +114,14 @@ public class MyInfoManager {
 		}
 	}
 
-	public void deletePackage(usersInfo household) {
+	public void deletePackage(PackagesInfo household) {
 		if (db != null) {
 			db.removePackage(household);
 		}
 	}
 
-	public List<usersInfo> getAllPackages() {
-		List<usersInfo> result = new ArrayList<usersInfo>();
+	public List<PackagesInfo> getAllPackages() {
+		List<PackagesInfo> result = new ArrayList<PackagesInfo>();
 		if (db != null) {
 			result = db.getAllPackages();
 		}
@@ -127,6 +134,11 @@ public class MyInfoManager {
 			result = db.getAllHistoryPackages();
 		}
 		return result;
+	}
+
+	public void deleteAllHistory() {
+		if(db != null)
+			db.deleteAllHistory();
 	}
 
 	public List<usersInfo> getAllActivePackages() {
@@ -243,10 +255,10 @@ public class MyInfoManager {
 		return selectedHousehold;
 	}
 
-	public void checksInserts(){
-		if(db != null)
-			db.checksInserts();
-	}
+//	public void checksInserts(){
+//		if(db != null)
+//			db.checksInserts();
+//	}
 
 
 

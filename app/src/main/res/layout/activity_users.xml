@@ -30,70 +30,68 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="77dp"
         android:layout_marginTop="110dp"
-        app:layout_constraintBottom_toBottomOf="@+id/descriptionUsers"
-        android:background="@color/white">
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/descriptionUsers">
 
-    <!--        table head-->
-    <TableRow android:background="@drawable/border">>
+        <!--        table head-->
+        <TableRow android:background="@drawable/border">>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:padding="10sp"
-            android:text="Num of package"
-            android:textColor="@color/white"
-            android:background="@drawable/border"
-            android:textSize="14sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4.5"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:padding="10sp"
+                android:text="package"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:padding="10sp"
-            android:text="Customer Name"
-            android:textColor="@color/white"
-            android:background="@drawable/border"
-            android:textSize="14sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="79dp"
+                android:layout_weight="4.5"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:padding="10sp"
+                android:text="Customer Name"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:padding="10sp"
-            android:text="Customer address"
-            android:background="@drawable/border"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4.5"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:padding="10sp"
+                android:text="Customer address"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:padding="10sp"
-            android:text="Send"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4.5"
+                android:gravity="center"
+                android:padding="10sp"
+                android:text="Send"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
 
-    </TableRow>
+        </TableRow>
     </TableLayout>
 
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="165dp">
-    </ListView>
+        android:layout_height="494dp"
+        android:layout_marginTop="185dp"></ListView>
 
 
 </RelativeLayout>

@@ -46,46 +46,46 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_height="71dp"
+                android:layout_weight="3.5"
+                android:background="@drawable/border"
                 android:gravity="center"
                 android:padding="10sp"
-                android:text="Num of package"
+                android:text="Package"
                 android:textColor="@color/white"
-                android:background="@drawable/border"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:background="@drawable/border"
                 android:gravity="center"
                 android:padding="10sp"
                 android:text="Customer Name"
                 android:textColor="@color/white"
-                android:background="@drawable/border"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:layout_weight="4.5"
+                android:background="@drawable/border"
                 android:gravity="center"
                 android:padding="10sp"
                 android:text="Customer address"
-                android:background="@drawable/border"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_height="71dp"
+                android:layout_weight="5"
                 android:gravity="center"
                 android:padding="10sp"
                 android:text="Delivery Date"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
 
         </TableRow>
@@ -94,9 +94,8 @@
     <ListView
         android:id="@+id/HistoryList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp">
-    </ListView>
+        android:layout_height="471dp"
+        android:layout_marginTop="167dp"></ListView>
 
 
 

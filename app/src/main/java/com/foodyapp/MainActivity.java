@@ -40,7 +40,7 @@ Context context;
         setContentView(R.layout.activity_main);
 
         MyInfoManager.getInstance().openDataBase(this);
-        MyInfoManager.getInstance().checksInserts();
+//        MyInfoManager.getInstance().checksInserts();
         MyInfoManager.getInstance().products();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();

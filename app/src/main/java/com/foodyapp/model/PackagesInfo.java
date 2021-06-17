@@ -55,6 +55,4 @@ public class PackagesInfo {
         this.houseAddress = houseAddress;
     }
 
-    public void setId(String string) {
-    }
 }
