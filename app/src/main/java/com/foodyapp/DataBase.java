@@ -5,30 +5,27 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
 import com.foodyapp.model.Order;
+import com.foodyapp.model.PackagesInfo;
 import com.foodyapp.model.Products;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.protobuf.StringValue;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 
 public class DataBase extends SQLiteOpenHelper {
     private Context context;
@@ -116,7 +113,7 @@ public class DataBase extends SQLiteOpenHelper {
 
             // SQL statement to create order table
             String CREATE_ORDERS_TABLE = "create table if not exists " + TABLE_ORDERS_NAME +" ( "
-                    + PACKAGES_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + ORDERS_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + ORDERS_COLUMN_SUPPLIER +" TEXT, "
                     + ORDERS_COLUMN_DATE + " TEXT)";
             db.execSQL(CREATE_ORDERS_TABLE);
@@ -150,15 +147,15 @@ public class DataBase extends SQLiteOpenHelper {
 
             // SQL statement to create houseHold table
             String CREATE_HOUSEHOLDS_TABLE = "create table if not exists " + TABLE_HOUSEHOLDS_NAME +" ( "
-                    + HOUSEHOLDS_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + HOUSEHOLDS_COLUMN_ID +" TEXT PRIMARY KEY, "
                     + HOUSEHOLDS_COLUMN_NAME +" TEXT, "
                     + HOUSEHOLDS_COLUMN_ADDRESS + " TEXT)";
             db.execSQL(CREATE_HOUSEHOLDS_TABLE);
 
             // SQL statement to create packages table
             String CREATE_PACKAGES_TABLE = "create table if not exists " + TABLE_PACKAGES_NAME +" ( "
-                    + PACKAGES_COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + PACKAGES_COLUMN_HOUSEHOLD_ID +" INTEGER, "
+                    + PACKAGES_COLUMN_ID +" TEXT PRIMARY KEY, "
+                    + PACKAGES_COLUMN_HOUSEHOLD_ID +" TEXT, "
                     + PACKAGES_COLUMN_HOUSEHOLD_NAME +" TEXT, "
                     + PACKAGES_COLUMN_HOUSEHOLD_ADDRESS +" TEXT, "
                     + PACKAGES_COLUMN_STATUS + " TEXT)";
@@ -262,6 +259,37 @@ public class DataBase extends SQLiteOpenHelper {
             t.printStackTrace();
         }
     }
+
+    public void deleteAllPackages() {
+        FirebaseFirestore dbf = FirebaseFirestore.getInstance();
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+        for(usersInfo ui : getAllHouseHolds()){
+            DocumentReference dr = dbf.collection("Packages").document(ui.getId());
+            batch.set(dr, ui);
+        }
+        batch.commit().addOnCompleteListener(task -> {
+        });
+
+        try {
+
+            // delete all
+            db.delete(TABLE_PACKAGES_NAME, null, null);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+
+    public void deleteAllHouseholds() {
+        try {
+
+            // delete all
+            db.delete(TABLE_HOUSEHOLDS_NAME, null, null);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
     //make an order from Tenuva/Meshek/Osem/Butcher.
     public void makeOrder(HashMap<String,Integer> products, HashMap<String,Integer> current, String supplier){
         Calendar calendar = Calendar.getInstance();
@@ -747,8 +775,6 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-
-
     //adds house holds to the db
     void addHouseHold(usersInfo user){
 
@@ -756,6 +782,7 @@ public class DataBase extends SQLiteOpenHelper {
             ContentValues cv=new ContentValues();
             cv.put(HOUSEHOLDS_COLUMN_NAME, user.getName());
             cv.put(HOUSEHOLDS_COLUMN_ADDRESS, user.getAddress());
+            cv.put(HOUSEHOLDS_COLUMN_ID, user.getId());
             db.insert(TABLE_HOUSEHOLDS_NAME, null, cv);
             //after adding new household, creating new package
 
@@ -767,12 +794,15 @@ public class DataBase extends SQLiteOpenHelper {
 
     //adds packages to the db
     void addPackage(usersInfo user){
-        String id= MyInfoManager.getInstance().getAllHouseHolds().get(MyInfoManager.getInstance().getAllHouseHolds().size()-1).getId();
+        FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
+        PackagesInfo packages = new PackagesInfo(user.getId(), user.getId(), user.getName(), user.getAddress());
+        dbOrder.collection("Packages").document(user.getId()).set(packages);
         try {
             ContentValues cv=new ContentValues();
-            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, id);
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, user.getId());
             cv.put(PACKAGES_COLUMN_HOUSEHOLD_NAME, user.getName());
             cv.put(PACKAGES_COLUMN_HOUSEHOLD_ADDRESS, user.getAddress());
+            cv.put(PACKAGES_COLUMN_ID, user.getId());
             db.insert(TABLE_PACKAGES_NAME, null, cv);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -867,28 +897,19 @@ public class DataBase extends SQLiteOpenHelper {
         return i;
     }
 
+
     //removes households- if household was removed, the package also removes.
     void reomoveHouseHold(usersInfo household){
-        boolean succeded = false;
         try {
-
-            // delete folder
             int rowAffected = db.delete(TABLE_HOUSEHOLDS_NAME, HOUSEHOLDS_COLUMN_ID + " = ?",
                     new String[] { String.valueOf(household.getId()) });
-            if(rowAffected>0) {
-                succeded = true;
-            }
+//            if(rowAffected>0) {
+//                removePackage(household);
+//            }
 
         } catch (Throwable t) {
-            succeded = false;
             t.printStackTrace();
-        } finally {
-            if(succeded){
-                reomovePackage(household);
-            }
         }
-
-
     }
 
     void removeVolunteer(Volunteers vol){
@@ -903,8 +924,20 @@ public class DataBase extends SQLiteOpenHelper {
 
     }
     //removes package
-    void reomovePackage(usersInfo household){
+    void removePackage(usersInfo household){
+        FirebaseFirestore dbFire = FirebaseFirestore.getInstance();
+        dbFire.collection("Packages").document(household.getId()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
 
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println(e);
+            }
+        });
         try {
 
             // delete items
@@ -987,6 +1020,22 @@ public class DataBase extends SQLiteOpenHelper {
         return result;
     }
 
+//    private PackagesInfo cursorToPackage(Cursor cursor) {
+//        PackagesInfo result = new PackagesInfo();
+//        try {
+//            //result.setId(Integer.parseInt(cursor.getString(0)));
+//            result.setId(cursor.getString(0));
+//            result.setId(cursor.getString(1));
+//            result.setName(cursor.getString(2));
+//            result.setAddress(cursor.getString(3));
+//
+//        } catch (Throwable t) {
+//            t.printStackTrace();
+//        }
+//
+//        return result;
+//    }
+
     private HistoryInfo cursorToHistorydPackage(Cursor cursor) {
         HistoryInfo result = new HistoryInfo();
         try {
@@ -1005,6 +1054,36 @@ public class DataBase extends SQLiteOpenHelper {
 
         return result;
     }
+
+
+//    public List<PackagesInfo>allPackages(){
+//        List<PackagesInfo> result = new ArrayList<>();
+//        Cursor cursor = null;
+//        try {
+//            cursor = db.query(TABLE_PACKAGES_NAME,TABLE_PACKAGES_COLUMNS, null, null,
+//                    null, null, null);
+//
+//            cursor.moveToFirst();
+//            while (!cursor.isAfterLast()) {
+//                PackagesInfo item = cursorToHouseHoldPackage(cursor);
+//                result.add(item);
+//                cursor.moveToNext();
+//            }
+//
+//        } catch (Throwable t) {
+//            t.printStackTrace();
+//        }
+//        finally {
+//            // make sure to close the cursor
+//            if(cursor!=null){
+//                cursor.close();
+//            }
+//        }
+//
+//        return result;
+//
+//    }
+
 
     public List<usersInfo>getAllPackages(){
         List<usersInfo> result = new ArrayList<>();

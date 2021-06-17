@@ -15,8 +15,20 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +45,10 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
     String selectedName;
     String selecteAddress;
     Context context;
+    static int id = 0;
     private FirebaseAuth mAuth;
-
-
-
-    DataBase myDB;
-    ArrayList<String> household_id, household_name, household_address;
+    List<usersInfo> templist;
+    List<usersInfo> deletelist = new ArrayList<>();
 
 
     @Override
@@ -48,6 +58,55 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
         ImageView toolBarArrow=findViewById(R.id.arrow);
         mAuth = FirebaseAuth.getInstance();
         ImageView rightIcon=findViewById(R.id.menu);
+
+        myList = (ListView) findViewById(R.id.listView);
+        this.context = this;
+
+        MyInfoManager.getInstance().openDataBase(this);
+        itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
+        adapter = new UsersAdapterOrg(this, R.layout.activity_users_adapter_org, itemInfos);
+        myList.setAdapter(adapter);
+
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference collRef = db.collection("Households");
+//
+//        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+//
+//                if (e != null) {
+//                    Toast.makeText(context, "Listen failed."+ e,
+//                            Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//
+//                if (snapshot != null && !snapshot.isEmpty()) {
+//
+//                    int lastID = 0;
+//                    MyInfoManager.getInstance().deleteAllHouseholds();
+//                    MyInfoManager.getInstance().deleteAllPackages();
+//                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+//                        usersInfo house = document.toObject(usersInfo.class);
+//                        MyInfoManager.getInstance().createHouseHold(new usersInfo(house.getName(), house.getAddress(), house.getId()));
+//                        lastID = Integer.parseInt(house.getId());
+//                    }
+//                    if(id <= lastID)
+//                        id = lastID + 1;
+//
+//                    itemInfos = MyInfoManager.getInstance().getAllHouseHolds();
+//                    adapter = new UsersAdapterOrg(context, R.layout.activity_users_adapter_org, itemInfos);
+//                    myList.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
+//
+//
+//                } else {
+//                    Toast.makeText(context, "Current data: null",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
+
+
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,14 +120,6 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                 showMenu(v);
             }
         });
-        myList = (ListView) findViewById(R.id.listView);
-        this.context = this;
-
-        MyInfoManager.getInstance().openDataBase(this);
-        itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
-        List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
-        adapter = new UsersAdapterOrg(this, R.layout.activity_users_adapter_org, itemInfos);
-        myList.setAdapter(adapter);
 
         Button updateBtn=findViewById(R.id.updateBtn);
         Button removeBtn=findViewById(R.id.removeBtn);
@@ -147,22 +198,43 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                     removeApprovalDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-           //                 DataBase db = new DataBase(HouseHoldListActivity.this);
-//                            db.reomoveHouseHold(itemInfos.get(indexVal).getId());
                             usersInfo currentuser = itemInfos.get(indexVal);
-//                            HouseHoldListActivity.itemInfos.remove(u);
-//                            adapter.notifyDataSetChanged();
-                            MyInfoManager.getInstance().deleteHousehold(currentuser);
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("Households")
+                                    .document(currentuser.getId()).delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            MyInfoManager.getInstance().deleteHousehold(currentuser);
+                                            FirebaseFirestore dbFire = FirebaseFirestore.getInstance();
+                                            dbFire.collection("Packages").document(currentuser.getId()).delete()
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            MyInfoManager.getInstance().deletePackage(currentuser);
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    System.out.println(e);
+                                                }
+                                            });
+                                            adapter.remove(currentuser);
+                                            if(!adapter.isEmpty())
+                                                adapter.clear();
+                                            itemInfos = MyInfoManager.getInstance().getAllHouseHolds();
+                                            adapter = new UsersAdapterOrg(HouseHoldListActivity.this, R.layout.activity_users_adapter_org, itemInfos);
+                                            myList.setAdapter(adapter);
+                                            adapter.notifyDataSetChanged();
 
-                            adapter.remove(currentuser);
-                            if(!adapter.isEmpty())
-                                adapter.clear();
-                            HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
-                            adapter = new UsersAdapterOrg(HouseHoldListActivity.this, R.layout.activity_users_adapter_org, HouseHoldListActivity.itemInfos);
-                            myList.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-
-                            Toast.makeText(HouseHoldListActivity.this, currentuser.getId()+" was deleted",Toast.LENGTH_LONG);
+                                            Toast.makeText(HouseHoldListActivity.this, "user: id -> " + currentuser.getId()+ ". name -> " + currentuser.getName() +" was deleted",Toast.LENGTH_LONG);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    System.out.println(e);
+                                }
+                            });
                         }
                     });
                     removeApprovalDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

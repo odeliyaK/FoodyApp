@@ -17,9 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.foodyapp.model.usersInfo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class DialogFragmentInputUpdate extends DialogFragment {
@@ -49,9 +53,6 @@ public class DialogFragmentInputUpdate extends DialogFragment {
             e.printStackTrace();
         }
     }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,33 +111,52 @@ public class DialogFragmentInputUpdate extends DialogFragment {
                                 int selected=HouseHoldListActivity.indexVal;
                                 usersInfo currentuser = HouseHoldListActivity.itemInfos.get(selected);
                                 usersInfo household =MyInfoManager.getInstance().getSelectedHouseHold();
-                                if(currentuser==null){
-                                    currentuser = new usersInfo(name, address);
-                                        MyInfoManager.getInstance().updateHousehold(currentuser);
-                                MyInfoManager.getInstance().createHouseHold(currentuser);
-                            }
-                                else{
-                                currentuser.setName(name);
-                                currentuser.setAddress(address);
-                                if(Integer.parseInt(currentuser.getId()) == NEW_ITEM_TAG){
-                                    MyInfoManager.getInstance().createHouseHold(currentuser);
-                                }
-                                else{
+//                                if(currentuser==null){
+//                                    currentuser = new usersInfo(name, address);
+//                                        MyInfoManager.getInstance().updateHousehold(currentuser);
+//                                MyInfoManager.getInstance().createHouseHold(currentuser);
+//                            }
+//                                else{
+//                                currentuser.setName(name);
+//                                currentuser.setAddress(address);
+//                                if(Integer.parseInt(currentuser.getId()) == NEW_ITEM_TAG){
+//                                    MyInfoManager.getInstance().createHouseHold(currentuser);
+//                                }
+//                                else{
                                     boolean notAdd=false;
                                     //check if the address already exists in DB
                                     for (usersInfo u: MyInfoManager.getInstance().getAllHouseHolds()){
-                                        if (u.getAddress().equals(address))
+                                        if (!u.getId().equals(currentuser.getId()) && u.getAddress().equals(address))
                                             notAdd=true;
                                     }
                                     if (notAdd==false){
-                                        MyInfoManager.getInstance().updateHousehold(currentuser);
+                                        currentuser.setName(name);
+                                        currentuser.setAddress(address);
+                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        db.collection("Households")
+                                                .document(currentuser.getId()).set(currentuser)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        MyInfoManager.getInstance().updateHousehold(currentuser);
+//                                                        HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
+//                                                        adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
+//                                                        HouseHoldListActivity.myList.setAdapter(adapter);
+//                                                        HouseHoldListActivity.adapter.notifyDataSetChanged();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                System.out.println(e);
+                                            }
+                                        });
                                     }else {
                                         Toast.makeText(activity, "household can't be updated- his address already exists",Toast.LENGTH_LONG).show();
 
                                     }
 
-                                }
-                            }
+//                                }
+//                            }
 
                             } catch (Throwable e) {
                                 e.printStackTrace();

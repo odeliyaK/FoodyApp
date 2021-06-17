@@ -86,11 +86,20 @@ public class MyInfoManager {
 		return result;
 	}
 
+	public void deleteAllHouseholds(){
+		if(db != null)
+			db.deleteAllHouseholds();
+	}
+
 	public void removeVolunteer(Volunteers vol){
 		if(db != null)
 			db.removeVolunteer(vol);
 	}
 
+	public void deleteAllPackages() {
+		if(db != null)
+			db.deleteAllPackages();
+	}
 
 	public void deleteHousehold(usersInfo household) {
 		if (db != null) {
@@ -100,7 +109,7 @@ public class MyInfoManager {
 
 	public void deletePackage(usersInfo household) {
 		if (db != null) {
-			db.reomovePackage(household);
+			db.removePackage(household);
 		}
 	}
 

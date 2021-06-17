@@ -15,7 +15,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.foodyapp.model.usersInfo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -49,9 +54,6 @@ public class DialogFragmentInputAdd extends DialogFragment {
         }
     }
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -74,7 +76,7 @@ public class DialogFragmentInputAdd extends DialogFragment {
                     NameField.setError("Name is empty");
                     NameField.requestFocus();
                 }
-              else  if(TextUtils.isEmpty(Address.getText())){
+              else if(TextUtils.isEmpty(Address.getText())){
                     Address.setError("Address is empty");
                     Address.requestFocus();
                 }
@@ -85,19 +87,39 @@ public class DialogFragmentInputAdd extends DialogFragment {
                     boolean notAdd=false;
                     //check if the address already exists in DB
                     for (usersInfo u: MyInfoManager.getInstance().getAllHouseHolds()){
-                        if (u.getAddress().equals(address))
-                            notAdd=true;
+                        if(u != null){
+                            if (u.getAddress().equals(address))
+                                notAdd=true;
+                        }
                     }
                     if (notAdd==false){
-                        usersInfo user=new usersInfo(name,address);
-                        MyInfoManager.getInstance().createHouseHold(user);
+                        usersInfo user=new usersInfo(name,address,String.valueOf(HouseHoldListActivity.id));
+                        String myID = String.valueOf(HouseHoldListActivity.id);
+                        HouseHoldListActivity.id++;
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("Households")
+                                .document(myID).set(user)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        System.out.println("hello");
+                                        MyInfoManager.getInstance().createHouseHold(user);
+                                        HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
+                                        adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
+                                        HouseHoldListActivity.myList.setAdapter(adapter);
+                                        HouseHoldListActivity.adapter.notifyDataSetChanged();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println(e);
+                            }
+                        });
 
-                        HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
-                        List<usersInfo> list = MyInfoManager.getInstance().getAllHouseHolds();
-                        adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
-//
-                        HouseHoldListActivity.myList.setAdapter(adapter);
-                        HouseHoldListActivity.adapter.notifyDataSetChanged();
+//                        HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
+//                        adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
+//                        HouseHoldListActivity.myList.setAdapter(adapter);
+//                        HouseHoldListActivity.adapter.notifyDataSetChanged();
 
                     }else {
                         Toast.makeText(context, "household can't be added- his address already exists",Toast.LENGTH_LONG).show();
