@@ -154,7 +154,6 @@ public class UsersActivity extends Activity {
                 for (int j=0; j<listOfHouseholds.size(); j++){
                     if (newPackage.getName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getAddress().equals(listOfHouseholds.get(j).getAddress())){
                         MyInfoManager.getInstance().createPackage(newPackage, listOfHouseholds.get(j).getId());
-                        listOfPackages = MyInfoManager.getInstance().getAllPackages();
                     }
 //                    else {
 //                       Toast.makeText(context, "There are no relevant packages in history", Toast.LENGTH_SHORT).show();
@@ -170,7 +169,7 @@ public class UsersActivity extends Activity {
             Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
         }
         else {
-                listOfPackages = MyInfoManager.getInstance().getAllPackages();
+
                 Date c = Calendar.getInstance().getTime();
                 adapter = new UsersLIstAdapter(this, listOfPackages);
                 list.setAdapter(adapter);

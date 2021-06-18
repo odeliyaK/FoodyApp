@@ -99,8 +99,6 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                         MyInfoManager.getInstance().createHistoryPackage(new HistoryInfo(UUID.randomUUID().toString(), history.getPackageNum(), history.getName(), history.getAddress(), history.getDate()));
 
                     }
-
-
                 } else {
                     Toast.makeText(context, "history data: null",
                             Toast.LENGTH_LONG).show();
