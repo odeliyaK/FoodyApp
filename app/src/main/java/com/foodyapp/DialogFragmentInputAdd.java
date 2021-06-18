@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.foodyapp.model.PackagesInfo;
 import com.foodyapp.model.usersInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -115,6 +116,8 @@ public class DialogFragmentInputAdd extends DialogFragment {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         MyInfoManager.getInstance().createHouseHold(user);
+                                         FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
+                                         PackagesInfo packages = new PackagesInfo(user.getId(), user.getId(), user.getName(), user.getAddress());dbOrder.collection("Packages").document(user.getId()).set(packages);
                                         MyInfoManager.getInstance().addPackage(user);
                                         HouseHoldListActivity.itemInfos = MyInfoManager.getInstance().getAllHouseHolds();
                                         adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);

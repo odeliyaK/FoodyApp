@@ -160,7 +160,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
         });
 
         CollectionReference collRefPackage = db.collection("Packages");
-        collRefHouse.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        collRefPackage.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
 

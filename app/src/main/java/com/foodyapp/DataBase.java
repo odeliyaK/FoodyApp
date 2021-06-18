@@ -806,9 +806,9 @@ public class DataBase extends SQLiteOpenHelper {
 
     //adds packages to the db
     void addPackage(usersInfo user){
-        FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
-        PackagesInfo packages = new PackagesInfo(user.getId(), user.getId(), user.getName(), user.getAddress());
-        dbOrder.collection("Packages").document(user.getId()).set(packages);
+//        FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
+//        PackagesInfo packages = new PackagesInfo(user.getId(), user.getId(), user.getName(), user.getAddress());
+//        dbOrder.collection("Packages").document(user.getId()).set(packages);
         try {
             ContentValues cv=new ContentValues();
             cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, user.getId());
