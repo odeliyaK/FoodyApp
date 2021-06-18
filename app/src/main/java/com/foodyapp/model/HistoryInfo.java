@@ -70,4 +70,15 @@ public class HistoryInfo {
     public void setDate(String date) {
         Date = date;
     }
+
+    @Override
+    public String toString() {
+        return "HistoryInfo{" +
+                "id='" + id + '\'' +
+                ", packageNum='" + packageNum + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", Date='" + Date + '\'' +
+                '}';
+    }
 }

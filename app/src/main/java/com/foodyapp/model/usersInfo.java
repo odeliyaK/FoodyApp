@@ -7,7 +7,6 @@ public class usersInfo {
     private String name;
     private String address;
     private String id;
-    private int image;
 
     public usersInfo(){
     }
@@ -53,9 +52,6 @@ public class usersInfo {
         return address;
     }
 
-    public int getImage() {
-        return image;
-    }
 
 
     public void setNum(String num) {
@@ -72,10 +68,6 @@ public class usersInfo {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 
     public String toStringOrg() {

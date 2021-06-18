@@ -113,6 +113,11 @@ public class MyInfoManager {
 			db.deleteAllPackages();
 	}
 
+	public void deleteAllPackagesNo() {
+		if(db != null)
+			db.deleteAllPackagesNo();
+	}
+
 	public void deleteHousehold(usersInfo household) {
 		if (db != null) {
 			db.reomoveHouseHold(household);

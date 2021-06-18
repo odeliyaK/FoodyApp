@@ -58,7 +58,6 @@ public class UsersActivity extends Activity {
         MyInfoManager.getInstance().openDataBase(this);
         this.context = this;
         list = (ListView) findViewById(R.id.list);
-        MyInfoManager.getInstance().openDataBase(this);
         ImageView toolBarArrow=findViewById(R.id.arrow);
         TextView toolBarTitle=findViewById(R.id.toolbar_title);
         ImageView rightIcon=findViewById(R.id.menu);
@@ -118,13 +117,11 @@ public class UsersActivity extends Activity {
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 if (snapshot != null && !snapshot.isEmpty()) {
-
-                    MyInfoManager.getInstance().deleteAllPackages();
+                    MyInfoManager.getInstance().deleteAllPackagesNo();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         PackagesInfo packages = document.toObject(PackagesInfo.class);
-                        MyInfoManager.getInstance().createNewPack(packages);
+                        MyInfoManager.getInstance().addPackage(packages);
                     }
                     listOfPackages = MyInfoManager.getInstance().getAllPackages();
                 } else {
@@ -163,34 +160,38 @@ public class UsersActivity extends Activity {
         for(PackagesInfo p : listOfPackages){
             System.out.println(p.toString());
         }
+
+        for(HistoryInfo p : listOfHPackages){
+            System.out.println(p.toString());
+        }
         Date today=new Date();
         Date send = null;
-        for (int i=0; i<listOfHPackages.size(); i++){
-            String sendDay=listOfHPackages.get(i).getDate();
-            SimpleDateFormat sdf=new SimpleDateFormat("dd-MMM-yyyy");
-            try {
-                send=sdf.parse(sendDay);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            //if 1 week was pass and the household is still in the DB- a new package for him will be created.
-            if (daysBetween(today,send) == 1){
-                PackagesInfo newPackage = new PackagesInfo(listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getName() ,listOfHPackages.get(i).getAddress());
-                Toast.makeText(context, newPackage.getHouseName()+newPackage.getHouseAddress()+ sendDay+today, Toast.LENGTH_SHORT).show();
-
-                for (int j=0; j<listOfHouseholds.size(); j++){
-                    if (newPackage.getHouseName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getHouseAddress().equals(listOfHouseholds.get(j).getAddress())){
-                        MyInfoManager.getInstance().createNewPack(newPackage);
-                    }
-//                    else {
-//                       Toast.makeText(context, "There are no relevant packages in history", Toast.LENGTH_SHORT).show();
+//        for (int i=0; i<listOfHPackages.size(); i++){
+//            String sendDay=listOfHPackages.get(i).getDate();
+//            SimpleDateFormat sdf=new SimpleDateFormat("dd-MMM-yyyy");
+//            try {
+//                send=sdf.parse(sendDay);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//            //if 1 week was pass and the household is still in the DB- a new package for him will be created.
+//            if (daysBetween(today,send) == 1){
+//                PackagesInfo newPackage = new PackagesInfo(listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getName() ,listOfHPackages.get(i).getAddress());
+//                Toast.makeText(context, newPackage.getHouseName()+newPackage.getHouseAddress()+ sendDay+today, Toast.LENGTH_SHORT).show();
 //
+//                for (int j=0; j<listOfHouseholds.size(); j++){
+//                    if (newPackage.getHouseName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getHouseAddress().equals(listOfHouseholds.get(j).getAddress())){
+//                        MyInfoManager.getInstance().addPackage(newPackage);
 //                    }
-                }
-
-            }
-
-        }
+////                    else {
+////                       Toast.makeText(context, "There are no relevant packages in history", Toast.LENGTH_SHORT).show();
+////
+////                    }
+//                }
+//
+//            }
+//
+//        }
 
         if (listOfPackages.isEmpty()){
             Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();

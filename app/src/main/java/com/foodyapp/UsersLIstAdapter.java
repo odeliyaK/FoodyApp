@@ -73,7 +73,10 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
         TextView name = (TextView) rowView.findViewById(R.id.userInfo);
         TextView address = (TextView) rowView.findViewById(R.id.useraddress);
         ImageButton sendBtn= (ImageButton)rowView.findViewById(R.id.image);
-        final PackagesInfo itemInfo = dataList.get(position);
+        for(PackagesInfo p : dataList){
+            System.out.println("data list: " + p.toString());
+        }
+        PackagesInfo itemInfo = dataList.get(position);
         pNum.setText(itemInfo.getHouseholdID());
         name.setText(itemInfo.getHouseName());
         address.setText(itemInfo.getHouseAddress());
@@ -172,7 +175,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
 
                 if (snapshot != null && !snapshot.isEmpty()) {
 
-                    MyInfoManager.getInstance().deleteAllPackages();
+                    MyInfoManager.getInstance().deleteAllPackagesNo();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         PackagesInfo packages = document.toObject(PackagesInfo.class);
                         MyInfoManager.getInstance().addPackage(packages);
@@ -299,7 +302,6 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                                         HistoryActivity.itemInfos=list;
                                         HistoryActivity.adapter=new HistoryAdapter(context, list);
                                         HistoryActivity.adapter.notifyDataSetChanged();
-
                                         MyInfoManager.getInstance().deletePackage(itemInfo);
                                         UsersLIstAdapter.this.remove(itemInfo);
                                         UsersLIstAdapter.this.notifyDataSetChanged();

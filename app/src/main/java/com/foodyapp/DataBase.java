@@ -272,6 +272,17 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+    public void deleteAllPackagesNo() {
+
+        try {
+
+            // delete all
+            db.delete(TABLE_PACKAGES_NAME, null, null);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
     public void deleteAllPackages() {
         FirebaseFirestore dbf = FirebaseFirestore.getInstance();
         WriteBatch batch = FirebaseFirestore.getInstance().batch();
