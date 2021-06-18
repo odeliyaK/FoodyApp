@@ -798,7 +798,7 @@ public class DataBase extends SQLiteOpenHelper {
             db.insert(TABLE_HOUSEHOLDS_NAME, null, cv);
             //after adding new household, creating new package
 
-            addPackage(user);
+//            addPackage(user);
         } catch (Throwable t) {
             t.printStackTrace();
         }

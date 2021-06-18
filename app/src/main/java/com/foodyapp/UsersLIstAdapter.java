@@ -147,10 +147,35 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                 if (snapshot != null && !snapshot.isEmpty()) {
 
                     MyInfoManager.getInstance().deleteAllHouseholds();
-                    MyInfoManager.getInstance().deleteAllPackages();
+//                    MyInfoManager.getInstance().deleteAllPackages();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         usersInfo house = document.toObject(usersInfo.class);
                         MyInfoManager.getInstance().createHouseHold(new usersInfo(house.getName(), house.getAddress(), house.getId()));
+                    }
+                } else {
+                    Toast.makeText(context, "house & packages data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        CollectionReference collRefPackage = db.collection("Packages");
+        collRefHouse.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+
+                    MyInfoManager.getInstance().deleteAllPackages();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        PackagesInfo packages = document.toObject(PackagesInfo.class);
+                        MyInfoManager.getInstance().addPackage(new usersInfo(packages.getPackageID(),packages.getHouseholdID(), packages.getHouseName(), packages.getHouseAddress() ));
                     }
                 } else {
                     Toast.makeText(context, "house & packages data: null",

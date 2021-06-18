@@ -63,6 +63,11 @@ public class MyInfoManager {
 		}
 	}
 
+	void addPackage(usersInfo user){
+		if(db != null)
+			db.addPackage(user);
+	}
+
 	public void createHistoryPackage(HistoryInfo user) {
 		if (db != null) {
 			db.addPackageToHistory(user);

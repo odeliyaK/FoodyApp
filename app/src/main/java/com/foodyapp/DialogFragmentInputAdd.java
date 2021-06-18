@@ -115,6 +115,7 @@ public class DialogFragmentInputAdd extends DialogFragment {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         MyInfoManager.getInstance().createHouseHold(user);
+                                        MyInfoManager.getInstance().addPackage(user);
                                         HouseHoldListActivity.itemInfos = MyInfoManager.getInstance().getAllHouseHolds();
                                         adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
                                         HouseHoldListActivity.myList.setAdapter(adapter);
