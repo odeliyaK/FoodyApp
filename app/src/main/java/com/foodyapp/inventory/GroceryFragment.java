@@ -83,36 +83,36 @@ public class GroceryFragment extends Fragment implements View.OnClickListener{
             }
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collRef = db.collection("Products");
-
-        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-
-                if (e != null) {
-                    Toast.makeText(GroceryFragment.this.getContext(), "Listen failed."+ e,
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (snapshot != null && !snapshot.isEmpty()) {
-                    int i = 0;
-                    for (DocumentSnapshot document : snapshot.getDocuments() ){
-                        Products product = document.toObject(Products.class);
-                        if(product.getSupplier().equals("Osem")){
-                            MyInfoManager.getInstance().updateProducts(product);
-                            textQ[i].setText(String.valueOf(product.getQuantity()));
-                        }
-
-                    }
-                } else {
-                    Toast.makeText(GroceryFragment.this.getContext(), "Current data: null",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference collRef = db.collection("Products");
+//
+//        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @RequiresApi(api = Build.VERSION_CODES.M)
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+//
+//                if (e != null) {
+//                    Toast.makeText(GroceryFragment.this.getContext(), "Listen failed."+ e,
+//                            Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//
+//                if (snapshot != null && !snapshot.isEmpty()) {
+//                    int i = 0;
+//                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+//                        Products product = document.toObject(Products.class);
+//                        if(product.getSupplier().equals("Osem")){
+//                            MyInfoManager.getInstance().updateProducts(product);
+//                            textQ[i].setText(String.valueOf(product.getQuantity()));
+//                        }
+//
+//                    }
+//                } else {
+//                    Toast.makeText(GroceryFragment.this.getContext(), "Current data: null",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
         for(int i=0; i<idArray.length; i++) {
             buttons[i] = (ImageButton) view.findViewById(idArray[i]);
             buttons[i].setOnClickListener(this);
@@ -185,19 +185,19 @@ public class GroceryFragment extends Fragment implements View.OnClickListener{
                         Toast.makeText(getContext(), "Saving inventory succeeded",Toast.LENGTH_LONG).show();
                         if(current != null)
                             current.clear();
-                        if(Integer.parseInt(num1.getText().toString()) > 0){
+                        if(Integer.parseInt(num1.getText().toString()) >= 0){
                             current.put("Bread", Integer.parseInt(num1.getText().toString()));
                         }
-                        if(Integer.parseInt(num2.getText().toString()) > 0){
+                        if(Integer.parseInt(num2.getText().toString()) >= 0){
                             current.put("Pasta", Integer.parseInt(num2.getText().toString()));
                         }
-                        if(Integer.parseInt(num3.getText().toString()) > 0){
+                        if(Integer.parseInt(num3.getText().toString()) >= 0){
                             current.put("Oil", Integer.parseInt(num3.getText().toString()));
                         }
-                        if(Integer.parseInt(num4.getText().toString()) > 0){
+                        if(Integer.parseInt(num4.getText().toString()) >= 0){
                             current.put("Rice", Integer.parseInt(num4.getText().toString()));
                         }
-                        if(Integer.parseInt(num5.getText().toString()) > 0){
+                        if(Integer.parseInt(num5.getText().toString()) >= 0){
                             current.put("Coffee", Integer.parseInt(num5.getText().toString()));
                         }
                         FirebaseFirestore db = FirebaseFirestore.getInstance();

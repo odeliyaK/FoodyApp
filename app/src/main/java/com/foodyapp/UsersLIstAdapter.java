@@ -92,7 +92,6 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                 }
 
                 if (snapshot != null && !snapshot.isEmpty()) {
-                    System.out.println("history");
                     MyInfoManager.getInstance().deleteAllHistory();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         HistoryInfo history = document.toObject(HistoryInfo.class);
@@ -120,7 +119,6 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                 }
 
                 if (snapshot != null && !snapshot.isEmpty()) {
-                    System.out.println("product");
                     boolean flag = false;
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         Products product = document.toObject(Products.class);
@@ -146,7 +144,6 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                 }
 
                 if (snapshot != null && !snapshot.isEmpty()) {
-                    System.out.println("household");
                     MyInfoManager.getInstance().deleteAllHouseholds();
 //                    MyInfoManager.getInstance().deleteAllPackages()
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
@@ -172,7 +169,6 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                 }
 
                 if (snapshot != null && !snapshot.isEmpty()) {
-                    System.out.println("try");
                     if(!dataList.isEmpty())
                         dataList.clear();
                     MyInfoManager.getInstance().deleteAllPackagesNo();

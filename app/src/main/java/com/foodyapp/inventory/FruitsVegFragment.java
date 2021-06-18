@@ -85,38 +85,38 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
             }
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collRef = db.collection("Products");
-
-        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-
-                if (e != null) {
-                    Toast.makeText(FruitsVegFragment.this.getContext(), "Listen failed."+ e,
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (snapshot != null && !snapshot.isEmpty()) {
-//                    Toast.makeText(FruitsVegFragment.this.getContext(), "Current data: " + snapshot.getDocuments(),
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference collRef = db.collection("Products");
+//
+//        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @RequiresApi(api = Build.VERSION_CODES.M)
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+//
+//                if (e != null) {
+//                    Toast.makeText(FruitsVegFragment.this.getContext(), "Listen failed."+ e,
 //                            Toast.LENGTH_LONG).show();
-                    int i = 0;
-                    for (DocumentSnapshot document : snapshot.getDocuments() ){
-                        Products product = document.toObject(Products.class);
-                        if(product.getSupplier().equals("Meshek")){
-                            MyInfoManager.getInstance().updateProducts(product);
-                            textQ[i].setText(String.valueOf(product.getQuantity()));
-                        }
-
-                    }
-                } else {
-                    Toast.makeText(FruitsVegFragment.this.getContext(), "Current data: null",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+//                    return;
+//                }
+//
+//                if (snapshot != null && !snapshot.isEmpty()) {
+////                    Toast.makeText(FruitsVegFragment.this.getContext(), "Current data: " + snapshot.getDocuments(),
+////                            Toast.LENGTH_LONG).show();
+//                    int i = 0;
+//                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+//                        Products product = document.toObject(Products.class);
+//                        if(product.getSupplier().equals("Meshek")){
+//                            MyInfoManager.getInstance().updateProducts(product);
+//                            textQ[i].setText(String.valueOf(product.getQuantity()));
+//                        }
+//
+//                    }
+//                } else {
+//                    Toast.makeText(FruitsVegFragment.this.getContext(), "Current data: null",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
         save = view.findViewById(R.id.saveBtn);
         save.setOnClickListener(this);
 

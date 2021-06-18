@@ -177,13 +177,13 @@ public class MeatPoultryFragment extends Fragment implements View.OnClickListene
 
                         MyInfoManager.getInstance().saveInventory(current, "Butcher");
 
-                        if(Integer.parseInt(num1.getText().toString()) > 0){
+                        if(Integer.parseInt(num1.getText().toString()) >= 0){
                             current.put("Meat", Integer.parseInt(num1.getText().toString()));
                         }
-                        if(Integer.parseInt(num2.getText().toString()) > 0){
+                        if(Integer.parseInt(num2.getText().toString()) >= 0){
                             current.put("Chicken", Integer.parseInt(num2.getText().toString()));
                         }
-                        if(Integer.parseInt(num3.getText().toString()) > 0) {
+                        if(Integer.parseInt(num3.getText().toString()) >= 0) {
                             current.put("Fish", Integer.parseInt(num3.getText().toString()));
                         }
 
