@@ -108,7 +108,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
 
         CollectionReference collRefProducts = db.collection("Products");
 
-        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        collRefProducts.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {

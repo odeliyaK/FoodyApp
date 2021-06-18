@@ -108,7 +108,7 @@ public class UsersActivity extends Activity {
             }
         });
 
-        CollectionReference collRefPackage = db.collection("Households");
+        CollectionReference collRefPackage = db.collection("Packages");
         collRefPackage.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
