@@ -73,9 +73,6 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
         TextView name = (TextView) rowView.findViewById(R.id.userInfo);
         TextView address = (TextView) rowView.findViewById(R.id.useraddress);
         ImageButton sendBtn= (ImageButton)rowView.findViewById(R.id.image);
-        for(PackagesInfo p : dataList){
-            System.out.println("data list: " + p.toString());
-        }
         PackagesInfo itemInfo = dataList.get(position);
         pNum.setText(itemInfo.getHouseholdID());
         name.setText(itemInfo.getHouseName());
@@ -95,7 +92,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                 }
 
                 if (snapshot != null && !snapshot.isEmpty()) {
-
+                    System.out.println("history");
                     MyInfoManager.getInstance().deleteAllHistory();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         HistoryInfo history = document.toObject(HistoryInfo.class);
@@ -123,6 +120,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                 }
 
                 if (snapshot != null && !snapshot.isEmpty()) {
+                    System.out.println("product");
                     boolean flag = false;
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         Products product = document.toObject(Products.class);
@@ -148,9 +146,9 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                 }
 
                 if (snapshot != null && !snapshot.isEmpty()) {
-
+                    System.out.println("household");
                     MyInfoManager.getInstance().deleteAllHouseholds();
-//                    MyInfoManager.getInstance().deleteAllPackages();
+//                    MyInfoManager.getInstance().deleteAllPackages()
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         usersInfo house = document.toObject(usersInfo.class);
                         MyInfoManager.getInstance().createHouseHold(new usersInfo(house.getName(), house.getAddress(), house.getId()));
@@ -174,21 +172,27 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                 }
 
                 if (snapshot != null && !snapshot.isEmpty()) {
-
+                    System.out.println("try");
+                    if(!dataList.isEmpty())
+                        dataList.clear();
                     MyInfoManager.getInstance().deleteAllPackagesNo();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         PackagesInfo packages = document.toObject(PackagesInfo.class);
                         MyInfoManager.getInstance().addPackage(packages);
+                        dataList.add(packages);
                     }
+                    UsersLIstAdapter.this.notifyDataSetChanged();
+
                 } else {
                     Toast.makeText(context, "house & packages data: null",
                             Toast.LENGTH_LONG).show();
+                    MyInfoManager.getInstance().deleteAllPackagesNo();
+                    if(!dataList.isEmpty())
+                        dataList.clear();
+                    UsersLIstAdapter.this.notifyDataSetChanged();
                 }
             }
         });
-
-
-
         //sends the package and delete from current page
     sendBtn.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -302,6 +306,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                                         HistoryActivity.itemInfos=list;
                                         HistoryActivity.adapter=new HistoryAdapter(context, list);
                                         HistoryActivity.adapter.notifyDataSetChanged();
+                                        System.out.println("the package to delete" + itemInfo.toString());
                                         MyInfoManager.getInstance().deletePackage(itemInfo);
                                         UsersLIstAdapter.this.remove(itemInfo);
                                         UsersLIstAdapter.this.notifyDataSetChanged();

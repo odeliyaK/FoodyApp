@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.foodyapp.model.PackagesInfo;
 import com.foodyapp.model.usersInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -143,10 +144,10 @@ public class DialogFragmentInputUpdate extends DialogFragment {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         MyInfoManager.getInstance().updateHousehold(currentuser);
-//                                                        HouseHoldListActivity.itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
-//                                                        adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
-//                                                        HouseHoldListActivity.myList.setAdapter(adapter);
-//                                                        HouseHoldListActivity.adapter.notifyDataSetChanged();
+                                                        FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
+                                                        PackagesInfo packages = new PackagesInfo(currentuser.getId(), currentuser.getId(), currentuser.getName(), currentuser.getAddress());
+                                                        dbOrder.collection("Packages").document(packages.getPackageID()).set(packages);
+                                                         MyInfoManager.getInstance().addPackage(packages);
                                                     }
                                                 }).addOnFailureListener(new OnFailureListener() {
                                             @Override
