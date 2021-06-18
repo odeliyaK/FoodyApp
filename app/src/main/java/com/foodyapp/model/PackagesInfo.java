@@ -55,4 +55,13 @@ public class PackagesInfo {
         this.houseAddress = houseAddress;
     }
 
+    @Override
+    public String toString() {
+        return "PackagesInfo{" +
+                "packageID='" + packageID + '\'' +
+                ", HouseholdID='" + HouseholdID + '\'' +
+                ", houseName='" + houseName + '\'' +
+                ", houseAddress='" + houseAddress + '\'' +
+                '}';
+    }
 }

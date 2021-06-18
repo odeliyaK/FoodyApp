@@ -108,6 +108,32 @@ public class UsersActivity extends Activity {
             }
         });
 
+        CollectionReference collRefPackage = db.collection("Households");
+        collRefPackage.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+
+                    MyInfoManager.getInstance().deleteAllPackages();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        PackagesInfo packages = document.toObject(PackagesInfo.class);
+                        MyInfoManager.getInstance().createNewPack(packages);
+                    }
+                    listOfPackages = MyInfoManager.getInstance().getAllPackages();
+                } else {
+                    Toast.makeText(context, "house & packages data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         CollectionReference collRefHouse = db.collection("Households");
         collRefHouse.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -122,13 +148,11 @@ public class UsersActivity extends Activity {
                 if (snapshot != null && !snapshot.isEmpty()) {
 
                     MyInfoManager.getInstance().deleteAllHouseholds();
-                    MyInfoManager.getInstance().deleteAllPackages();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         usersInfo house = document.toObject(usersInfo.class);
                         MyInfoManager.getInstance().createHouseHold(new usersInfo(house.getName(), house.getAddress(), house.getId()));
                     }
                     listOfHouseholds = MyInfoManager.getInstance().getAllHouseHolds();
-                    listOfPackages = MyInfoManager.getInstance().getAllPackages();
                 } else {
                     Toast.makeText(context, "house & packages data: null",
                             Toast.LENGTH_LONG).show();
@@ -136,6 +160,9 @@ public class UsersActivity extends Activity {
             }
         });
 
+        for(PackagesInfo p : listOfPackages){
+            System.out.println(p.toString());
+        }
         Date today=new Date();
         Date send = null;
         for (int i=0; i<listOfHPackages.size(); i++){
