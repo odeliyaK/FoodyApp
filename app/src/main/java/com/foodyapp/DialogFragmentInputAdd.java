@@ -117,8 +117,9 @@ public class DialogFragmentInputAdd extends DialogFragment {
                                     public void onSuccess(Void aVoid) {
                                         MyInfoManager.getInstance().createHouseHold(user);
                                          FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
-                                         PackagesInfo packages = new PackagesInfo(user.getId(), user.getId(), user.getName(), user.getAddress());dbOrder.collection("Packages").document(user.getId()).set(packages);
-                                        MyInfoManager.getInstance().addPackage(user);
+                                         PackagesInfo packages = new PackagesInfo(user.getId(), user.getId(), user.getName(), user.getAddress());
+                                         dbOrder.collection("Packages").document(packages.getPackageID()).set(packages);
+                                        MyInfoManager.getInstance().addPackage(packages);
                                         HouseHoldListActivity.itemInfos = MyInfoManager.getInstance().getAllHouseHolds();
                                         adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
                                         HouseHoldListActivity.myList.setAdapter(adapter);

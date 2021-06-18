@@ -175,7 +175,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                     MyInfoManager.getInstance().deleteAllPackages();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         PackagesInfo packages = document.toObject(PackagesInfo.class);
-                        MyInfoManager.getInstance().addPackage(new usersInfo(packages.getPackageID(),packages.getHouseholdID(), packages.getHouseName(), packages.getHouseAddress() ));
+                        MyInfoManager.getInstance().addPackage(packages);
                     }
                 } else {
                     Toast.makeText(context, "house & packages data: null",

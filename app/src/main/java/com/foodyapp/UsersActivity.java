@@ -148,12 +148,12 @@ public class UsersActivity extends Activity {
             }
             //if 1 week was pass and the household is still in the DB- a new package for him will be created.
             if (daysBetween(today,send) == 1){
-                usersInfo newPackage = new usersInfo(listOfHPackages.get(i).getName() ,listOfHPackages.get(i).getAddress());
-                Toast.makeText(context, newPackage.getName()+newPackage.getAddress()+ sendDay+today, Toast.LENGTH_SHORT).show();
+                PackagesInfo newPackage = new PackagesInfo(listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getName() ,listOfHPackages.get(i).getAddress());
+                Toast.makeText(context, newPackage.getHouseName()+newPackage.getHouseAddress()+ sendDay+today, Toast.LENGTH_SHORT).show();
 
                 for (int j=0; j<listOfHouseholds.size(); j++){
-                    if (newPackage.getName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getAddress().equals(listOfHouseholds.get(j).getAddress())){
-                        MyInfoManager.getInstance().createPackage(newPackage, listOfHouseholds.get(j).getId());
+                    if (newPackage.getHouseName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getHouseAddress().equals(listOfHouseholds.get(j).getAddress())){
+                        MyInfoManager.getInstance().createNewPack(newPackage);
                     }
 //                    else {
 //                       Toast.makeText(context, "There are no relevant packages in history", Toast.LENGTH_SHORT).show();

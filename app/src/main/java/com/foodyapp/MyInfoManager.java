@@ -63,7 +63,7 @@ public class MyInfoManager {
 		}
 	}
 
-	void addPackage(usersInfo user){
+	void addPackage(PackagesInfo user){
 		if(db != null)
 			db.addPackage(user);
 	}

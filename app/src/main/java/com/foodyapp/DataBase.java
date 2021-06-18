@@ -805,16 +805,16 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     //adds packages to the db
-    void addPackage(usersInfo user){
+    void addPackage(PackagesInfo packages){
 //        FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
 //        PackagesInfo packages = new PackagesInfo(user.getId(), user.getId(), user.getName(), user.getAddress());
 //        dbOrder.collection("Packages").document(user.getId()).set(packages);
         try {
             ContentValues cv=new ContentValues();
-            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, user.getId());
-            cv.put(PACKAGES_COLUMN_HOUSEHOLD_NAME, user.getName());
-            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ADDRESS, user.getAddress());
-            cv.put(PACKAGES_COLUMN_ID, user.getId());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ID, packages.getHouseholdID());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_NAME, packages.getHouseName());
+            cv.put(PACKAGES_COLUMN_HOUSEHOLD_ADDRESS, packages.getHouseAddress());
+            cv.put(PACKAGES_COLUMN_ID, packages.getPackageID());
             db.insert(TABLE_PACKAGES_NAME, null, cv);
         } catch (Throwable t) {
             t.printStackTrace();
