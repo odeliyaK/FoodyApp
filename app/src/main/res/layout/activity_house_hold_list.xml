@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/householdsListLayout"
     tools:context=".HouseHoldListActivity">
     <include layout="@layout/latet_popupmenu"/>
     <TextView
@@ -81,7 +82,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <Button
             android:id="@+id/updateBtn"

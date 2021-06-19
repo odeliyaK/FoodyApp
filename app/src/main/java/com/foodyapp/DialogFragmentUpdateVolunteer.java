@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -115,6 +117,9 @@ public class DialogFragmentUpdateVolunteer extends DialogFragment {
 
                                 if(currentUser != null){
                                     Volunteers vol = new Volunteers(currentUser.getEmail(), name, phones);
+                                    Snackbar sbar=Snackbar.make(VolunteersListActivity.volLayout, "The volunteer "+vol.getName()+" was updated successfully", Snackbar.LENGTH_LONG);
+                                    sbar.show();
+
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                                     db.collection("Volunteers")
                                             .document(currentUser.getEmail()).set(vol)

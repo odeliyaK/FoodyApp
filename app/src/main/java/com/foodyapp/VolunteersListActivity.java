@@ -11,8 +11,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -47,7 +50,7 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
     String selectePhone;
     Context context;
     FirebaseAuth mAuth;
-
+    public static RelativeLayout volLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,8 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
 
         myList = (ListView) findViewById(R.id.listView);
         this.context = this;
+
+        volLayout=(RelativeLayout) findViewById(R.id.vol);
 
         MyInfoManager.getInstance().openDataBase(this);
         itemInfos=MyInfoManager.getInstance().allVolunteers();
@@ -189,7 +194,9 @@ public class VolunteersListActivity extends Activity implements UpdateInputDialo
                                             myList.setAdapter(adapter);
                                             adapter.notifyDataSetChanged();
 
-                                            Toast.makeText(VolunteersListActivity.this, currentuser.getEmail()+" was deleted",Toast.LENGTH_LONG);
+                                         //   Toast.makeText(VolunteersListActivity.this, currentuser.getEmail()+" was deleted",Toast.LENGTH_LONG);
+                                            Snackbar sbar=Snackbar.make(VolunteersListActivity.volLayout, "The volunteer "+currentuser.getName()+" was removed", Snackbar.LENGTH_LONG);
+                                            sbar.show();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import com.foodyapp.order.DairyActivityOrder;
 import com.foodyapp.order.OrderActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -47,6 +50,8 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
     private List<PackagesInfo> dataList = null;
     private Context context = null;
     private HistoryAdapter adapter;
+    RelativeLayout packLayout;
+    View rowView;
     int pos;
     public UsersLIstAdapter(Context context, List<PackagesInfo> dataList) {
         super(context, R.layout.users_list, dataList);
@@ -67,7 +72,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View rowView=inflater.inflate(R.layout.users_list, null,false);
+        rowView=inflater.inflate(R.layout.users_list, null,false);
         MyInfoManager.getInstance().openDataBase(context);
         TextView pNum = (TextView) rowView.findViewById(R.id.pNum);
         TextView name = (TextView) rowView.findViewById(R.id.userInfo);
@@ -315,8 +320,10 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                         });
 
 
-                        Toast.makeText(context,  itemInfo.getHouseName()+"'s package was sent", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(context,  itemInfo.getHouseName()+"'s package was sent", Toast.LENGTH_SHORT).show();
 
+                        Snackbar sbar=Snackbar.make(rowView, itemInfo.getHouseName()+"'s package was sent", Snackbar.LENGTH_LONG);
+                        sbar.show();
                         //update inventory
                         //String= name of product
                         //Integer= amount of product
@@ -436,6 +443,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
 
 
         return rowView;
+
 
     }
 

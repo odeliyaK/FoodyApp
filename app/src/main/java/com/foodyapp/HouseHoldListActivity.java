@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -50,7 +52,7 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
     private FirebaseAuth mAuth;
     List<usersInfo> templist;
     List<usersInfo> deletelist = new ArrayList<>();
-
+    public static RelativeLayout householdListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,50 +64,50 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 
         myList = (ListView) findViewById(R.id.listView);
         this.context = this;
-
+        householdListLayout=(RelativeLayout) findViewById(R.id.householdsListLayout) ;
         MyInfoManager.getInstance().openDataBase(this);
         itemInfos=MyInfoManager.getInstance().getAllHouseHolds();
         adapter = new UsersAdapterOrg(this, R.layout.activity_users_adapter_org, itemInfos);
         myList.setAdapter(adapter);
 
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        CollectionReference collRef = db.collection("Households");
-//
-//        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-//
-//                if (e != null) {
-//                    Toast.makeText(context, "Listen failed."+ e,
-//                            Toast.LENGTH_LONG).show();
-//                    return;
-//                }
-//
-//                if (snapshot != null && !snapshot.isEmpty()) {
-//
-//                    int lastID = 0;
-//                    MyInfoManager.getInstance().deleteAllHouseholds();
-//                    MyInfoManager.getInstance().deleteAllPackages();
-//                    for (DocumentSnapshot document : snapshot.getDocuments() ){
-//                        usersInfo house = document.toObject(usersInfo.class);
-//                        MyInfoManager.getInstance().createHouseHold(new usersInfo(house.getName(), house.getAddress(), house.getId()));
-//                        lastID = Integer.parseInt(house.getId());
-//                    }
-//                    if(id <= lastID)
-//                        id = lastID + 1;
-//
-//                    itemInfos = MyInfoManager.getInstance().getAllHouseHolds();
-//                    adapter = new UsersAdapterOrg(context, R.layout.activity_users_adapter_org, itemInfos);
-//                    myList.setAdapter(adapter);
-//                    adapter.notifyDataSetChanged();
-//
-//
-//                } else {
-//                    Toast.makeText(context, "Current data: null",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("Households");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+
+                    int lastID = 0;
+                    MyInfoManager.getInstance().deleteAllHouseholds();
+                   // MyInfoManager.getInstance().deleteAllPackages();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        usersInfo house = document.toObject(usersInfo.class);
+                        MyInfoManager.getInstance().createHouseHold(new usersInfo(house.getName(), house.getAddress(), house.getId()));
+                        lastID = Integer.parseInt(house.getId());
+                    }
+                    if(id <= lastID)
+                        id = lastID + 1;
+
+                    itemInfos = MyInfoManager.getInstance().getAllHouseHolds();
+                    adapter = new UsersAdapterOrg(context, R.layout.activity_users_adapter_org, itemInfos);
+                    myList.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
+
+                } else {
+                    Toast.makeText(context, "Current data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
@@ -227,8 +229,9 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
                                             adapter = new UsersAdapterOrg(HouseHoldListActivity.this, R.layout.activity_users_adapter_org, itemInfos);
                                             myList.setAdapter(adapter);
                                             adapter.notifyDataSetChanged();
-
-                                            Toast.makeText(HouseHoldListActivity.this, "user: id -> " + currentuser.getId()+ ". name -> " + currentuser.getName() +" was deleted",Toast.LENGTH_LONG);
+                                            Snackbar sbar=Snackbar.make(HouseHoldListActivity.householdListLayout, "user: id -> " + currentuser.getId()+ ". name -> " + currentuser.getName() +" was deleted", Snackbar.LENGTH_LONG);
+                                            sbar.show();
+                                        //    Toast.makeText(HouseHoldListActivity.this, "user: id -> " + currentuser.getId()+ ". name -> " + currentuser.getName() +" was deleted",Toast.LENGTH_LONG);
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override

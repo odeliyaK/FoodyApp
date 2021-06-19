@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ import com.foodyapp.model.PackagesInfo;
 import com.foodyapp.model.usersInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -59,7 +62,7 @@ public class DialogFragmentInputUpdate extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        View c=inflater.inflate(R.layout.activity_house_hold_list, null);
         View v = inflater.inflate(R.layout.activity_dialog_fragment_input_update, null);
         context = v.getContext();
         MyInfoManager.getInstance().openDataBase(context);
@@ -144,6 +147,8 @@ public class DialogFragmentInputUpdate extends DialogFragment {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         MyInfoManager.getInstance().updateHousehold(currentuser);
+                                                        Snackbar sbar=Snackbar.make(HouseHoldListActivity.householdListLayout, currentuser.getName()+" was updated successfully", Snackbar.LENGTH_LONG);
+                                                        sbar.show();
                                                         FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
                                                         PackagesInfo packages = new PackagesInfo(currentuser.getId(), currentuser.getId(), currentuser.getName(), currentuser.getAddress());
                                                         dbOrder.collection("Packages").document(packages.getPackageID()).set(packages);
@@ -156,8 +161,9 @@ public class DialogFragmentInputUpdate extends DialogFragment {
                                             }
                                         });
                                     }else {
-                                        Toast.makeText(activity, "household can't be updated- his address already exists",Toast.LENGTH_LONG).show();
-
+                                     //  Toast.makeText(activity, "household can't be updated- his address already exists",Toast.LENGTH_LONG).show();
+                                        Snackbar sbar=Snackbar.make(HouseHoldListActivity.householdListLayout, "household can't be added- the address: "+address+ " already exists", Snackbar.LENGTH_LONG);
+                                        sbar.show();
                                     }
 
 //                                }

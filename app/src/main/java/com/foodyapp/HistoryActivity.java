@@ -1,5 +1,6 @@
 package com.foodyapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -18,8 +19,15 @@ import com.foodyapp.inventory.InventoryActivity;
 import com.foodyapp.model.HistoryInfo;
 import com.foodyapp.order.OrderActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
+import java.util.UUID;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -70,6 +78,38 @@ public class HistoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                HistoryInfo selecteditem = adapter.getItem(position);
+            }
+        });
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("History");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    MyInfoManager.getInstance().deleteAllHistory();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        HistoryInfo history = document.toObject(HistoryInfo.class);
+                        MyInfoManager.getInstance().createHistoryPackage(new HistoryInfo(UUID.randomUUID().toString(),
+                                history.getPackageNum(), history.getName(), history.getAddress(), history.getDate()));
+
+                    }
+                    itemInfos = MyInfoManager.getInstance().getAllHistoryPackages();
+                    adapter=new HistoryAdapter(context,  itemInfos);
+                    list.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(context, "history data: null",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

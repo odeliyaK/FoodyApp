@@ -13,6 +13,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.foodyapp.inventory.InventoryActivity;
@@ -21,6 +22,9 @@ import com.foodyapp.model.PackagesInfo;
 import com.foodyapp.model.Volunteers;
 import com.foodyapp.model.usersInfo;
 import com.foodyapp.order.OrderActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -95,11 +99,12 @@ public class UsersActivity extends Activity {
                     MyInfoManager.getInstance().deleteAllHistory();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         HistoryInfo history = document.toObject(HistoryInfo.class);
-                        MyInfoManager.getInstance().createHistoryPackage(new HistoryInfo(UUID.randomUUID().toString(),
+                        MyInfoManager.getInstance().createHistoryPackage(new HistoryInfo( history.getId(),
                                 history.getPackageNum(), history.getName(), history.getAddress(), history.getDate()));
 
                     }
                     listOfHPackages = MyInfoManager.getInstance().getAllHistoryPackages();
+
                 } else {
                     Toast.makeText(context, "history data: null",
                             Toast.LENGTH_LONG).show();
@@ -107,30 +112,7 @@ public class UsersActivity extends Activity {
             }
         });
 
-        CollectionReference collRefPackage = db.collection("Packages");
-        collRefPackage.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
 
-                if (e != null) {
-                    Toast.makeText(context, "Listen failed."+ e,
-                            Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (snapshot != null && !snapshot.isEmpty()) {
-                    MyInfoManager.getInstance().deleteAllPackagesNo();
-                    for (DocumentSnapshot document : snapshot.getDocuments() ){
-                        PackagesInfo packages = document.toObject(PackagesInfo.class);
-                        MyInfoManager.getInstance().addPackage(packages);
-                    }
-                    listOfPackages = MyInfoManager.getInstance().getAllPackages();
-                } else {
-                    Toast.makeText(context, "house & packages data: null",
-                            Toast.LENGTH_LONG).show();
-                    MyInfoManager.getInstance().deleteAllPackagesNo();
-                }
-            }
-        });
 
         CollectionReference collRefHouse = db.collection("Households");
         collRefHouse.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -157,6 +139,74 @@ public class UsersActivity extends Activity {
                 }
             }
         });
+        System.out.println("hostory: "+ listOfHPackages.get(0).getId()+ " "+ listOfHPackages.get(0).getPackageNum());
+        Date today=new Date();
+        Date send = null;
+        if (!listOfHPackages.isEmpty()){
+            for (int i=0; i<listOfHPackages.size(); i++){
+                String sendDay=listOfHPackages.get(i).getDate();
+                SimpleDateFormat sdf=new SimpleDateFormat("dd-MMM-yyyy");
+                try {
+                    send=sdf.parse(sendDay);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //if 1 week was pass and the household is still in the DB- a new package for him will be created.
+                if (daysBetween(today,send) == 1){
+                    PackagesInfo newPackage = new PackagesInfo(listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getName() ,listOfHPackages.get(i).getAddress());
+
+
+                    for (int j=0; j<listOfHouseholds.size(); j++){
+                        if (!listOfHouseholds.get(j).getName().equals(null)
+                                &&!listOfHouseholds.get(j).getAddress().equals(null)
+                        && !newPackage.getHouseName().equals(null) &&!newPackage.getHouseAddress().equals(null)){
+                            if (newPackage.getHouseName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getHouseAddress().equals(listOfHouseholds.get(j).getAddress())){
+                                FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
+                                dbOrder.collection("Packages").document(newPackage.getPackageID()).set(newPackage);
+                           //     MyInfoManager.getInstance().addPackage(newPackage);
+//                                adapter=new UsersLIstAdapter(context,listOfPackages);
+//                                list.setAdapter(adapter);
+//                               adapter.notifyDataSetChanged();
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        CollectionReference collRefPackage = db.collection("Packages");
+        collRefPackage.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(context, "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    MyInfoManager.getInstance().deleteAllPackagesNo();
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        PackagesInfo packages = document.toObject(PackagesInfo.class);
+                        MyInfoManager.getInstance().addPackage(packages);
+                        //    MyInfoManager.getInstance().addPackage(packages);
+                    }
+                    listOfPackages = MyInfoManager.getInstance().getAllPackages();
+                    adapter=new UsersLIstAdapter(context,listOfPackages);
+//                    adapter = new UsersLIstAdapter(context,  listOfPackages);
+                    list.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(context, "house & packages data: null",
+                            Toast.LENGTH_LONG).show();
+                    MyInfoManager.getInstance().deleteAllPackagesNo();
+                }
+            }
+        });
 
         for(PackagesInfo p : listOfPackages){
             System.out.println(p.toString());
@@ -165,34 +215,7 @@ public class UsersActivity extends Activity {
         for(HistoryInfo p : listOfHPackages){
             System.out.println(p.toString());
         }
-        Date today=new Date();
-        Date send = null;
-        for (int i=0; i<listOfHPackages.size(); i++){
-            String sendDay=listOfHPackages.get(i).getDate();
-            SimpleDateFormat sdf=new SimpleDateFormat("dd-MMM-yyyy");
-            try {
-                send=sdf.parse(sendDay);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            //if 1 week was pass and the household is still in the DB- a new package for him will be created.
-            if (daysBetween(today,send) == 1){
-                PackagesInfo newPackage = new PackagesInfo(listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getPackageNum(),listOfHPackages.get(i).getName() ,listOfHPackages.get(i).getAddress());
-                Toast.makeText(context, newPackage.getHouseName()+newPackage.getHouseAddress()+ sendDay+today, Toast.LENGTH_SHORT).show();
 
-                for (int j=0; j<listOfHouseholds.size(); j++){
-                    if (newPackage.getHouseName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getHouseAddress().equals(listOfHouseholds.get(j).getAddress())){
-                        MyInfoManager.getInstance().addPackage(newPackage);
-                    }
-//                    else {
-//                       Toast.makeText(context, "There are no relevant packages in history", Toast.LENGTH_SHORT).show();
-//
-//                    }
-                }
-
-            }
-
-        }
 
         if (listOfPackages.isEmpty()){
             Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();

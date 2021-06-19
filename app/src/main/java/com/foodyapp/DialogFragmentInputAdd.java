@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -41,6 +44,7 @@ public class DialogFragmentInputAdd extends DialogFragment {
     private Activity activity;
     UsersAdapterOrg adapter;
     private Context context = null;
+    RelativeLayout householdListLayout;
 
     // Use this instance of the interface to deliver action events
     AddInputDialogFragment mListener;
@@ -124,6 +128,8 @@ public class DialogFragmentInputAdd extends DialogFragment {
                                         adapter=new UsersAdapterOrg(context, R.layout.activity_users_adapter_org,HouseHoldListActivity.itemInfos);
                                         HouseHoldListActivity.myList.setAdapter(adapter);
                                         HouseHoldListActivity.adapter.notifyDataSetChanged();
+                                        Snackbar sbar=Snackbar.make(HouseHoldListActivity.householdListLayout, user.getName()+" was added successfully", Snackbar.LENGTH_LONG);
+                                        sbar.show();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -133,7 +139,11 @@ public class DialogFragmentInputAdd extends DialogFragment {
                         });
 
                     }else {
-                        Toast.makeText(context, "household can't be added- his address already exists",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, "household can't be added- his address already exists",Toast.LENGTH_LONG).show();
+//                        householdListLayout=(RelativeLayout) v .findViewById(R.id.householdsListLayout);
+                        Snackbar sbar=Snackbar.make(HouseHoldListActivity.householdListLayout, "household can't be added- the address: "+address+ " already exists", Snackbar.LENGTH_LONG);
+                        sbar.show();
+
 
                     }
                     dismiss();
