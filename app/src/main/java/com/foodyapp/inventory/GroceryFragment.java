@@ -83,36 +83,36 @@ public class GroceryFragment extends Fragment implements View.OnClickListener{
             }
         }
 
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        CollectionReference collRef = db.collection("Products");
-//
-//        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @RequiresApi(api = Build.VERSION_CODES.M)
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-//
-//                if (e != null) {
-//                    Toast.makeText(GroceryFragment.this.getContext(), "Listen failed."+ e,
-//                            Toast.LENGTH_LONG).show();
-//                    return;
-//                }
-//
-//                if (snapshot != null && !snapshot.isEmpty()) {
-//                    int i = 0;
-//                    for (DocumentSnapshot document : snapshot.getDocuments() ){
-//                        Products product = document.toObject(Products.class);
-//                        if(product.getSupplier().equals("Osem")){
-//                            MyInfoManager.getInstance().updateProducts(product);
-//                            textQ[i].setText(String.valueOf(product.getQuantity()));
-//                        }
-//
-//                    }
-//                } else {
-//                    Toast.makeText(GroceryFragment.this.getContext(), "Current data: null",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collRef = db.collection("Products");
+
+        collRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Toast.makeText(GroceryFragment.this.getContext(), "Listen failed."+ e,
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    int i = 0;
+                    for (DocumentSnapshot document : snapshot.getDocuments() ){
+                        Products product = document.toObject(Products.class);
+                        if(product.getSupplier().equals("Osem")){
+                            MyInfoManager.getInstance().updateProducts(product);
+                            textQ[i].setText(String.valueOf(product.getQuantity()));
+                        }
+
+                    }
+                } else {
+                    Toast.makeText(GroceryFragment.this.getContext(), "Current data: null",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         for(int i=0; i<idArray.length; i++) {
             buttons[i] = (ImageButton) view.findViewById(idArray[i]);
             buttons[i].setOnClickListener(this);

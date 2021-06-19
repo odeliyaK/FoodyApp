@@ -211,83 +211,83 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
                         for(Products p : products){
 
                             if(p.getName().equals("Milk")){
-                                if (p.getQuantity()<0){
+                                if (p.getQuantity()<=0){
                                     notSend=true;
                                 }
                             }else if (p.getName().equals("Cheese")){
-                                if (p.getQuantity()<0){
+                                if (p.getQuantity()<=0){
                                     notSend=true;
                                 }
                             }else if (p.getName().equals("Eggs")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Butter")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Cottage")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Meat")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Chicken")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Fish")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Bread")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Pasta")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Oil")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Rice")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Coffee")){
-                            if (p.getQuantity()<0){
+                            if (p.getQuantity()<=0){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Cucumber")){
-                            if (p.getQuantity()<4){
+                            if (p.getQuantity()<=4){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Tomato")){
-                            if (p.getQuantity()<4){
+                            if (p.getQuantity()<=4){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Potato")){
-                            if (p.getQuantity()<4){
+                            if (p.getQuantity()<=4){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Apple")){
-                            if (p.getQuantity()<4){
+                            if (p.getQuantity()<=4){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Banana")){
-                            if (p.getQuantity()<4){
+                            if (p.getQuantity()<=4){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Onion")){
-                            if (p.getQuantity()<4){
+                            if (p.getQuantity()<=4){
                                 notSend=true;
                             }
                         }else if (p.getName().equals("Carrot")){
-                            if (p.getQuantity()<4){
+                            if (p.getQuantity()<=4){
                                 notSend=true;
                             }
                         }

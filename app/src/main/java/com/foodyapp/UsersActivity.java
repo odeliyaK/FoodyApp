@@ -99,6 +99,7 @@ public class UsersActivity extends Activity {
                     MyInfoManager.getInstance().deleteAllHistory();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         HistoryInfo history = document.toObject(HistoryInfo.class);
+                        System.out.println("history" + history.toString());
                         MyInfoManager.getInstance().createHistoryPackage(new HistoryInfo( history.getId(),
                                 history.getPackageNum(), history.getName(), history.getAddress(), history.getDate()));
 
@@ -139,7 +140,7 @@ public class UsersActivity extends Activity {
                 }
             }
         });
-        System.out.println("hostory: "+ listOfHPackages.get(0).getId()+ " "+ listOfHPackages.get(0).getPackageNum());
+
         Date today=new Date();
         Date send = null;
         if (!listOfHPackages.isEmpty()){
@@ -161,8 +162,8 @@ public class UsersActivity extends Activity {
                                 &&!listOfHouseholds.get(j).getAddress().equals(null)
                         && !newPackage.getHouseName().equals(null) &&!newPackage.getHouseAddress().equals(null)){
                             if (newPackage.getHouseName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getHouseAddress().equals(listOfHouseholds.get(j).getAddress())){
-//                                FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
-//                                dbOrder.collection("Packages").document(newPackage.getPackageID()).set(newPackage);
+                                FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
+                                dbOrder.collection("Packages").document(newPackage.getPackageID()).set(newPackage);
 //                                MyInfoManager.getInstance().addPackage(newPackage);
 //                                adapter=new UsersLIstAdapter(context,listOfPackages);
 //                                list.setAdapter(adapter);

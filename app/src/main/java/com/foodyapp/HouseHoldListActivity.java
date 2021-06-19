@@ -87,10 +87,11 @@ public class HouseHoldListActivity extends Activity implements AddInputDialogFra
 
                     int lastID = 0;
                     MyInfoManager.getInstance().deleteAllHouseholds();
-                   // MyInfoManager.getInstance().deleteAllPackages();
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         usersInfo house = document.toObject(usersInfo.class);
                         MyInfoManager.getInstance().createHouseHold(new usersInfo(house.getName(), house.getAddress(), house.getId()));
+                        db.collection("Packages").document(house.getId()).set(new PackagesInfo(house.getId(), house.getId(), house.getName(), house.getAddress()));
+//                        MyInfoManager.getInstance().addPackage(new PackagesInfo(house.getId(), house.getId(), house.getName(), house.getAddress()));
                         lastID = Integer.parseInt(house.getId());
                     }
                     if(id <= lastID)

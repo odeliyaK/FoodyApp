@@ -100,7 +100,6 @@ public class HistoryActivity extends AppCompatActivity {
                         HistoryInfo history = document.toObject(HistoryInfo.class);
                         MyInfoManager.getInstance().createHistoryPackage(new HistoryInfo(UUID.randomUUID().toString(),
                                 history.getPackageNum(), history.getName(), history.getAddress(), history.getDate()));
-
                     }
                     itemInfos = MyInfoManager.getInstance().getAllHistoryPackages();
                     adapter=new HistoryAdapter(context,  itemInfos);
