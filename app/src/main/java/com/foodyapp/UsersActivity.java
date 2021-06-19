@@ -161,9 +161,9 @@ public class UsersActivity extends Activity {
                                 &&!listOfHouseholds.get(j).getAddress().equals(null)
                         && !newPackage.getHouseName().equals(null) &&!newPackage.getHouseAddress().equals(null)){
                             if (newPackage.getHouseName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getHouseAddress().equals(listOfHouseholds.get(j).getAddress())){
-                                FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
-                                dbOrder.collection("Packages").document(newPackage.getPackageID()).set(newPackage);
-                           //     MyInfoManager.getInstance().addPackage(newPackage);
+//                                FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
+//                                dbOrder.collection("Packages").document(newPackage.getPackageID()).set(newPackage);
+//                                MyInfoManager.getInstance().addPackage(newPackage);
 //                                adapter=new UsersLIstAdapter(context,listOfPackages);
 //                                list.setAdapter(adapter);
 //                               adapter.notifyDataSetChanged();
@@ -217,15 +217,15 @@ public class UsersActivity extends Activity {
         }
 
 
-        if (listOfPackages.isEmpty()){
-            Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
-        }
-        else {
-
-                Date c = Calendar.getInstance().getTime();
-                adapter = new UsersLIstAdapter(this, listOfPackages);
-                list.setAdapter(adapter);
-        }
+//        if (listOfPackages.isEmpty()){
+//            Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
+//        }
+//        else {
+//
+//                Date c = Calendar.getInstance().getTime();
+//                adapter = new UsersLIstAdapter(this, listOfPackages);
+//                list.setAdapter(adapter);
+//        }
 
 
     }

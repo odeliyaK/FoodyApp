@@ -73,7 +73,7 @@ public class UsersLIstAdapter extends ArrayAdapter<PackagesInfo> {
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         rowView=inflater.inflate(R.layout.users_list, null,false);
-        MyInfoManager.getInstance().openDataBase(context);
+//        MyInfoManager.getInstance().openDataBase(context);
         TextView pNum = (TextView) rowView.findViewById(R.id.pNum);
         TextView name = (TextView) rowView.findViewById(R.id.userInfo);
         TextView address = (TextView) rowView.findViewById(R.id.useraddress);
