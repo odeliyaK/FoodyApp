@@ -164,10 +164,6 @@ public class UsersActivity extends Activity {
                             if (newPackage.getHouseName().equals(listOfHouseholds.get(j).getName() )&& newPackage.getHouseAddress().equals(listOfHouseholds.get(j).getAddress())){
                                 FirebaseFirestore dbOrder = FirebaseFirestore.getInstance();
                                 dbOrder.collection("Packages").document(newPackage.getPackageID()).set(newPackage);
-//                                MyInfoManager.getInstance().addPackage(newPackage);
-//                                adapter=new UsersLIstAdapter(context,listOfPackages);
-//                                list.setAdapter(adapter);
-//                               adapter.notifyDataSetChanged();
                             }
                         }
 
@@ -194,11 +190,9 @@ public class UsersActivity extends Activity {
                     for (DocumentSnapshot document : snapshot.getDocuments() ){
                         PackagesInfo packages = document.toObject(PackagesInfo.class);
                         MyInfoManager.getInstance().addPackage(packages);
-                        //    MyInfoManager.getInstance().addPackage(packages);
                     }
                     listOfPackages = MyInfoManager.getInstance().getAllPackages();
                     adapter=new UsersLIstAdapter(context,listOfPackages);
-//                    adapter = new UsersLIstAdapter(context,  listOfPackages);
                     list.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -208,25 +202,6 @@ public class UsersActivity extends Activity {
                 }
             }
         });
-
-        for(PackagesInfo p : listOfPackages){
-            System.out.println(p.toString());
-        }
-
-        for(HistoryInfo p : listOfHPackages){
-            System.out.println(p.toString());
-        }
-
-
-//        if (listOfPackages.isEmpty()){
-//            Toast.makeText(context, "There are no packages", Toast.LENGTH_SHORT).show();
-//        }
-//        else {
-//
-//                Date c = Calendar.getInstance().getTime();
-//                adapter = new UsersLIstAdapter(this, listOfPackages);
-//                list.setAdapter(adapter);
-//        }
 
 
     }
