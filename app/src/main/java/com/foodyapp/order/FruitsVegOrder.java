@@ -24,6 +24,7 @@ import com.foodyapp.R;
 import com.foodyapp.inventory.FruitsVegFragment;
 import com.foodyapp.model.Order;
 import com.foodyapp.model.Products;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -164,7 +165,8 @@ public class FruitsVegOrder extends Fragment implements View.OnClickListener{
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(getContext(), "Order cancelled",Toast.LENGTH_LONG).show();
+                        Snackbar sbar=Snackbar.make(OrderActivity.v, "Saving inventory is cancelled", Snackbar.LENGTH_LONG);
+                        sbar.show();
                         num1.setText(be1);
                         num2.setText(be2);
                         num3.setText(be3);

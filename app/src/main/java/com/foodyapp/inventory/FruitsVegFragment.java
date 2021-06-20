@@ -20,8 +20,10 @@ import android.widget.Toast;
 
 import com.foodyapp.MyInfoManager;
 import com.foodyapp.R;
+import com.foodyapp.VolunteersListActivity;
 import com.foodyapp.model.Products;
 import com.foodyapp.order.OrderActivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -180,23 +182,24 @@ public class FruitsVegFragment extends Fragment implements View.OnClickListener{
                 // Add the buttons
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Snackbar sbar=Snackbar.make(InventoryActivity.v, "Saving inventory is cancelled", Snackbar.LENGTH_LONG);
+                        sbar.show();
 
-                        Toast.makeText(getContext(), "Saving inventory is cancelled",Toast.LENGTH_LONG).show();
-                        num1.setText(quantity[0]);
-                        num2.setText(quantity[1]);
-                        num3.setText(quantity[2]);
-                        num4.setText(quantity[3]);
-                        num5.setText(quantity[4]);
-                        num6.setText(quantity[5]);
-                        num7.setText(quantity[6]);
+                        num1.setText(String.valueOf(quantity[0]));
+                        num2.setText(String.valueOf(quantity[1]));
+                        num3.setText(String.valueOf(quantity[2]));
+                        num4.setText(String.valueOf(quantity[3]));
+                        num5.setText(String.valueOf(quantity[4]));
+                        num6.setText(String.valueOf(quantity[5]));
+                        num7.setText(String.valueOf(quantity[6]));
                         getActivity().closeContextMenu();
 
                     }
                 });
                 builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
-                        Toast.makeText(getContext(), "Saving inventory succeeded", Toast.LENGTH_LONG).show();
+                        Snackbar sbar=Snackbar.make(InventoryActivity.v, "Saving inventory succeeded", Snackbar.LENGTH_LONG);
+                        sbar.show();
                         if (current != null)
                             current.clear();
 

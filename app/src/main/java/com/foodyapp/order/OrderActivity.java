@@ -45,7 +45,7 @@ import java.util.ArrayList;
 public class OrderActivity extends AppCompatActivity {
     private Context context;
     FirebaseAuth mAuth;
-
+    public static View v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +53,7 @@ public class OrderActivity extends AppCompatActivity {
         ImageView toolBarArrow=findViewById(R.id.arrow);
         ImageView rightIcon=findViewById(R.id.menu);
         mAuth = FirebaseAuth.getInstance();
-
+        v=findViewById(android.R.id.content);
         toolBarArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

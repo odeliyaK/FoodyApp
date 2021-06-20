@@ -26,10 +26,12 @@ import com.foodyapp.R;
 import com.foodyapp.VolunteerAdapterOrg;
 import com.foodyapp.VolunteersListActivity;
 import com.foodyapp.inventory.DairyActivity;
+import com.foodyapp.inventory.InventoryActivity;
 import com.foodyapp.model.Order;
 import com.foodyapp.model.Products;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -167,7 +169,8 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(getContext(), "Order cancelled",Toast.LENGTH_LONG).show();
+                        Snackbar sbar=Snackbar.make(OrderActivity.v, "Saving inventory is cancelled", Snackbar.LENGTH_LONG);
+                        sbar.show();
                         num1.setText(be1);
                         num2.setText(be2);
                         num3.setText(be3);
@@ -180,8 +183,8 @@ public class DairyActivityOrder extends Fragment implements View.OnClickListener
                 builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(getContext(), "Order from 'Tenuva' succeeded",Toast.LENGTH_LONG).show();
-
+                        Snackbar sbar=Snackbar.make(OrderActivity.v, "Saving inventory succeeded", Snackbar.LENGTH_LONG);
+                        sbar.show();
                         if(current != null)
                             current.clear();
                         if(myOrder != null)

@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.foodyapp.HistoryActivity;
 import com.foodyapp.MainActivity;
@@ -20,15 +22,20 @@ import com.foodyapp.R;
 import com.foodyapp.UsersActivity;
 import com.foodyapp.VolunteerMainActivity;
 import com.foodyapp.order.OrderActivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 
 public class InventoryActivity extends AppCompatActivity {
     private Context context;
     FirebaseAuth mAuth;
+    public static View v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        v=findViewById(android.R.id.content);
+
+
         setContentView(R.layout.activity_inventory);
         ImageView toolBarArrow=findViewById(R.id.arrow);
         ImageView rightIcon=findViewById(R.id.menu);
